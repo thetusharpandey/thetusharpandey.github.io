@@ -1,0 +1,303 @@
+Image Segmentation using Deep Learning Techniques in Medical Images
+ Mamta Mittal1, Maanak Arora1,*, Tushar Pandey1, Lalit Mohan Goyal2
+1Department of CSE, G. B Pant Government Engineering College, Okhla, New Delhi
+2Department of CE, J C Bose University of Science and Technology, YMCA Faridabad
+*Corresponding Author : maanakarora@gmail.com
+
+
+Abstract. Nowadays, Medical field is one with a need for paramount concern and research where Medical Sciences are at a stage that needs extensive       research and technical proposals so as to meet the increasingly complex        challenges. The identification and analysis of diseases are getting harder as they get even more sophisticated as ever before. In this study, authors have discussed one such aspect of the medical sciences, Brain tumor detection and the       Magnetic Resonance Imaging (MRI) image segmentation in order to make tumor detection automated and a few deep learning techniques that are          potentially effective to do such tasks. They have also elaborated the basic      concepts involved in Segmentation and the Image Pre-processing steps. Lastly, the Deep learning techniques that can be used for medical image segmentation are elucidated, which is the eccentric essence of this chapter.
+
+Introduction	
+
+	Modern-Day Computer Vision technology has, by being developed on the roots of AI and Deep learning techniques learned, changed and unfolded significantly in the past decade [1-3]. Now it has applications in face recognition, image classification, picking out objects in pictures, video analysis, along with the processing of images in the robots and independently functioning vehicles (autonomous). Deep learning has the caliber of learning pattern(s) in its inputs so as to speculate and call out the classes of objects which contribute to the development of the entire object, which may be an image. The image segmentation algorithms and techniques nowadays use Deep Learning-based approaches to effectively understand the image structure at a level that seemed inconceivable only a decade ago [4]. They aim to develop the fact that exactly which real-world object a pixel is a constituent of, and hence the entire row and/or column of the image represents what. However, this is not necessary. The Deep Learning model also can be making notions and relations on clusters inside an image that need not be a specific row or column [5]. The prime Deep Learning frameworks that are employed for the computer vision or related tasks are Convolutional Neural Network (CNN), or some specific CNN architectures available e.g. AlexNet, UNET, Inception, VGG or ResNet [6].
+
+
+
+1.1 Image Segmentation and its essence 
+	
+		The process of image segmentation holds a vital role in the computer-vision. It consists of a division of a given visual input into segments in order to rationalize the analysis of the image, as shown in figure. 1(a). After the System finishes computing over the images, the segments represent either the entire object or one of its elements depending upon the algorithm complexity. Such segments are made up of sets of pixels called 'Super Pixels’. The process of Image segmentation classifies these pixels in comparatively sizeable components, thus eradicating the requirement to observe singular pixels as one unit, and as shown in figure. 1(b) they deal in clusters of pixels known as classes or instances. Forming correct clusters is still a challenge [7,8]
+Figure 1(a): Image segmentation applied on cell tissue [9]
+Figure 1(b): Segmentation on real world photographs
+
+
+
+
+
+Generally the Image analysis has three major stages :
+
+Image Classification : Categorising the whole input image in a class like ‘cars’, ‘girls', ‘cheques’.
+
+ Object detection : Detect the object in the picture, form a quadrilateral (Square or Rectangle) around it, i.e. on a woman or on a cup. There may be multiple objects.
+
+Image Segmentation : pinning down the portions of input picture, along with interpreting that which object does the part belongs to. Segmentation lays down the basis for performing classification and object detection.
+     
+Further, Segmentation process itself is divided into two wide divisions :
+
+Semantic Segmentation : Since a long time, this is termed as a process to allocate classes to each pixel in the given input image. Classify each pixel of the image in some purposeful and individual class of objects, such that one pixel gets just one class. Such classes are called as ‘Semantically interpretable’, along with this           corresponds to object classes in the real world. As an example, all pixels covering a cat can be isolated and colored all brown. It is called ‘dense prediction’ as it predicts a class for each pixel beforehand. 
+
+Instance segmentation : This Segmentation tags every occurring instance or         repetition of all subjects in a picture. This is different from semantic segmentation as this does not group the same kinds of the pixel into a single class. Instead, for        example, if three women are there in the input image, instance segmentation tags every single woman as a unique instance. There are some more image segmentation methods which are used very commonly since a long time, but when compared to their other Deep Learning peers, sometimes these are a lot less efficient due to the use of immutable algorithms, along with the need of human proficiency and intrusion in the process [10-14].
+K-means clustering
+Thresholding
+Histogram based image segmentation
+Edge detection
+
+
+
+
+
+
+Need of Image Segmentation: Reason and Significance 
+
+		In the reports of American Cancer Society from the year 2015, in the USA approximately over 1600 humans were speculated to lose life to cancer on every    passing day which corresponds to about 590,000 humans in a single year [15-17]. Even in today’s age of technological advancements, cancer can be fatal if it is not identified at an early stage. If cancerous cells are detected as early as technology can and aware patients take necessary steps correctly, potentially millions of lives can be saved. The shape of the cancerous cells plays a pivotal role in governing the extent or severity of corresponding cancer. A common inference can effectively be drawn here that object detection will not be very helpful in this case. Only the bounding boxes will be generated and they will not help in identifying the shape of the cells. Image           segmentation techniques prove to be helpful. They help to approach this problem in a more granular manner and get more meaningful results. 
+
+In this chapter, the authors delve into some very popular Deep Learning techniques used for Image Segmentation in Medical Image Analysis. Differences among them are highlighted and their capabilities, limitations, along with advantages are           discussed. To familiarise readers with the intricacy existent among Segmentation in the medical sphere and address the challenges, the basic concepts of Image          Segmentation are discussed first [18-21]. This involves the definition of the 2D and 3D images, description of an image segmentation problem, the image features and the introduction of intensity distributions of sample images (medical images, etc). Then the authors explain different pre-processing steps also consisting of image              registration, bias field correction, and removal of the insignificant portions. The   common validation problems are discussed in the chapters. Medical illustrations are included in the chapter to depict information wherever possible. Each topic contains relevant images for a proper explanation of the concepts.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2. Basic concepts of Image Segmentation 
+	
+	This section explains the basic concepts of Image Segmentation used in this chapter using Brain MRI scans as a subject [22].
+
+2.1 2D and 3D Images 	
+
+In a 2D space, an image could be effectively expressed as I(i, j), a function, whereas  inside a 3D space, it can be defined as a function I(i, j, k), when i={0 : M-1}, j={1 : N-1}, along with k={0 : D-1}, denoting the space coordinates with M, N and D being the lattice dimensions. Value of these functions are intensities, which are usually illustrated as gray values (i.e. 0 to 255) in MRI of the brain . When a 2D image is considered, an image can be classified as a set of fundamental image elements called Pixels. Similarly, in 3D space, the fundamental components of an image are called Voxels. Representation of Pixels and Voxels can be seen in figure 2 below.
+
+Figure 2: Image elements in planar, volumetric representations. (a) Pixels in 2D space are represented with square lattice nodes. (b) Voxels in  3D space are represented with cubic lattice nodes.
+
+
+
+
+The Intensity values (0-255) and plane coordinates (i, j) uniquely specify the pixels whereas, Voxels have unique specification of intensity values(0-255) and space coordinates(i, j, k), where i is row no., j is column no. and k is slice no. in the volumetric arrangement. The average magnetic resonance characteristics that the considered corresponding element tissue exhibits, generate a single numerical value that is assigned to that image element. Spatial resolution for the clarity of the image depends on the. dimension of the elements taken into consideration. Figure 3 illustrates a Voxel for the 3D brain volume and 2D MRI image of the same brain using a Pixel for the representation of information. Also, Voxel/Pixel sizes do vary in different cases due to different imaging parameter, magnet strength of the MRI apparatus used, and the time allowed for entire image acquisition along with other factors. However, in conventional results provided by famed studies, Voxels are often of a few millimeters, the most common being 1-2mm large. 
+Figure 3: Illustration of Brain MRI elements. Square represents the pixel (i,j) in 2D MRI slice and cube represents image voxel(i, j, k) in 3D space
+
+Even finer spatial resolutions can be obtained with longer scanning durations being allowed, but the increasing patient discomfort with passing time must be taken into consideration too. Allowed duration of image acquisition changes with the age groups involved too, as adults can withstand comparatively longer durations in the process in contrast to children who may get uncomfortable sooner.  
+As a result, adult brain MRI raw-data acquisition is approximately 18-19 minutes often, whereas in pediatric MRI cases, the image acquisition varies in the limits of 5 minutes to 15 minutes. After the raw data is acquired, the images are fed to a series of systems there may be thousands of slices, which should be sorted [23]. Image segmentation is elaborated in the next section, where the authors talk about its objective as a process and the technical insights to how different types of segmentation are dealt with etc.
+
+2.2 Segmentation of an MRI Image 
+
+The prime objective of segmentation of the image is to mark clusters of distinct      portions in it, which are visually distinct, homogeneous and meaningful with respect to some computed properties or features, such as texture, grey level or some other property to facilitate easy image analysis (classification, object identification, and processing). Image segmentation is categorised into three major types namely Threshold Segmentation, Region-Based Segmentation and Edge-Based Segmentation as shown in figure 4. MRI is an effective technique for non-invasive imaging for producing detailed images of portions inside the flesh, seemingly opaque to human eyes as it appears, but opens up like a transparent layer of jello to the magnetic resonant waves of the the apparatus.
+Figure 4: Basic Segmentation Techniques 
+MRIs are readily preferred in the treatment of brain tumors for speculating and     monitoring of patients from the inside. It can also be used to measure the tumor’s size. Segmentation is a process of extracting information from an image and to group them into regions with similar characteristics. Structural brain MRI analysis includes the description and identification or classification of some particular components in human anatomy, the most important part being the classification of tissue.             Each region/portion in the picture is assigned a predefined class of tissue in the        classification process. Image elements in brain MRI are classified in 3 primary tissue variants- White Matter(WM), Gray Matter (GM), as well as the Cerebrospinal Fluid(CSF), as shown in figure 5. Segmentation means a classification, whereas a    classifier simply is for segmentation of input imagery. This means that problems in segmentation and classification are interconnected. 
+Figure 5: Segmentation of MRI of Brain shown alongside an original MRI result and the portions segmented shown in three different categories.
+The results obtained after image segmentation have further applications in surgical planning, visualisation, studying anatomical structures and pathological regions. A large portion of research in segmentation is focussed on 2D images, though it can be performed on a sequence of two Dimensional images, or three Dimensional volumetric imagery as well. The data in 3D is sourced from a bunch of MRI acquisitions in series, where every single image is subjected to segmentation separate and slice wise. This type of 3D segmenting involves post-processing of 2D segment connection resulting in a continuous 3D volume. However, the resulting volume can be inconsistent and a non-smooth surface due to information loss in 3D space. Therefore, a need for 3D segmentation algorithms arises for accuracy in the segmentation of 3D brain MR  images. Difference between 2D and 3D segmentation lies inside the concept of the pixels and voxels, the methods to process information in both of them and their neighbourhoods in different dimensions over which the image features are defined. Often 2D segmentation methods can be converted to 3D spatial segmentation but this amounts to huge amount of data, and demand for huge computation power. This comes in the category of processing of big data which has its own challenges [24]. There are various techniques to process big data, and is often done on dedicated    machines [25-28].
+
+
+2.3 Mathematical modeling of Pixel or Voxel neighbourhood 
+	The mathematical modeling holds huge significance in segmentation of Brain MRI. Provided that the input is not just randomly plotted noise, the pixel/voxel intensity highly depends statistically on gray intensity values of the adjacent (local) pixel(s) or voxel(s). The theory of Markov Random Field (MRF) efficiently makes available a firm base suiting the modeling of local level features of the input picture, where the local scale patterns and trends are governing the global-scale patterns, or the ‘trends’ as the term goes by i.e. the local properties in the image. Lately, MRF models have previously been quite successfully integrated into existing brain MRI segmentation methods in an attempt to decrease the misclassification errors to some extent due to image noise. And regardless to say, the method has proved its mettle with the underlying algorithms proving to be effective in the application concerned.
+As shown in section 2.1, every Pixel/Voxel is capable of being represented in the    lattice with a single node 𝒫. Let 𝑥𝒾 represent the intensity measurement of any       singular Voxel/Pixel in the entire lattice with a position 𝒾 in the image x̅ = (x1, …,xm), defined across a lattice, 𝒫 finite in size.
+Here, E stands for net count of image elements (E = MN for any 2D image and           E = MND for any image in 3D).
+Assume that,  𝒩 = { 𝒩i | ∀i ∈ 𝒫} denotes the neighbourhood system of 𝒫, where 𝒩𝒾  stands for a significantly smaller neighbourhood around 𝒾, (Note - not including 𝑥𝒾). Now the nodes, which can be anything from pixels or voxels in a lattice 𝒫 stand    related to each other by a neighbourhood system 𝒩, that can easily be defined or    represented as 
+𝒩 = { 𝒩i | ∀i ∈ 𝒫}                                               (1)
+
+ The Neighbouring relation of the pixels/Voxels have the properties as follows:
+Any node 𝒾 isn’t belonging to own neighbourhood as they both are mutually       exclusive by definition.
+The neighbouring relationship is mutual[29].
+			
+				𝑖 ∈ N𝒾 ⟺𝑖∈ N𝒾	  			     (2)
+
+Hence from equation 1 and 2, the first order and second-order neighbourhood in mathematical form are the most commonly used neighbourhoods in the image      segmentation.
+
+MRF models can be represented with just a graph where 𝒩 determines the links and 𝒫 represents the nodes, which takes the nodes as per their neighbourhood relations and connects them with the surrounding nodes. This relation derivation can prove to be helpful to a significant extent such that it can resolve the challenge of wrongly segmented portions being generated due to the presence of image noise, commonly called random noise. A Graph structure in the form of nodes and edges will hence correspond to an image, wherein every lattice node corresponds to the pixels or even voxels, along with links existing between the nodes representing the mutual           dependency on the basis of context, among the (any group of) voxel/pixel in the     surroundings.
+
+
+2.4 Analysis of Intensity Distribution in Brain MRI 
+	Resultant intensity data of brain tissues in generated imagery is vital in   Segmentation, however whenever the intensity values are corrupted or they seem to be affected by the MRI artifacts like the image noise, or bias field effect or effects of partial volume, there the intensity-based methods, no matter what they are will always lead to wrong results as they are affected by the visual garbage information in an    already grayscale picture. Often the data is pre-processed for the algorithms to work on it so as to improve the resultant output quality. In the case when the extra skull structures, bias field, and background voxels are removed, the resulting histogram of an adult brain will effectively have three prime peaks in the intensity-based graph as shown in figure 6. Which also confirms the fact that the three major types of brain      components are having different intensity signature in the MRI segmentation.
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 6: Distribution of intensities in an adult brain MRI. The three peaks visible show the amount of  CSF, WM and GM respectively left to right, counted by number of pixels covering a certain material.
+
+
+The peaks visible in figure 6 in order are for the following brain MRI components :
+ CerebroSpinal Fluid (CSF)
+ Gray Matter (GM)
+ White Matter (WM)
+
+Sometimes, Intensities of the brain may be in a form that the techniques can easily identify the parts. However, on a general note, the intensity of the brain can be taken a piecewise constant, corrupted only by the noise, along with Partial Volume Effect (PVE) as talked about earlier. The PVE talks about the information lost due to the limitation of resolution on Magnetic Resonance Imagery apparatus and also the      limited time available to capture the scan iterations. The issue is highlighted further with relatively smaller neonatal brains, which are relatively more crowded and are hence harder to study by techniques like MRI, which are taking slices of a few mm(s) of resolution thereby potentially missing chunks of information.
+
+
+2.5 Segmented Features of MRI image 
+	The term ‘Image feature’ is the collective term for the distinctive              characteristics of the input picture to be subjected to segmentation. Resultant features or collections of such features are highly dependent on the underlying numerical    measurements and calculations from the algorithms pre-fed to the system, and will also include the visual features and the specific shape descriptors used in the         computation of segmentation portion in the said image.
+All these components help the system, and hence technicians to distinguish between the background and the structures of interest. The result of image segmentation      depends significantly on appropriate feature selection and accurate extraction of     features. Usually, the approach that is used in the extraction of features and the MRI image classification is highly statistical, where a texture or pattern is a few features deduced from statistical maths, and represented in the space in vector form. These statistical features are based on Gray Intensity. They depend upon the first and second order of Intensity statistics. Now talking about the origin/source of these statistics, the first-order statistics are derived from the gray value of the image in histogram form and involves the median, mean, intensity and the standard deviation of the given pixel value. The Image Segmentation performance of the algorithms can be enhanced the probabilistic shape models. They are used frequently in segmentation of imagery in the Medical Field. These prior shape models specifically list the average shape and form variation of the object (tumour here), and are often approximated from a bunch of co-aligned pictures covering the object slices from different heights.
+A prominent feature amongst all others in the segmentation for the identification of the tumor is the edge detection of the tumor in the brain scan, typically an MRI      image, that is a ready to go algorithm and can be easily be identified in relatively shorter time duration, on almost any machine. It may be a normal computer with a researcher or a professional analyst in a specialized institution. These edges are      traditionally calculated out by thresholding concept onto the 1st and 2nd order spatial derivative of the pixel intensity in the taken picture. However, it must be kept in mind that the edges detected by this procedure are way more sensitive to the image noise that may creep-in and hence possibly hampers the result of the derivatives in a way or other, and hence these images often require preprocessing in the form of smoothening of the image as a significant step. In the conclusion of the algorithms talked about over here, they can be majorly assessed on their robustness, i.e. how much             disturbance they can withstand and still be giving a significantly acceptable result.
+
+Talking about robustness, another even robust technique for the detection methods oriented on edges happens to be the phase congruency method. This actually is a method constructed at the concept of frequency for detection of features. This method derives its inspiration from the methods mammals employ to identify an edge       plausibly, along with studying it using the concept of local phase and energy. This method successfully explains how humans build up a psychophysical response to the edges and sharp lines in the visual feed. Mathematically, lines and edges are the spots in the image where the Fourier component be in the same maximal phase, also termed as ‘InPhase arrangement’. Also on a mathematical front, this is observed that the   Rician Distribution is the appropriate entity that governs the image noise contained within, with the proposal of this being formed from the fact that imaginary channel along with noise is following Gauss Laws [30].
+The probability density function is defined as 
+	𝑓Rician(𝑥) =,
+Here,  is measured voxel/pixel density, and  stands for image intensity without noise, sigma is the standard deviation of the intermittent gaussian noise within     imaginary and real images, also 𝐼o stands for the zero-order, First kind of modified Bessel’s function.
+
+
+
+
+3. Image pre-Processing 
+	The computer-based analysis of the MR images currently pose a challenging situation because of inconsistent intensity, changes in the range of intensity and      contrast, and the noise. Hence, before proceeding for automated analysis, a few     standard steps for the preparation of the data are needed to modify the imagery so as to look similar, also usually this is what’s known as pre-processing, or sometimes as preparation steps. Usually, the steps taken for data preparation are in a sequence as discussed further.
+3.1 Registering the images in the system 
+	Registration is space-based positioning of brain MRI images along with the ‘same axis’ space, i.e. a plane with the same axis so as to align those images perfectly. Inter-patient image registration helps in making a standard and common notion of the images being registered and help scientists and technicians in generalizing several attributes of the human body based on the common shape and design trends of         the images on a general stereotaxic spatial arrangement. Oftentimes Molecular             neuroImaging (MNI) or ICBM techniques are deployed for it. It is used to obtain complete information about the patients’ health when using the images from different modes : (MRI, CT scans, PET, and SPEC techniques (or just SPECT)), realignment is used in the process for the motion correction by the same subject(the patient) and the normalisation process help in inter-subject registration when several groups from the population are studied. Detection of transformation between the inputs is also        involved in the process so that the corresponding features between two people or just two different models can be better understood. Transformation studied are usually one of either rigid or they can be affine. Rigid transformations are a Hexa-parameterized transformation consisting of translation of the models along-with rotation too. If    scaling and skewing to the parameters are allowed, the parameters change to 12 from 6. However, if the task aimed is the matching of the images belonging to the same subject but distinct stages of the brain or even other different subjects, a non rigid    registration is what is aimed for. But registration between two different brains is not possible when the brains include some disease or lesion as they cannot remain or maintain the original form due to the disease.
+
+
+
+
+3.2 Skull Stripping/Extraction from the image  
+	Aimed at making the image free of skull in-order to better concentrate on intracranial tissues skull stripping takes out the skull elements from the image. Robex, BET, and SPM have been the usual methods to do this . The reason being the fact that the Non-brain tissues like skull, fat, skin or even the neck cavities have the intensities that overlap to that of the tissue in the human brain. Hence the brain needs to be made free of such elements by some means so that only brain is processed and no extra    matter is considered as the part of the brain erroneously. This step tags a voxel as    either brain matter or not in a binary fashion. And the resultant can be an entirely   separate picture with only voxels belonging to brain matter or binary format brain mask, which sets the value 1 for brain and a zero for the rest of the matter. Generally, the voxel of the brain is comprising of the GM, WM, CSF. The scalp, fat of the skull, skin over it, muscle for the movements, eyes and even the bones are always classified as unwanted parts, and hence any part containing them (voxels containing) such parts are tagged as non-brain voxels. The common brain stripping uses the already       available brain anatomy information beforehand so that the system can take           references from the existent data and hence decide efficiently about which voxel to ignore and which to not.
+
+3.3 Bias Field correction 
+	This technique, Bias Field Correction, also referred to as the image           inhomogeneity correction is actually a low-frequency, space varying MRI artifact, and is the rectification carried out in the image due to inconsistencies in the magnetic field. N4 approach stands out as the goto for this correction due to a solid record of performance in a large number of cases of removal of noise. The bias field arises from the space based in-homogeneity of the magnetic field from the machine used in MRI process and also based on the sensitivity of the reception coil, sometimes on the     human body to magnetic field interaction to some extent. The bias field is independent usually, but sometimes the output of the field depends significantly on the magnitude of the magnetic field when field applied is high. And in case of MRI machines as    discussed here, the bias field does depend on the magnetic field when the MRI is    taken at 0.5T (unit = Tesla), the bias field is generally weak and can be neglected, but when the MRI is taken at 1.5T or even 3T or even higher, the bias field gets strong. In practice, trained medical experts can successfully perform analysis up to 30% of    inhomogeneity. In practice, Performance of the MRI analysis increases significantly in the presence of the bias field parameter because the algorithms assume the intensity homogeneity. In the literature of the MRI image segmentation technique, a number of methods with varying success and effectiveness rates have previously been proposed to provide a correction to the field bias. Earlier the manual labelling of tissue voxels was desired for this task. However this must be kept in mind that the need of humans in the surface fitting segmentation process is also a drawback of the system as the elimination of human involvement in the entire process was the only aim of           developing such algorithms in the first place. Another method having the potency to fulfill this objective is the low-pass method. This method however, introduces        unwanted entities in the picture by cutting out the original low-frequency               components. Other methods include the Image Entropy minimization, histogram    fitting of local neighbors to the global members, and the registered template methods. An alternative is the BET, called Brain Extraction Tool, which targets for the center of gravity and expands spheres until the brain boundary is found. It works well in the T1 and T2 modes of data of good quality (in adults). But is inconsistent with neonatal brains.
+3.4  Intensity Normalisation 
+	Intensity Normalisation is the arranging of all the involved images, intensity wise to a specified range of 0-4095, or 0-255. Talking with respect to Deep Learning architectures, calculation of z scores by subtracting the intensity mean from all the     pixels, is the main parameter which is desired to be optimized. MRI as everyone knows, is non-invasive and hence that gives an excellent contrast between soft tissues without even the need of any minor incision, but a major drawback to be considered is the fact that here tissues don’t have a singular value of intensity so it cannot use a constant value to be a specific intensity of the tissue, such as in computer tomography. Many techniques help in intensity normalization, a few being as follows :
+Histogram matching on generalised ball scale 
+STI, Standardisation of intensities
+Gaussian method
+Z-score method
+Histogram matching on median
+MIMECS
+
+Some imaging techniques register different intensities for the same tissue even in the same subject due to the difference in orientation of the brain tissue, which is common to be in folds. And MRI may somehow detects these as different objects and not the same tissue in different orientations. These variations are machine-dependent and cannot be corrected with just bias feed correction. The variations make segmentation process and hence image analysis very difficult. Hence intensity normalization is an important preprocessing step. Now there are specific techniques based on deep      learning that are used for Image segmentation specifically. Section 4 talks about such techniques and elaborates their limitations, uses, advantages.
+4. Deep Learning techniques used in Image Segmentation - 
+	Classifying the dogs and cars using Deep Learning is quite easy but          detecting and classifying tumors and lesions in the brain using Deep Learning is a challenging task. Locating the exact affected regions is a crucial step in planning the treatment and tracking the progression of various brain diseases. In this chapter, the case of brain tumors is considered. It is crucial to know where the tumor is located in order to decide whether or not to perform surgery. This section talks about some of the popular techniques used in Medical Image segmentation and enlists their effects, limits, and advantages. It should be noted that other techniques are also available [31].
+4.1 Fully Convolutional Network(FCN) 
+	Machine learning can learn various complex trends in data in ways that can range from traditional to abstract, but it can do various tasks [32-34]. Convolutional networks are very effective in the visual mode of operation that yields feature        hierarchies. Infact, they are so much preferred nowadays that the term FCS is almost omnipresent in the research field for the operations intended in the text. Convolutional networks train themselves pixel-to-pixel and create better results from their end to end training than other inferior segmentation techniques.The key focus in FCNs is the fact that these kind of networks are the drivers and leaders of almost all the advances that are obtained in the field of recognition [35]. These networks very effectively rule out the limitation of hardcoded algorithms and they help in building better products that can recognize patterns and shapes better. These are not only improving image              classification but also are making considerable progress in the logical tasks with a structured output, provided they are fed with the best data possible to train on. They account for the developments in the ‘Detection by Bounding Box’ techniques and the part with a key-point prediction with local-level support of information better inferred from the data. Earlier approaches tend to use CNNs for the semantic segmentation where every individual pixel is labeled from its enclosing region’s class, however along with all the problem areas that various texts in the research field address in these networks, every data layer is an extremely large array of size ‘a*b*c’, where ‘a’ and ‘b' are space-based dimensions, and c is feature of the data . The initial layer is input picture, with ‘a*b’ being pixel size, and ‘c’ the color channels. Locations in upper logical layers relate to location data in image in a path-connected manner, called receptive fields. While an ordinary deep network calculates a normal nonlinear function, a conv. network with structure layers and formation calculates a nonlinear     FILTER. Any FCN normally operates on simple numerical input and gives an output of corresponding space-based dimensions but the output is resampled by means of calculations carried out in hidden network layers.
+4.2 ParseNet 
+By using ParseNets the global context is added to the information and the accuracy is increased in the classification process and final form of the shape is always kept in mind whenever the classification is done, this enables the network to classify only the correct classes, and not some other class, sub-class even if the numerical representations of both look similar in hidden layers [36]. Hence the Algorithms with global context know what they are doing and are not really making decisions in the dark based on just numbers being calculated on filters in hidden layers.
+ParseNet Module :  At the lower path, at certain convolutional layer, Normalisation using l2 norm is performed for each channel. At the upper path of the module, at a certain conv. layer the ‘global average pooling’ as shown in figure. 7 is performed on these features and then l2 type normalisation is performed, followed by Unpooling. Unpooling is the unpacking of older information, adding new facts and making a even larger knowledge pool including new data. However, it should be noted that ParseNet has lower performance than DeepLab etc, but is still competitive and is used till date. The prime key point that gives ParseNets the advantage they enjoy is the information about the global context. Context is vital to enhance the performance of detection, classification tasks, along with the use of Deep Learning in specific places illustrates how this can be applied to a number of different tasks. Talking about semantic      segmentation, it is recommended that the system is provided the global context of the 
+Figure 7: The ParseNet Model
+image it is working on so that it can work in an advance manner than just classifying each and every single pixel of the image as one class or the other. After this, the concepts of Early and Late fusion of the contexts come in, along with the normalization layers and their loops for iterative enhancement of the entire network.
+4.3 Pyramid Scene Parsing Network (PSPNet)
+	PSPNet, works on concept of scene parsing. It is challenging the un-bound open vocabulary and scene with diversity [37,38]. The goal of scene parsing and the PSPNets through it, is to utilize the potential of the global context by distinct regions based on the aggregation of context of the picture by pyramid pooling. PSPNet allows a very effective architecture for pixel scale predictive capability in the picture and hence aides the classification. Objective of scene parsing is providing every pixel of the picture a type based tag as shown in figure 8. Scene parsing complete context understanding possible. It provides prediction of the size shape and the location to the users, of an element in the picture given and hence is very similar to human visual approach. They actually locate and look at the object instead of just detecting the presence of something and calculating its coordinates. 
+
+
+
+
+
+
+
+Figure 8: A comparison of PSPNet with other techniques
+Knowledge graphs also prove to be helpful, since they infer knowledge based on previous scene information, i.e. previous layers of brain MRI. Most of the current techniques still cannot use the context of other neighbouring scenes to generate output. Initially detection of global level image features was done by space based pyramid pooling with spatial statistics. But now spatial pyramid pooling networks strongly enhance the ability of image description. Here in PSPNet, along with the usually employed FCNs, the pixel level information is extended to explicitly engineered globally pooled attributes of the scene. This way their features enhance the ability of the algorithm to make even better predictions. Its worth noting that PSPNet(s) were the winner of the ImageNet scene parsing challenge 2016, they claimed first spot in PASCAL VOC 2012 semantic segmentation benchmark along with winning in urban scene Cityscapes data PSPNets give an extremely convincing direction for the pixel-level prediction [39-42]. Their code is available for testing. And they are seen to be a way to help stereo matching on the basis of CNNs, estimating depth etc. Hence PSPNet are effective for interpreting sophisticated scenes.
+
+
+4.4 DeepLab, DeepLabv3 and DeepLabv3+ 
+Deep convolutional neural networks aided the vision system’s performance graph to rise a significant step by pushing performance of the algorithms up by many scores, on a wide array of compatible problems of image classification, object detection, etc. the DCNNs have a very surprising edge of performance over other hand-coded algorithms in the said portion of computer vision applications. And to be specific about this success that they achieve, this is done by their inbuilt invariance to local image transformations which enables abstract data representations. This is accepted for classification operations but can be devastating to some extent for prediction tasks like semantic segmentation were abstract but spatial knowledge is desired. 
+This poses three main problems :
+Reduced feature resolution
+Existence of objects at different scale
+Reduced localisation accuracy to DCNN invariance
+
+This is the challenge(s) that the DeepLab overcomes or approaches to overcome. DeepLab is a very effective semantic segmentation model, entirely designed and    later-on open-sourced by Google in the year 2016 [43]. Multiple improvements have since been made in the model. Revised versions include the DeepLab, DeepLabV3, and DeepLabV3+. The DeepLab system once again proposes the networks that have been trained on picture classification technique, directly on the operation by applying the ‘atrous convolution’ along with the filters that are upsampled for dense-extraction of the features. It further extends the tasks by spatial pyramid pooling, which encodes the image objects and encodes the image content at multiple scales as well. Now to produce detailed segmentation maps along with semantically accurate predictions along the boundaries of object, the ideas from the deep convolution neural networks and the fully connected random fields are combined too. As can be seen in figure 9,   DeepLab uses Atrous Convolution and Fully Connected Conditional Random Field, while the Atrous Spatial Pyramid Pooling brings the additional piece of tech at our disposal with the next DeepLab version.
+
+Figure 9: DeepLab Model
+Talking of all three versions of the DeepLab, following must be discussed first - 
+Atrous Convolution : The term Atrous particularly comes from the French word ‘à trous’, apparently meaning a hole. Hence it is also called the hole algorithm, or going by the french naming; ‘algorithme à trous’. Commonly used in wavelet transform because of mathematical potential and power enough to provide sufficient metrics or transformations to analyse the waves, now-a-days this is applied in convolutions for Deep Learning. The following equation is used in Atrous convolution - 
+	y[i] = ∑(k=1,k)x[i+r.k]w[k]; r >1 for atrous convolution. 
+Atrous convolution facilitates the users in enlarging the view of the filter so as to   incorporate the comparatively larger context than existing standard algorithms. In DeepLab the LastPooling or Convolution5_1 is set to 1 to avoid the signal from being affected negatively too much. The output in this layer is much larger than the usual algorithms due to the enhancement in the size of the field-of-view.
+Atrous Spatial Pyramid Pooling(ASPP) : ASPP actually is an atrous version of SPP, and this concept has been used in the SPPNet [44]. As the object of the same class can have different scales in the image, ASPP helps to account for objects of   different scales (sizes) and this can help to improve the accuracy of the underlying algorithm by enhancing the output being thereby making ground truth look similar to it.
+Fully Connected Conditional Random Field (FCCRF) : This FCCRF is applied at the resultant output of network after the bilinear interpolation as shown below [45]. 
+𝞱i)(𝑥𝒾) + 𝞱𝒾𝑗(𝑥𝒾,𝑥𝑗)
+Where,
+𝞱i(𝑥𝒾) = -logP(𝑥𝒾)
+𝞱𝒾𝑗(𝑥𝒾,𝑥𝑗) = µ(𝑥𝒾,𝑥𝑗)[ω1exp{-((p𝒾-p𝑗)2)/2σ𝛼2)-((I𝒾-I𝑗)2)/2σ𝛽2}+ω2exp{(p𝒾-p𝑗)2)/2σ𝛾2}]
+
+In the formulae above, the first term 𝞱i is the Log probability. The second term, 𝞱𝒾𝑗 is a filter term. In the brackets of the filter, it is the weighted use of the two kernels. The first Kernel depends on bilateral filter made from difference of the pixel value and the difference of pixel position. Bilateral filter has the edge preserving property, i.e. it can preserve edges in the calculations. The second kernel only depends on the pixel      position difference, which actually is a Gaussian Filter. The σ and w, are calculated by cross validation of both the equations. However, The CRF is a post-processing step which makes DeepLab version 1 and DeepLab version 2 become not an end-to-end learning product. It is not found in further versions of Deeplab.
+
+
+4.5 U-Net 
+	Olaf Ronneberger developed the UNET for Medical Image Segmentation. CNN has a significant reputation when it comes to Image Segmentation because it generates considerably good results in simpler image segmentation problems. It doesn’t work so well when it comes to the intricate problems of image segmentation. Here comes UNET in the picture of image segmentation. It was initially developed for image segmentation in the medical field. Eventually, the good results shown by UNET made it useful in many other fields too. 
+4.5.1 Concept Backing UNET :  Learning the mapping of features of the image and using it to create increasingly refined feature mapping is the prime idea that revolves around CNN. For further classification, the image gets converted to vector. This makes it work well in classification problems. Now coming to image segmentation, an image also needs to be reconstructed from its vector, along with the conversion of the feature map to vector form. Since the conversion of a vector to an image is more   tedious than converting an image to a vector, this corresponds to a gigantic task. This is the problem around which the whole idea of UNET revolves around.The feature mapping of an image that is used during the conversion of an image into a vector, very same mapping can be used to convert it back to an image. This is the main      concept that backs UNET. To convert vector to image (after segmentation), the feature maps that were used for contraction are used again. This process would protect the constitutional stability of the image, which in turn would enormously reduce the     distortion factor.
+4.5.2 UNET Architecture : The name UNET is very well justified by its ‘U’ shaped architecture [46]. There are three sections in the UNET architecture:
+The Contraction section
+The Bottleneck section
+The Expansion section
+
+Contraction blocks are the building blocks of the contraction section. Each one of these blocks takes up an input on which double 3*3 convolution layers followed by a 2*2 max pooling are applied. For the architecture to learn the complex structures     successfully, the number of kernels or feature maps get doubled after each block.   Between the contraction layer and the expansion layer, arbitrates the lower-most layer which uses double 3*3 CNN layers which are then followed by a 2*2 up convolution layer. Expansion section is the core of this architecture. 
+It also consists of a number of expansion blocks just like the contraction layer. The input is then passed by each block to dual 3*3 CNN layers which are then followed by a 2*2 upsampling layers. In order to maintain symmetry, the number of kernels used by convolution layer get halved after each block. The feature maps of the       corresponding contraction layer get appended to the input. This ensures that for the reconstruction of the image, the features used would be the same as the features learned when contracting image. The number of contraction blocks and expansion blocks is same. Thereafter, the resultant mapping passes via one more 3*3 CNN layer having number of kernels equal to the number of segments required. The architecture of the same can be seen in figure 10.
+
+
+
+Figure 10: UNET Architecture
+All these techniques discussed above are actively deployed to process the images containing brain tumors. Some methods work better than others, and sometimes the input image defines the quality of results. But all these techniques have proved to be effective to at least one type of image and can segment the input effectively [47]. The effectiveness of any technique discussed depends on several other factors like the structure of the entire model used for segmentation, the classifiers used, the structure of input data and amount, consistency and the quality of the data available. Apart from the techniques discussed, preprocessing the way the data is arranged in an ordered form is required, after that it is fed to a segmentation model using one of the techniques discussed above. Only then can the segmented output be generated. However, more post-processing may be involved to refine the outputs to suit a specific requirement.
+
+
+
+
+
+
+5. Conclusion 
+	Image segmentation is the most difficult step in image processing and has been a vital and active research field since the past few years. It holds utmost importance in many medical applications like computer-aided diagnosis, image registration, and relevant fields. Its application also includes 3D visualizations. For Brain MRI segmentation, there prevails a spread of state-of-art techniques and smart previous information. Still, it may be a difficult task and there’s a necessity to boost the accuracy, precision, and speed of segmentation techniques for future analysis. Initially, in this chapter, the important concepts of image segmentation which are necessary for medical analysis have been discussed, including 2D and 3D image definition, modeling of neighborhood information, image features and intensity distribution. After this, the image pre-processing steps which are necessary for preparing the data have been elaborated, including bias field correction, image registration, skull stripping, and intensity normalization. Lastly, the significance of Deep Learning and its various techniques used in image segmentation like FCN, ParseNet, PSPNet, DeepLab, DeepLabv3, DeepLabv3+ and UNET have been elaborated.
+
+
+
+
+
+
+
+
+
+
+
+
+6. References
+Mittal M, Verma A, Kaur I, Kaur B, Sharma M,Goyal L M, Roy S & Kim T, (2019), “An Efficient Edge Detection Approach to Provide Better Edge Connectivity for Image Analysis”, IEEE Access, Vol. 7(1), pp 33240-33255
+Kaur S, Bansal R.K, Mittal M, Goyal L M, Kaur I, Verma A, Son L H (2019), “Mixed pixel decomposition based on extended fuzzy clustering for single spectral value remote sensing images”, Journal of the Indian Society of   Remote Sensing, pp. 1-11
+Avendi M.R. Kheradvar A, Jafarkhani H., A combined deep-learning and deformable-model approach to fully automatic segmentation of the left ventricle in cardiac MRI, (2016), https://www.doi.org/10.1016/j.media.2016.01.005
+Akkus Z.,Galimzianova A., Hoogi A., Roobin D. L.,Erickson B. J, Deep Learning for Brain MRI Segmentation: State of the Art and Future     Directions,(2017)https://link.springer.com/article/10.1007/s10278-017-9983-4
+Saxena A., Mittal M. and Goyal L. M. (2015), “Comparative Analysis of Clustering Methods,” International Journal of Computer Applications,        vol. 118(21), pp. 30-35.
+Image Segmentation in Deep Learning: Methods and Applications; https://missinglink.ai/guides/neural-network-concepts/image-segmentation-deep-learning-methods-applications/
+Mittal M., Sharma R.K and Singh V.P., “Random Automatic Detection of Clusters”, IEEE International conference on Image Information Processing, ICIIP-2011, JUIT Solan, 3-5th Nov. 2011, proceedings of IEEE Delhi section. pp 91, 2011
+Mittal M, Sharma R. K., Singh V. P. and Goyal L. M., (2016), “Modified     Single Pass Clustering Algorithm Based on Median as a Threshold       Similarity Value” Collaborative Filtering Using Data Mining and Analysis. IGI Global, pp. 24-48. 
+Despotovic I., Goossens B, and Philips W.. (2015) MRI Segmentation of the Human Brain: Challenges, Methods, and Applications, Computational and Mathematical Methods in Medicine, Vol.2015, Article ID 450341
+Mittal M, Goyal L.M, Hemanth D.J and Sethi J.K (2019), “Clustering        Approaches for High-Dimensional Databases: A Review”, WIREs Data Mining Knowl Discov, John Wiley & Sons, DOI: 10.1002/widm.1300, pp. 1-14
+Mittal M., Sharma R.K. and Singh V.P. (2019) “Performance Evaluation of Threshold-Based and k-means Clustering Algorithms using Iris Dataset" Recent Patents on Engineering, Vol 13 (2)
+Goyal L. M., Mittal M. and Sethi J. K., (2016), “Fuzzy Model Generation using Subtractive and Fuzzy C–Means Clustering”, CSI Transaction on ICT, Springer, pp 129-133
+Mittal M., Sharma R.K. and Singh V.P., (2015), “Modified Single Pass      Clustering with Variable Threshold Approach”, International Journal of Innovative Computing, Information and Control, vol. 11(1).
+Mittal M., Sharma R.K. and Singh V.P., (2014), “Validation of k-means and Threshold based clustering method”, International Journal of Advancements in Technology, vol. 5(2)
+Early Detection of Cancerhttps://www.who.int/cancer/detection/en/
+Deimling A. Gliomas. Recent Results in Cancer Research vol 171. Berlin: Springer; 2009.
+Cancer facts and figures 2015, American Cancer Society; https://www.cancer.org/content/dam/cancer-org/research/cancer-facts-and-statistics/annual-cancer-facts-and-figures/2015/cancer-facts-and-figures-2015.pdf
+Norouzi A. ,Shafry M., Rahim M., Altameem A., Saba T., Ehsani Rad A.,Rehman A. & Uddin M. (2014) Medical Image Segmentation Methods, Algorithms, and Applications, IETE Technical Review, 31:3, 199-213
+Chen L.C., Papandreou G.,Kokkinos I., Murphy K., Yuille A.L.: Semantic image segmentation with deep convolutional nets and fully connected CRFs. In: ICLR (2015) https://arxiv.org/abs/1412.7062
+Alberto G., Victor V. et al. “A survey on Deep Learning Techniques for    image and video semantic segmentation” , Applied Soft Computing, 2018
+Geiger D., and Yuille A., A common framework for image segmentation. IJCV, 6(3):227–243, 1991.
+Akkus Z., Galimzianova A., Hoogi A., et al. J Digit Imaging (2017) 30: 449, Deep Learning for Brain MRI Segmentation: State of the Art and Future Directions. https://doi.org/10.1007/s10278-017-9983-4
+Sharma S., Singh P. and Mittal M. (2017) “S-ARRAY: Highly Scalable    Parallel Sorting Algorithm”, Data Intensive Computing Applications for Big Data, IOS press Netherland
+Bhatia M, Mittal M “Big Data & Deep Data (2017):  Minding the           challenges”, Deep Learning for image processing Applications, IOS press Netherland, pp. 177-193
+Singh A., Mittal M., Kapoor N. (2018) “Data Processing Framework Using Apache and Spark Technologies in Big Data” Big Data Processing Using Spark in Cloud. Studies in Big Data, vol 43, pp 107-122. Springer
+Mittal, M., Balas, V.E., Goyal, L.M. and Kumar, R., (2018), “Big Data       Processing using Spark in Cloud”, 43, (Singapore, Springer Nature Pte Ltd.).
+Mittal M., Hemanth D.J., Balas V.E. and Kumar R. (eds), “ Big Data for    Parallel Computing” in the Advances in Parallel Computing Series, IOS   Press, 2018.
+Kaur P, Sharma M, Mittal M (2018), “Big Data and Machine Learning Based Secure Healthcare Framework”, Procedia Computer Science,       Elsevier, Volume 132, pp. 1049-1059
+Kaur B., Sharma M., Mittal M., Verma A., Goyal L. M., Hemanth D. J., (2018), “An improved salient object detection algorithm combining     background and foreground connectivity for brain image analysis”,     Computers and Electrical Engineering, vol. 71, pp.692-703
+Glasbey C.A., Univ. of Edinburgh, Edinburgh, Scotland,UK; Horgan G. W. , Univ. of Edinburgh, Edinburgh Scotland,UK,Image Analysis for the          Biological Sciences. John Wiley & Sons, Inc. New York, NY, USA ©1995 ,ISBN:0-471-93726-6
+Alqazzaz S., Sun X., Yang X.. et al. Comp. Visual Media (2019), Automated brain tumor segmentation on multi-modal MR image using SegNet. https://doi.org/10.1007/s41095-019-0139-y
+Mittal M., Goyal L.M, Sethi J.K and Hemanth D.J, (2018), “Monitoring the Impact of Economic Crisis on Crime in India Using Machine Learning”, Computational Economics, Springer, pp. 1-19.
+Shastri M, Roy S., Mittal M., (2019) “Stock Price Prediction using Artificial Neural Model : An Application of Big Data”, SIS, EAI, DOI: 10.4108/eai.19-12-2018.156085
+Bell S., Upchurch P., Snavely N., and Bala K., Material recognition in the wild with the materials in context database. arXiv:1412.0623, 2014.
+Long J., Evan S., and Trevor D.. "Fully convolutional networks for         semantic segmentation", 2015 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2015. arXiv:1605.06211v1 [cs.CV] 20 May 2016
+Liu W., Rabinovich A, Berg. A.C.,: ParseNet: looking wider to see better. In: ILCR (2016), https://www.cs.unc.edu/~wliu/papers/parsenet.pdf
+Zhao H,, Shi J., Qi X., Wang X., and Jia J., Pyramid scene parsing network. arXiv:1612.01105, 2016
+Pyramid Scene Parsing Network, CVPR2017., https://github.com/hszhao/PSPNet
+Zhou B., Zhao H., Puig X., Fidler S., Barriuso A., and Torralba A.. Semantic understanding of scenes through the ADE20K dataset. arXiv:1608.05442, 2016
+Everingham M., Gool L. J. V., Williams C.K.I., Winn J.M., and Zisserman A.. The pascal visual object classes VOC challenge. IJCV, 2010
+Cordts M. , Omran M. , Ramos S.,  Rehfeld T.,  Enzweiler M.,  Benenson R,  Franke U., Roth S., and Schiele B. The cityscapes dataset for semantic     urban scene understanding. In CVPR, 2016
+https://towardsdatascience.com/review-pspnet-winner-in-ilsvrc-2016-semantic-segmentation-scene-parsing-e089e5df177d
+Chen J., Papandreou G., Kokkinos I., Murphy K., and Yuille A.L. Deeplab: Semantic image segmentation with deep convolutional nets, atrous       convolution, and fully connected crfs. arXiv:1606.00915, 2016.
+He K., Zhang X., Ren X., and Sun J.. Spatial pyramid pooling in deep     convolutional networks for visual recognition. In ECCV, 2014 
+Chen L.C, Papanderou. G, Kokkinos. I., Murphy. K., Yuille. A., Semantic    Image Segmentation with Deep Convolutional Nets and Fully Connected CRFs, 2014, arXiv:1505.04597v1
+Ronneberger O., Fischer F., Brox F., U-Net: Convolutional Networks for Biomedical Image Segmentation; arXiv:1505.04597v1 [cs.CV] 18 May 2015
+Isin A. , Direkoglu C. , Sah M, Review of MRI-based brain tumor image segmentation using Deep Learning methods, 12th International Conference on Application of Fuzzy Systems and Soft Computing, ICAFS 2016, 29-30 August 2016, Vienna, Austria
