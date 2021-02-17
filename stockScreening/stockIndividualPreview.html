@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>StockMarket Hover Screening</title>
+
+
+    <style>
+        .background{
+            z-index: 0;
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+            justify-content: center;
+
+                
+                align-content: center;
+        }
+
+        .background video{
+
+            position: fixed;
+            object-fit: cover;
+            width: 100%;
+        }
+        .content{
+            position: relative;
+            z-index: 1;
+        }
+       .content 
+       {
+  z-index: 1; 
+  font-family: Segoe UI;
+  border: 1px solid #ddd;
+  padding: 30px;
+  box-sizing: border-box;
+  line-height: 27px;
+}
+
+.v-content-modal {
+  position: absolute;
+  box-shadow: 0 3px 20px 0 #ddd;
+  width: auto;
+  border-top: 3px solid #ddd;
+  display: none;
+  box-sizing: border-box;
+}
+
+.v-content-modal .modal-title .modal-title2 {
+  padding: 0 1.25rem;
+  font-size: .95rem;
+  letter-spacing: .03rem;
+  line-height: 38px;
+  height: 35px;
+  border-bottom: 1px solid #ddd;
+
+
+}
+
+.v-content-modal .modal-content .modal-content2 {
+    
+}
+
+.v-content-modal::before {   /*the arrow on top of hover box*/  
+  content: "";
+  position: absolute;
+  top: -22px;
+  left: 30px;
+  border: 10px solid transparent;
+  border-color: transparent transparent #ddd transparent;
+}
+ </style>
+</head>
+
+<body>
+
+  <script language="javascript" type="text/javascript">
+        function nsePage(alt)
+        {
+            window.open("https://www.google.com/search?q="+alt+" stock price nse");
+        }
+    </script>
+
+<div class = "background">
+    <video autoplay muted loop><source src="./stock.mp4" type="video/mp4"></video>
+</div>
+<div class="content">
+<img src='https://static.nseindia.com/sparklines/today/AMBIKCOEQN.jpg' alt = 'AMBIKCO' title = 'AMBIKCO' onclick='nsePage(alt)' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/AMBIKCO-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/AMBIKCO-EQ.jpg">'>
+<br><br><br>
+<img src='https://static.nseindia.com/sparklines/today/AGRITECHEQN.jpg' alt = 'AGRITECH' title = 'AGRITECH' onclick='nsePage(alt)' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/AGRITECH-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/AGRITECH-EQ.jpg">'>
+<br><br><br>
+<img src='https://static.nseindia.com/sparklines/today/AGROPHOSEQN.jpg' alt = 'AGROPHOS' title = 'AGROPHOS' onclick='nsePage(alt)' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/AGROPHOS-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/AGROPHOS-EQ.jpg">'>
+<br><br><br>
+<img src='https://static.nseindia.com/sparklines/today/AHLADAEQN.jpg' alt = 'AHLADA' title = 'AHLADA' onclick='nsePage(alt)' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/AHLADA-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/AHLADA-EQ.jpg">'>
+<br><br><br>
+<img src='https://static.nseindia.com/sparklines/today/AHLEASTEQN.jpg' alt = 'AHLEAST' title = 'AHLEAST' onclick='nsePage(alt)' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/AHLEAST-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/AHLEAST-EQ.jpg">'>
+<br><br><br>
+<img src='https://static.nseindia.com/sparklines/today/AHLUCONTEQN.jpg' alt = 'AHLUCONT' title = 'AHLUCONT' onclick='nsePage(alt)' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/AHLUCONT-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/AHLUCONT-EQ.jpg">'>
+<br><br><br>
+<img src='https://static.nseindia.com/sparklines/today/AHLWESTEQN.jpg' alt = 'AHLWEST' title = 'AHLWEST' onclick='nsePage(alt)' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/AHLWEST-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/AHLWEST-EQ.jpg">'>
+<br><br><br>
+<img src='https://static.nseindia.com/sparklines/today/AIAENGEQN.jpg' alt = 'AIAENG' title = 'AIAENG' onclick='nsePage(alt)' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/AIAENG-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/AIAENG-EQ.jpg">'>
+<br><br><br>
+<img src='https://static.nseindia.com/sparklines/today/AIRANEQN.jpg' alt = 'AIRAN' title = 'AIRAN' onclick='nsePage(alt)' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/AIRAN-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/AIRAN-EQ.jpg">'>
+<br><br><br>
+<img src='https://static.nseindia.com/sparklines/today/STEELCITYEQN.jpg' alt = 'STEELCITY' title = 'STEELCITY' onclick='nsePage(alt)' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/STEELCITY-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/STEELCITY-EQ.jpg">'>
+<br><br><br>
+<img src='https://static.nseindia.com/sparklines/today/STEELXINDEQN.jpg' alt = 'STEELXIND' title = 'STEELXIND' onclick='nsePage(alt)' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/STEELXIND-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/STEELXIND-EQ.jpg">'>
+<br><br><br>
+<img src='https://static.nseindia.com/sparklines/today/STELEQN.jpg' alt = 'STEL' title = 'STEL' onclick='nsePage(alt)' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/STEL-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/STEL-EQ.jpg">'>
+<br><br><br>
+<img src='https://static.nseindia.com/sparklines/today/STERTOOLSEQN.jpg' alt = 'STERTOOLS' title = 'STERTOOLS' onclick='nsePage(alt)' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/STERTOOLS-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/STERTOOLS-EQ.jpg">'>
+<br><br><br>
+<img src='https://static.nseindia.com/sparklines/today/STLTECHEQN.jpg' alt = 'STLTECH' title = 'STLTECH' onclick='nsePage(alt)' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/STLTECH-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/STLTECH-EQ.jpg">'>
+<br><br><br>
+<img src='https://static.nseindia.com/sparklines/today/STOVEKRAFTEQN.jpg' alt = 'STOVEKRAFT' title = 'STOVEKRAFT' onclick='nsePage(alt)' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/STOVEKRAFT-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/STOVEKRAFT-EQ.jpg">'>
+<br><br><br>
+<img src='https://static.nseindia.com/sparklines/today/SUBCAPCITYEQN.jpg' alt = 'SUBCAPCITY' title = 'SUBCAPCITY' onclick='nsePage(alt)' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/SUBCAPCITY-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/SUBCAPCITY-EQ.jpg">'>
+<br><br><br>
+<img src='https://static.nseindia.com/sparklines/today/SUBEXLTDEQN.jpg' alt = 'SUBEXLTD' title = 'SUBEXLTD' onclick='nsePage(alt)' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/SUBEXLTD-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/SUBEXLTD-EQ.jpg">'>
+<br><br><br>
+<img src='https://static.nseindia.com/sparklines/today/SUBROSEQN.jpg' alt = 'SUBROS' title = 'SUBROS' onclick='nsePage(alt)' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/SUBROS-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/SUBROS-EQ.jpg">'>
+<br><br><br>
+<img src='https://static.nseindia.com/sparklines/today/SUDARSCHEMEQN.jpg' alt = 'SUDARSCHEM' title = 'SUDARSCHEM' onclick='nsePage(alt)' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/SUDARSCHEM-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/SUDARSCHEM-EQ.jpg">'>
+<br><br><br>
+<img src='https://static.nseindia.com/sparklines/today/SUMICHEMEQN.jpg' alt = 'SUMICHEM' title = 'SUMICHEM' onclick='nsePage(alt)' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/SUMICHEM-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/SUMICHEM-EQ.jpg">'>
+<br><br><br>
+<img src='https://static.nseindia.com/sparklines/today/SUMITEQN.jpg' alt = 'SUMIT' title = 'SUMIT' onclick='nsePage(alt)' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/SUMIT-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/SUMIT-EQ.jpg">'>
+<br><br><br>
+<img src='https://static.nseindia.com/sparklines/today/SUMMITSECEQN.jpg' alt = 'SUMMITSEC' title = 'SUMMITSEC' onclick='nsePage(alt)' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/SUMMITSEC-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/SUMMITSEC-EQ.jpg">'>
+v<br><br><br>
+<img src='https://static.nseindia.com/sparklines/today/SUNCLAYLTDEQN.jpg' alt = 'SUNCLAYLTD' title = 'SUNCLAYLTD' onclick='nsePage(alt)' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/SUNCLAYLTD-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/SUNCLAYLTD-EQ.jpg">'>
+<br><br><br>
+<img src='https://static.nseindia.com/sparklines/today/SUNDARAMEQN.jpg' alt = 'SUNDARAM' title = 'SUNDARAM' onclick='nsePage(alt)' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/SUNDARAM-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/SUNDARAM-EQ.jpg">'>
+<br><br><br>
+<img src='https://static.nseindia.com/sparklines/today/AJANTPHARMEQN.jpg' alt = 'AJANTPHARM' title = 'AJANTPHARM' onclick='nsePage(alt)' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/AJANTPHARM-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/AJANTPHARM-EQ.jpg">'>
+<br><br><br>
+    <div class="v-content-modal">
+        <div class="modal-title">
+            Title of the hover comes here
+        </div>
+        <div class="modal-content">
+            description of the hover comes here
+        </div>
+        <div class="modal-title2">
+            Title of the hover comes here
+        </div>
+        <div class="modal-content2">
+            description of the hover comes here
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+$(function () {
+    let modal = $(".v-content-modal");
+    let title = $(".v-content-modal > .modal-title");
+    let content = $(".v-content-modal > .modal-content");
+    let title2 = $(".v-content-modal > .modal-title2");
+    let content2 = $(".v-content-modal > .modal-content2");
+    let btns = document.querySelectorAll("#info");
+
+    btns.forEach(btn => {
+        btn.addEventListener("mousemove", (e) => {
+            modal.css({
+                top: 'unset',
+                right: 'unset',
+                left: 'unset',
+                bottom: 'unset'
+            });
+
+            title.html(e.target.getAttribute('data-title'));
+            content.html(e.target.getAttribute('data-content'));
+            title2.html(e.target.getAttribute('data-title2'));
+            content2.html(e.target.getAttribute('data-content2'));
+
+            let pageX, pageY, winWidth, winHeight, elmWidth, elmHeight, width_limit, height_limit = '';
+            pageX = e.pageX;
+            pageY = e.pageY;
+            winWidth = $(window).width();
+            winHeight = $(window).height();
+            elmWidth = $(".v-content-modal").width();
+            elmHeight = $(".v-content-modal").height();
+            width_limit = winWidth - elmWidth;
+            height_limit = winHeight - elmHeight;
+
+            (pageX > width_limit) ? crossWidth(): normalWidth();
+            (pageY > height_limit) ? crossHeight(): normalHeight();
+
+            function crossWidth() {
+                modal.css({
+                    right: '0px'
+                });
+            }
+
+            function normalWidth() {
+                modal.css({
+                    left: pageX
+                });
+            }
+
+            function crossHeight() {
+                modal.css({
+                    top: e.pageY+ 30+'px'
+                });
+            }
+
+            function normalHeight() {
+                modal.css({
+                    top: e.pageY+ 30+'px'
+                });
+            }
+
+            // show when all customization is completed...
+            modal.show();
+        });
+
+        btn.addEventListener("mouseleave", () => {
+            modal.hide();
+        });
+    });
+
+});
+   </script>
+   
+</body>
+
+</html>
