@@ -152,7 +152,38 @@ v<br><br><br>
             description of the hover comes here
         </div>
     </div>
-
+    
+<!-- the start of the scripting for http requests -->
+<script>
+  fetch("https://query1.finance.yahoo.com/v8/finance/chart/RANASUG.NS?region=IN&lang=en-IN&includePrePost=false&interval=2m&useYfid=true&range=1d&corsDomain=thetusharpandey.github.com&.tsrc=finance", {
+  "headers": {
+    "accept": "*/*",
+    "accept-language": "en-GB,en;q=0.9,en-US;q=0.8",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-site"
+  },
+  "referrer": "https://in.finance.yahoo.com/quote/RANASUG.NS",
+  "orogin": "same-site",
+  "referrerPolicy": "no-referrer-when-downgrade",
+  "body": null,
+  "method": "GET",
+  "mode": "cors",
+  "cookie": "B=6fgepptg32j67&b=3&s=b4; GUC=AQEBAQFgMp5gO0IgoARg; A3=d=AQABBMdMMWACEBB3Xoq1mc8NnK1kfM_ZwWcFEgEBAQGeMmA7YAAAAAAA_SMAAAcIx0wxYM_ZwWc&S=AQAAAtOTY5vrEBCgTBEMQQfNKnE; A1=d=AQABBMdMMWACEBB3Xoq1mc8NnK1kfM_ZwWcFEgEBAQGeMmA7YAAAAAAA_SMAAAcIx0wxYM_ZwWc&S=AQAAAtOTY5vrEBCgTBEMQQfNKnE; A1S=d=AQABBMdMMWACEBB3Xoq1mc8NnK1kfM_ZwWcFEgEBAQGeMmA7YAAAAAAA_SMAAAcIx0wxYM_ZwWc&S=AQAAAtOTY5vrEBCgTBEMQQfNKnE&j=WORLD; APID=UPb060e440-73a5-11eb-a82a-02536618fbd0; cmp=t=1613844114&j=0; PRF=t%3DRANASUG.NS%252BRANASUG.BO%252B%255ENSEI; APIDTS=1613844409",
+  "credentials": "include"
+})
+.then(function(response){
+  return response.text();
+})
+.then(function (textItem){
+console.log(textItem);
+})
+.catch(function(error){
+      console.log("Error ho gayi --> "+error);
+})
+</script>
+<!-- the end of the scripting for http requests-->
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
 $(function () {
