@@ -1815,6 +1815,7 @@ $(function () {
     let content = $(".v-content-modal > .modal-content");
     let title2 = $(".v-content-modal > .modal-title2");
     let content2 = $(".v-content-modal > .modal-content2");
+    let priceTag = $(".v-content-modal > .price");
     let btns = document.querySelectorAll("#info");
 
     btns.forEach(btn => {
@@ -1830,6 +1831,7 @@ $(function () {
             content.html(e.target.getAttribute('data-content'));
             title2.html(e.target.getAttribute('data-title2'));
             content2.html(e.target.getAttribute('data-content2'));
+            priceTag.html("₹"+ e.target.getAttribute('price'));
 
             let pageX, pageY, winWidth, winHeight, elmWidth, elmHeight, width_limit, height_limit = '';
             pageX = e.pageX;
