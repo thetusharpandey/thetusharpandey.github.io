@@ -33,9 +33,9 @@
             position: relative;
             z-index: 2;
         }
-       .content 
+       .content
        {
-  z-index: 2; 
+  z-index: 2;
   font-family: Segoe UI;
   font-color: black;
   border: 1px solid #ddd;
@@ -76,7 +76,7 @@
 }
 
 #news{
-  z-index: 1; 
+  z-index: 1;
 
   position: fixed; 
 }
@@ -86,6 +86,15 @@
  padding-bottom: : 20px;
 position: absolute;
 margin-left: 46%;
+}
+.price{
+  font-weight: 300;
+  background-image: linear-gradient(to right, black, purple, white);
+  font-family: cursive;
+}
+
+.priceArea{
+  mix-blend-mode: difference;
 }
 
 .v-content-modal .modal-content .modal-content2 {
@@ -105,7 +114,7 @@ margin-left: 46%;
 </head>
 
 <body>
-<marquee id = 'news' scrollamount = "10"> 
+<marquee id = 'news' scrollamount = "10">
 TODO News API for usual healines staying on top always
 TODO News API for usual healines staying on top always
 TODO News API for usual healines staying on top always
@@ -1793,6 +1802,9 @@ TODO News API for usual healines staying on top always
         <div class="modal-content2">
             description of the hover comes here
         </div>
+        <div class="price">
+        <p class="priceArea"><font color = "black">he two decimal price of the stock comes here</font> </p>
+        </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -1867,7 +1879,7 @@ $(function () {
 
 });
    </script>
-   
+
 </body>
 
 </html>
