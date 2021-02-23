@@ -120,11 +120,17 @@ margin-left: 46%;
             window.open("https://www.google.com/search?q="+alt+" stock price nse");
         }
     </script>
-
+  <script language = "javascript" type = "text/javascript">
+      funtion linkMaker(alt)
+      {
+        return 'https://static.nseindia.com/sparklines/today/'+string(alt)+'.jpg';
+      }
 <div class = "background">
     <video autoplay muted loop><source src="./stock.mp4" type="video/mp4"></video>
 </div>
 <div class="content">
+  <p> alt= 'FINEORG' title = linkMaker(alt)</p>
+  <br><br><br>
   <img src='https://static.nseindia.com/sparklines/today/FINEORGEQN.jpg' price = 2380 alt = 'FINEORG' title = 'FINEORG' onclick='nsePage(alt)' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/FINEORG-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/FINEORG-EQ.jpg">'>
   <br><br><br>
   <img src='https://static.nseindia.com/sparklines/today/GLANDEQN.jpg' price = 2403 alt = 'GLAND' title = 'GLAND' onclick='nsePage(alt)' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/GLAND-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/GLAND-EQ.jpg">'>
