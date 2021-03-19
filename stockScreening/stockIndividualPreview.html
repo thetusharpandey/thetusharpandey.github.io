@@ -15,8 +15,7 @@
         }
         .background{
             z-index: 0;
-            width: 100%;
-            height: auto;
+            
             overflow: hidden;
             justify-content: center;
             background-repeat: no-repeat;
@@ -28,8 +27,7 @@
 
             position: fixed;
             object-fit: cover;
-            height: auto;
-            width: 100%;
+            
 
         }
         .content{
@@ -112,7 +110,14 @@ margin-left: 46%;
 </head>
 
 <body>
-
+<script type="text/javascript">
+  if (window.innerWidth>window.innerHeight){
+    document.getElementById("backgroundVideo").style.width = "100%";
+  }
+  if (window.innerWidth<window.innerHeight) {
+    document.getElementById("backgroundVideo").style.height = "100%";
+  }
+</script>
   <script language="javascript" type="text/javascript">
         function nsePage(alt)
         {
@@ -124,8 +129,8 @@ margin-left: 46%;
       {
         return 'https://static.nseindia.com/sparklines/today/'+string(alt)+'.jpg';
       }
-<div class = "background">
-    <video autoplay muted loop><source src="./stock.mp4" type="video/mp4"></video>
+    </script>
+<div class = "background" id = "backgroundVideo"><<video autoplay muted loop><source src="./stock.mp4" type="video/mp4"></video>
 </div>
 <div class="content">
   <p> alt= 'FINEORG' title = linkMaker(alt)</p>
