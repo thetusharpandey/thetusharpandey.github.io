@@ -1,6 +1,6 @@
 //sampleJS
 function clickedWaiting() {
-  window.open("https://thetusharpandey.github.io","_self");
+  window.open("../secondPage/index.html","_self");
 };
 $('#linkIcon').click(function(){
   $('#riquardi').css({
