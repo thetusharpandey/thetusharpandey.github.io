@@ -1,6 +1,6 @@
 //sampleJS
 function clickedWaiting() {
-  window.open("../secondPage/index.html","_self");
+  window.open("../secondPage/index2.html","_self");
 };
 $('#linkIcon').click(function(){
   $('#riquardi').css({
