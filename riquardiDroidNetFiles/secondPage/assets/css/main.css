@@ -216,7 +216,7 @@ input, select, textarea {
 			z-index: -1;
 			background-attachment: fixed;
 			background-color: #e1e6e1;
-			background-image: url("../../images/overlay2.png"), url("../secondPage/images/bg2.jpg");
+			background-image: url("../../images/overlay2.png"), url("../../images/bg2.jpg");
 			background-repeat: repeat, repeat-x;
 			background-size: 128px 128px, cover;
 		}
