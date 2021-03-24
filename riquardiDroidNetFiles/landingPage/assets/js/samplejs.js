@@ -1,4 +1,11 @@
 //sampleJS
+function dimmingPreloading(){
+  $('#wrapper').css({
+    'animation-duration':'0.7s',
+    'animation-name': 'opacityDown',
+    'opacity':'0'
+  });
+};
 function clickedWaiting() {
   window.open("../secondPage/index2.html","_self");
 };
@@ -18,5 +25,6 @@ $('#linkIcon').click(function(){
     'animation-name': 'opacityDown',
     'opacity':'0'
   });
+  setTimeout(dimmingPreloading,2300);
   setTimeout(clickedWaiting,3000);
 });
