@@ -1,0 +1,14 @@
+price renewal checklist:
+Open Jupyter, load the csv in this folder.
+copy the names 
+open drive, renew the list in stockFile
+reload the list and sort by price
+copy the name list
+paste name list in stock tags Numbers document
+paste the price list in the stock tags Numbers document.
+copy paste the daily, 30d and 365d columns in respective ages
+find and replace the highlight text duly in the fields
+check the replace in x occurences number is divisible fully by 3.
+refresh or recheck the list, and update the daily, 30d and 365d document.
+check tags, check on local Browser
+commit, push
