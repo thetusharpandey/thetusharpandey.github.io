@@ -1840,6 +1840,13 @@ $(function () {
     let btns = document.querySelectorAll("#info");
 
     btns.forEach(btn => {
+        btn.addEventListener("mouseenter", (e) => {
+            title.html(e.target.getAttribute('data-title'));
+            content.html(e.target.getAttribute('data-content'));
+            title2.html(e.target.getAttribute('data-title2'));
+            content2.html(e.target.getAttribute('data-content2'));
+            priceTag.html("₹"+ e.target.getAttribute('price'));});
+
         btn.addEventListener("mousemove", (e) => {
             modal.css({
                 top: 'unset',
@@ -1847,12 +1854,6 @@ $(function () {
                 left: 'unset',
                 bottom: 'unset'
             });
-
-            title.html(e.target.getAttribute('data-title'));
-            content.html(e.target.getAttribute('data-content'));
-            title2.html(e.target.getAttribute('data-title2'));
-            content2.html(e.target.getAttribute('data-content2'));
-            priceTag.html("₹"+ e.target.getAttribute('price'));
 
             let pageX, pageY, winWidth, winHeight, elmWidth, elmHeight, width_limit, height_limit = '';
             pageX = e.pageX;
