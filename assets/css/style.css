@@ -1,17 +1,39 @@
+#exception003
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(#04a2f4, #007de7);
+  clip-path: circle(30% at left 70%);
+}
+
+body::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(#007de7, #262d37);
+  clip-path: circle(20% at right 10%);
+}
 
 #exception006 {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  max-width: 1400px;
+  max-width: 1200px;
   flex-wrap: wrap;
-  z-index: 15;
+  z-index: 1;
 }
 
- .card {
-  position: center;
-  z-index: 15;
+#exception006 .card {
+  position: relative;
   width: 280px;
   height: 400px;
   margin: 30px;
@@ -27,7 +49,7 @@
   backdrop-filter: blur(5px);
 }
 
- .card .item {
+#exception006 .card .item {
   padding: 20px;
   text-align: center;
   transform: translateY(100px);
@@ -35,12 +57,12 @@
   transition: 0.5s;
 }
 
- .card:hover .item {
+#exception006 .card:hover .item {
   transform: translateY(0px);
   opacity: 1;
 }
 
- .card .item #exception003 {
+#exception006 .card .item #exception003 {
   position: absolute;
   top: -80px;
   right: 20px;
@@ -49,13 +71,13 @@
   color: #ffffff0d;
 }
 
- .card .item #exception004 {
+#exception006 .card .item #exception004 {
   font-size: 1.8em;
   color: #fff;
-  z-index: 15;
+  z-index: 1;
 }
 
- .card .item #exception005 {
+#exception006 .card .item p {
   font-size: 1em;
   color: #fff;
   font-weight: 300;
