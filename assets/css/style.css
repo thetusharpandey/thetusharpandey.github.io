@@ -6,12 +6,12 @@
   align-items: center;
   max-width: 1400px;
   flex-wrap: wrap;
-  z-index: 1;
+  z-index: 15;
 }
 
  .card {
   position: center;
-  z-index: 1;
+  z-index: 15;
   width: 280px;
   height: 400px;
   margin: 30px;
@@ -52,7 +52,7 @@
  .card .item #exception004 {
   font-size: 1.8em;
   color: #fff;
-  z-index: 1;
+  z-index: 15;
 }
 
  .card .item #exception005 {
