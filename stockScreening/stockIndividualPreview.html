@@ -225,10 +225,10 @@ $(function () {
         btn.addEventListener("mouseenter", (e) => {
             const http = new XMLHttpRequest();
             const scripName = e.target.getAttribute('title');
-            const urlBase = "http://37c3d845cda1.ngrok.io";
+            const urlBase = "http://3b1bc3efedad.ngrok.io";
             const url = urlBase+"/getPrice/"+scripName;
             console.log(url);
-            http.open("GET", url);
+            http.open("GET", url, false);
             http.send();
             title.html(e.target.getAttribute('data-title'));
             content.html(e.target.getAttribute('data-content'));
