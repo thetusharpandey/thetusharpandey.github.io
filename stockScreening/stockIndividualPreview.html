@@ -225,8 +225,8 @@ $(function () {
         btn.addEventListener("mouseenter", (e) => {
             const http = new XMLHttpRequest();
             const scripName = e.target.getAttribute('title');
-            const urlBase = "http://ecb06c9aaf54.ngrok.io/";
-            const url = urlBase+"getPrice/"+scripName;
+            const urlBase = "http://5c9f4f0b6c1d.ngrok.io";
+            const url = urlBase+"/getPrice/"+scripName;
             console.log(url);
             http.open("GET", url);
             http.send();
