@@ -15,7 +15,7 @@
         }
         .background{
             z-index: 0;
-            
+
             overflow: hidden;
             justify-content: center;
             background-repeat: no-repeat;
@@ -27,7 +27,7 @@
 
             position: fixed;
             object-fit: cover;
-            
+
 
         }
         .content{
@@ -88,7 +88,7 @@ margin-left: 46%;
 }
 .price{
   font-weight: 300;
-  background-image: linear-gradient(to right, black, purple, white);
+  background-image: linear-gradient(to right, blue, purple, white);
   font-family: cursive;
 }
 
@@ -130,12 +130,12 @@ TODO News API for usual headlines staying on top always
         }
     </script>
   <script language = "javascript" type = "text/javascript">
-      funtion linkMaker(alt)
+      function linkMaker(alt)
       {
         return 'https://static.nseindia.com/sparklines/today/'+string(alt)+'.jpg';
       }
     </script>
-<div class = "background" id = "backgroundVideo"><<video autoplay muted loop><source src="./stock2.mp4" type="video/mp4"></video>
+<div class = "background" ><video id = "backgroundVideo" autoplay muted loop><source src="./stock2.mp4" type="video/mp4"></video>
 </div>
 <div class="content">
   <p> alt= 'FINEORG' title = linkMaker(alt)</p>
@@ -204,8 +204,9 @@ TODO News API for usual headlines staying on top always
         <div class="modal-content2">
             description of the hover comes here
         </div>
+
         <div class="price">
-          <p class="priceArea"><font color = "black">he two decimal price of the stock comes here</font> </p>
+          ₹00.00<!--<p class="priceArea"><font color = "black">The two decimal price of the stock comes here</font></p>-->
         </div>
     </div>
 
@@ -221,6 +222,22 @@ $(function () {
     let btns = document.querySelectorAll("#info");
 
     btns.forEach(btn => {
+        btn.addEventListener("mouseenter", (e) => {
+            const http = new XMLHttpRequest();
+            const scripName = e.target.getAttribute('title');
+            const urlBase = "http://5b64930ec5f5.ngrok.io/";
+            const url = urlBase+"getPrice/"+scripName;
+            console.log(url);
+            http.open("GET", url);
+            http.send();
+            title.html(e.target.getAttribute('data-title'));
+            content.html(e.target.getAttribute('data-content'));
+            title2.html(e.target.getAttribute('data-title2'));
+            content2.html(e.target.getAttribute('data-content2'));
+            //priceTag.html("₹"+ e.target.getAttribute('price'));
+            setTimeout(() => { priceTag.html("₹"+ http.responseText); }, 2000);
+          });
+
         btn.addEventListener("mousemove", (e) => {
             modal.css({
                 top: 'unset',
@@ -229,11 +246,6 @@ $(function () {
                 bottom: 'unset'
             });
 
-            title.html(e.target.getAttribute('data-title'));
-            content.html(e.target.getAttribute('data-content'));
-            title2.html(e.target.getAttribute('data-title2'));
-            content2.html(e.target.getAttribute('data-content2'));
-            priceTag.html("₹"+ e.target.getAttribute('price'));
 
             let pageX, pageY, winWidth, winHeight, elmWidth, elmHeight, width_limit, height_limit = '';
             pageX = e.pageX;

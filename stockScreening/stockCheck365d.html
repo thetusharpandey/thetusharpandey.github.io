@@ -1872,7 +1872,7 @@ TODO News API for usual headlines staying on top always
             description of the hover comes here
         </div>
         <div class="price">
-        <p class="priceArea"><font color = "black">he two decimal price of the stock comes here</font> </p>
+        <p class="priceArea"><font color = "black">The two decimal price of the stock comes here</font> </p>
         </div>
     </div>
 
@@ -1888,6 +1888,13 @@ $(function () {
     let btns = document.querySelectorAll("#info");
 
     btns.forEach(btn => {
+        btn.addEventListener("mouseenter", (e) => {
+            title.html(e.target.getAttribute('data-title'));
+            content.html(e.target.getAttribute('data-content'));
+            title2.html(e.target.getAttribute('data-title2'));
+            content2.html(e.target.getAttribute('data-content2'));
+            priceTag.html("₹"+ e.target.getAttribute('price'));});
+
         btn.addEventListener("mousemove", (e) => {
             modal.css({
                 top: 'unset',
@@ -1896,11 +1903,6 @@ $(function () {
                 bottom: 'unset'
             });
 
-            title.html(e.target.getAttribute('data-title'));
-            content.html(e.target.getAttribute('data-content'));
-            title2.html(e.target.getAttribute('data-title2'));
-            content2.html(e.target.getAttribute('data-content2'));
-            priceTag.html("₹"+ e.target.getAttribute('price'));
 
             let pageX, pageY, winWidth, winHeight, elmWidth, elmHeight, width_limit, height_limit = '';
             pageX = e.pageX;
