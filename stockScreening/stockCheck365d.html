@@ -15,8 +15,7 @@
         }
         .background{
             z-index: 0;
-            width: 100%;
-            height: auto;
+
             overflow: hidden;
             justify-content: center;
             background-repeat: no-repeat;
@@ -28,8 +27,7 @@
 
             position: fixed;
             object-fit: cover;
-            height: auto;
-            width: 100%
+
 
         }
         .content{
@@ -39,7 +37,6 @@
        .content
        {
   font-family: Segoe UI;
-  font-color: black;
   border: 1px solid #ddd;
   padding: 30px;
   box-sizing: border-box;
@@ -83,7 +80,6 @@
   position: fixed; 
 }
 
-
 #logo{
  z-index: 1;
  padding-bottom: : 20px;
@@ -92,14 +88,13 @@ margin-left: 46%;
 }
 .price{
   font-weight: 300;
-  background-image: linear-gradient(to right, black, purple, white);
+  background-image: linear-gradient(to right, blue, purple, white);
   font-family: cursive;
 }
 
 .priceArea{
   mix-blend-mode: difference;
 }
-
 .v-content-modal .modal-content .modal-content2 {
 }
 
@@ -115,7 +110,7 @@ margin-left: 46%;
 </head>
 
 <body>
-  <script type="text/javascript">
+<script type="text/javascript">
   if (window.innerWidth>window.innerHeight){
     document.getElementById("backgroundVideo").style.width = "100%";
   }
@@ -134,9 +129,14 @@ TODO News API for usual headlines staying on top always
             window.open("https://www.google.com/search?q="+alt+" stock price nse");
         }
     </script>
-
-<div class = "background">
-    <video autoplay muted loop ><source src="./stock1.mp4" type="video/mp4"></video>
+  <script language = "javascript" type = "text/javascript">
+      function linkMaker(alt)
+      {
+        return 'https://static.nseindia.com/sparklines/today/'+string(alt)+'.jpg';
+      }
+    </script>
+<div class = "background" >
+  <video id = "backgroundVideo" autoplay muted loop><source src="./stock2.mp4" type="video/mp4"></video>
 </div>
 <div class="content">
 <img src='https://static.nseindia.com/sparklines/365d/VISESHINFO-EQ.jpg' price = 0.1 alt = 'VISESHINFO' title ='VISESHINFO' onclick='nsePage(alt); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='Today' data-content='<img src="https://static.nseindia.com/sparklines/today/VISESHINFOEQN.jpg">' data-title2='30d' data-content2='<img src ="https://static.nseindia.com/sparklines/30d/VISESHINFO-EQ.jpg">'>
@@ -1857,9 +1857,9 @@ TODO News API for usual headlines staying on top always
 <img src='https://static.nseindia.com/sparklines/365d/SUBEXLTD-EQ.jpg' price = #N/A alt = 'SUBEXLTD' title ='SUBEXLTD' onclick='nsePage(alt); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='Today' data-content='<img src=https://static.nseindia.com/sparklines/today/SUBEXLTDEQN.jpg>' data-title2='30d' data-content2='<img src =https://static.nseindia.com/sparklines/30d/SUBEXLTD-EQ.jpg>'>
 </div>
 <br>
-<a href="./stockCheck.html"><img src = 'https://thetusharpandey.github.io/riquardi.png' title = 'RiquardiLogo, Copyright 2014-2021, All Rights Reserved, ClickForNextView' height = '50px' width = '50px' padding = '30px' id = 'logo'></a>
-<div class="v-content-modal">
-       <div class="modal-title">
+<a href="./stockCheck30d.html"><img src = 'https://thetusharpandey.github.io/riquardi.png' title = 'RiquardiLogo, Copyright 2014-2021, All Rights Reserved, ClickForNextView' height = '50px' width = '50px' padding = '30px' id = 'logo'></a>
+    <div class="v-content-modal">
+        <div class="modal-title">
             Title of the hover comes here
         </div>
         <div class="modal-content">
@@ -1871,8 +1871,9 @@ TODO News API for usual headlines staying on top always
         <div class="modal-content2">
             description of the hover comes here
         </div>
+
         <div class="price">
-        <p class="priceArea"><font color = "black">The two decimal price of the stock comes here</font> </p>
+          ₹00.00<!--<p class="priceArea"><font color = "black">The two decimal price of the stock comes here</font></p>-->
         </div>
     </div>
 
@@ -1886,14 +1887,25 @@ $(function () {
     let content2 = $(".v-content-modal > .modal-content2");
     let priceTag = $(".v-content-modal > .price");
     let btns = document.querySelectorAll("#info");
-
+    var timer;
     btns.forEach(btn => {
         btn.addEventListener("mouseenter", (e) => {
+            const http = new XMLHttpRequest();
+            const scripName = e.target.getAttribute('title');
+            const urlBase = "http://aeff3dd8e3db.ngrok.io/";
+            const url = urlBase+"getPrice/"+scripName;
+            console.log(url);
+            http.open("GET", url, false);
             title.html(e.target.getAttribute('data-title'));
             content.html(e.target.getAttribute('data-content'));
             title2.html(e.target.getAttribute('data-title2'));
             content2.html(e.target.getAttribute('data-content2'));
-            priceTag.html("₹"+ e.target.getAttribute('price'));});
+            priceTag.html("~₹"+ e.target.getAttribute('price')+"~");
+            timer = setTimeout(() => {while(!http.send())
+            {
+              priceTag.html("₹"+ http.responseText);
+            }}, 2000);
+          });
 
         btn.addEventListener("mousemove", (e) => {
             modal.css({
@@ -1946,17 +1958,19 @@ $(function () {
         });
 
         btn.addEventListener("mouseleave", () => {
+            clearTimeout(timer);
             modal.hide();
         });
     });
 
 });
    </script>
-   <script>
-   window.onbeforeunload = function() {
-     return "Data will be lost if you leave the page, are you sure?";
-   };
-   </script>
+<script>
+window.onbeforeunload = function() {
+  return "Data will be lost if you leave the page, are you sure?";
+};
+</script>
+
 </body>
 
 </html>
