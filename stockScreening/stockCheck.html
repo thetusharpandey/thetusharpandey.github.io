@@ -142,6 +142,8 @@ TODO News API for usual headlines staying on top always
 onclick='nsePage(alt); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"'
 -->
 <div class="content">
+  <div id = "declaration">hello</div>
+
 <img src='https://static.nseindia.com/sparklines/today/VISESHINFOEQN.jpg' price = 0.1 alt = 'VISESHINFO' title = 'VISESHINFO' onclick='nsePage(alt); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/VISESHINFO-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/VISESHINFO-EQ.jpg">'>
 <img src='https://static.nseindia.com/sparklines/today/BLUECHIPEQN.jpg' price = 0.15 alt = 'BLUECHIP' title = 'BLUECHIP' onclick='nsePage(alt); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/BLUECHIP-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/BLUECHIP-EQ.jpg">'>
 <img src='https://static.nseindia.com/sparklines/today/KSERASERAEQN.jpg' price = 0.15 alt = 'KSERASERA' title = 'KSERASERA' onclick='nsePage(alt); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/KSERASERA-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/KSERASERA-EQ.jpg">'>
@@ -1890,14 +1892,17 @@ $(function () {
     let content2 = $(".v-content-modal > .modal-content2");
     let priceTag = $(".v-content-modal > .price");
     let btns = document.querySelectorAll("#info");
-    var timer;
-    btns.forEach(btn => {
-        btn.addEventListener("mouseenter", (e) => {
-            const http = new XMLHttpRequest();
-            const scripName = e.target.getAttribute('title');
-            const urlBase = "http://aeff3dd8e3db.ngrok.io/";
-            const url = urlBase+"getPrice/"+scripName;
-            console.log(url);
+    var timer;  var urlBase = "http://aeff3dd8e3db.ngrok.io";
+      var urlName = prompt("Please enter your domain", "<domain goes here>");
+      if (urlName!= null) {
+        urlBase = urlName;
+      }
+      btns.forEach(btn => {
+          btn.addEventListener("mouseenter", (e) => {
+              const http = new XMLHttpRequest();
+              const scripName = e.target.getAttribute('title');
+              const url = urlBase+"/getPrice/"+scripName;
+              console.log(url);
             http.open("GET", url, false);
             title.html(e.target.getAttribute('data-title'));
             content.html(e.target.getAttribute('data-content'));

@@ -140,6 +140,7 @@ TODO News API for usual headlines staying on top always
 </div>
 <div class="content">
   <p> alt= 'FINEORG' title = linkMaker(alt)</p>
+<div id = "declaration">hello</div>
   <br><br><br>
   <img src='https://static.nseindia.com/sparklines/today/JIKINDEQN.jpg' price = 0.55 alt = 'JIKIND' title = 'JIKIND' onclick='nsePage(alt); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/JIKIND-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/JIKIND-EQ.jpg">'>
   <img src='https://static.nseindia.com/sparklines/today/NITINFIREEQN.jpg' price = 0.55 alt = 'NITINFIRE' title = 'NITINFIRE' onclick='nsePage(alt); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/NITINFIRE-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/NITINFIRE-EQ.jpg">'>
@@ -252,12 +253,16 @@ $(function () {
     let priceTag = $(".v-content-modal > .price");
     let btns = document.querySelectorAll("#info");
     var timer;
+    var urlBase = "http://aeff3dd8e3db.ngrok.io";
+    var urlName = prompt("Please enter your domain", "<domain goes here>");
+    if (urlName!= null) {
+      urlBase = urlName;
+    }
     btns.forEach(btn => {
         btn.addEventListener("mouseenter", (e) => {
             const http = new XMLHttpRequest();
             const scripName = e.target.getAttribute('title');
-            const urlBase = "http://aeff3dd8e3db.ngrok.io/";
-            const url = urlBase+"getPrice/"+scripName;
+            const url = urlBase+"/getPrice/"+scripName;
             console.log(url);
             http.open("GET", url, false);
             title.html(e.target.getAttribute('data-title'));
@@ -334,7 +339,6 @@ window.onbeforeunload = function() {
   return "Data will be lost if you leave the page, are you sure?";
 };
 </script>
-
 </body>
 
 </html>
