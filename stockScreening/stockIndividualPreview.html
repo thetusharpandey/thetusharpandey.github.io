@@ -363,6 +363,12 @@ margin-left: 46%;
         <div class="price">
           ₹00.00<!--<p class="priceArea"><font color = "black">The two decimal price of the stock comes here</font></p>-->
         </div>
+        <div class="sector">
+          ₹00.00<!--<p class="priceArea"><font color = "black">The two decimal price of the stock comes here</font></p>-->
+        </div>
+        <div class="industry">
+          ₹00.00<!--<p class="priceArea"><font color = "black">The two decimal price of the stock comes here</font></p>-->
+        </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -374,6 +380,8 @@ $(function () {
     let title2 = $(".v-content-modal > .modal-title2");
     let content2 = $(".v-content-modal > .modal-content2");
     let priceTag = $(".v-content-modal > .price");
+    let sectorTag = $(".v-content-modal > .sector");
+    let industryTag = $(".v-content-modal > .industry");
     let btns = document.querySelectorAll("#info");
     var timer;
     var urlBase = "http://aeff3dd8e3db.ngrok.io";
@@ -393,9 +401,14 @@ $(function () {
             title2.html(e.target.getAttribute('data-title2'));
             content2.html(e.target.getAttribute('data-content2'));
             priceTag.html("~₹"+ e.target.getAttribute('price')+"~");
+            sectorTag.html("Fake Credentials");
+            industryTag.html("Shadow Company");
             timer = setTimeout(() => {while(!http.send())
             {
-              priceTag.html("₹"+ http.responseText);
+              var obj1 = JSON.parse(http.responseText);
+              priceTag.html("₹"+ obj1[0]);
+              sectorTag.html(obj[1]);
+              industryTag.html(obj[2]);
             }}, 2000);
           });
 
