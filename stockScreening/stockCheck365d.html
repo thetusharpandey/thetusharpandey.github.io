@@ -140,10 +140,21 @@ position: absolute;
 margin-left: 46%;
 }
 .price{
-  font-weight: 300;
+  font-weight: bolder;
   background-image: linear-gradient(to right, blue, purple, white);
   font-family: cursive;
 }
+.name{
+  background-image: linear-gradient(to right, lightcoral, khaki);
+  font-family:monospace;
+}
+
+.circuit{
+  font-weight: bold;
+  background-image: linear-gradient(to left, blue, purple, lightseagreen);
+  font-family:monospace;
+}
+
 
 .priceArea{
   mix-blend-mode: difference;
@@ -1963,59 +1974,75 @@ margin-left: 46%;
 </div>
 <br>
 <a href="./stockCheck30d.html"><img src = 'https://thetusharpandey.github.io/riquardi.png' title = 'RiquardiLogo, Copyright 2014-2021, All Rights Reserved, ClickForNextView' height = '50px' width = '50px' padding = '30px' id = 'logo'></a>
-    <div class="v-content-modal">
-        <div class="modal-title">
-            Title of the hover comes here
-        </div>
-        <div class="modal-content">
-            description of the hover comes here
-        </div>
-        <div class="modal-title2">
-            Title of the hover comes here
-        </div>
-        <div class="modal-content2">
-            description of the hover comes here
-        </div>
-
-        <div class="price">
-          ₹00.00<!--<p class="priceArea"><font color = "black">The two decimal price of the stock comes here</font></p>-->
-        </div>
+<div class="v-content-modal">
+    <div class="modal-title">
+        Title of the hover comes here
+    </div>
+    <div class="modal-content">
+        description of the hover comes here
+    </div>
+    <div class="modal-title2">
+        Title of the hover comes here
+    </div>
+    <div class="modal-content2">
+        description of the hover comes here
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script>
-$(function () {
-    let modal = $(".v-content-modal");
-    let title = $(".v-content-modal > .modal-title");
-    let content = $(".v-content-modal > .modal-content");
-    let title2 = $(".v-content-modal > .modal-title2");
-    let content2 = $(".v-content-modal > .modal-content2");
-    let priceTag = $(".v-content-modal > .price");
-    let btns = document.querySelectorAll("#info");
-    var timer;  var urlBase = "https://thetusharpandey.github.io";
-      var urlName = prompt("Please enter your domain", "<domain goes here>");
-      if (urlName!= null) {
-        urlBase = urlName;
-      }
-      btns.forEach(btn => {
-          btn.addEventListener("mouseenter", (e) => {
-              const http = new XMLHttpRequest();
-              const scripName = e.target.getAttribute('title');
-              const url = urlBase+"/getPrice/"+scripName;
-              console.log(url);
-            http.open("GET", url, false);
-            title.html(e.target.getAttribute('data-title'));
-            content.html(e.target.getAttribute('data-content'));
-            title2.html(e.target.getAttribute('data-title2'));
-            content2.html(e.target.getAttribute('data-content2'));
-            priceTag.html("~₹"+ e.target.getAttribute('price')+"~");
-            timer = setTimeout(() => {while(!http.send())
-            {
-              priceTag.html("₹"+ http.responseText);
-            }}, 2000);
-          });
+    <div class="price">
+      ₹00.00<!--<p class="priceArea"><font color = "black">The two decimal price of the stock comes here</font></p>-->
+    </div>
+    <div class="name">
+      Name Not Available<!--<p class="priceArea"><font color = "black">The two decimal price of the stock comes here</font></p>-->
+    </div>
+    <div class="circuit">
+      Circuit Not Available<!--<p class="priceArea"><font color = "black">The two decimal price of the stock comes here</font></p>-->
+    </div>
+</div>
 
-        btn.addEventListener("mousemove", (e) => {
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+$(function () {
+let modal = $(".v-content-modal");
+let title = $(".v-content-modal > .modal-title");
+let content = $(".v-content-modal > .modal-content");
+let title2 = $(".v-content-modal > .modal-title2");
+let content2 = $(".v-content-modal > .modal-content2");
+let priceTag = $(".v-content-modal > .price");
+let nameTag = $(".v-content-modal > .name");
+let circuitSize = $(".v-content-modal > .circuit");
+let btns = document.querySelectorAll("#info");
+var timer;
+var urlBase = "http://thetusharpandey.github.io";
+var urlName = prompt("Please enter your domain", "<domain goes here>");
+if (urlName!= null) {
+  urlBase = urlName;
+}
+btns.forEach(btn => {
+    btn.addEventListener("mouseenter", (e) => {
+        const http = new XMLHttpRequest();
+        const scripName = e.target.getAttribute('title');
+        const url = urlBase+"/getPrice/"+scripName;
+        console.log(url);
+        http.open("GET", url, false);
+        title.html(e.target.getAttribute('data-title'));
+        content.html(e.target.getAttribute('data-content'));
+        title2.html(e.target.getAttribute('data-title2'));
+        content2.html(e.target.getAttribute('data-content2'));
+        nameTag.html("Name Not Available");
+        priceTag.html("~₹"+ e.target.getAttribute('price')+"~");
+        circuitSize.html("Circuit Not Available");
+        timer = setTimeout(() => {while(!http.send())
+        {
+          var obj1 = JSON.parse(http.responseText);
+          //<br> tag working in the text, since it is on HTML part, and ]n not working cuz not javascript, BUT {interestingly} "\n" was in there, but HTML did not render it even though it should've been taking it like text!!! STRANGE
+          //can combine everything in the price tag part to be containd in the gradient
+          priceTag.html("₹"+ obj1[0]);
+          nameTag.html("<marquee>" + obj1[1] + "</marquee>");
+          circuitSize.html("Circuit: " + obj1[2] + "%");
+        }}, 2000);
+      });
+
+    btn.addEventListener("mousemove", (e) => {
             modal.css({
                 top: 'unset',
                 right: 'unset',
