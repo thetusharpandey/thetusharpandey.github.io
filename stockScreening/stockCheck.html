@@ -179,7 +179,9 @@ margin-left: 46%;
         function moneyControlPage(title)
         {
           //handles all the chart pages that I might find in the future, MoneyControl stands for Moneycontrol TYPE pages
-          moneyControlPageWindow = window.open("https://www.moneycontrol.com/mc/stock/chart?exchangeId="+title);
+          //moneyControlPageWindow = window.open("https://www.moneycontrol.com/mc/stock/chart?exchangeId="+title);
+          //Deactivating this, coz trading view looks cool doe,
+          moneyControlPageWindow = window.open("https://www.tradingview.com/chart/?symbol="+title);
         }
         function nsePage(title)
         {
