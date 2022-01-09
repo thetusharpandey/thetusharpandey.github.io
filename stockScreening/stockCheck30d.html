@@ -184,15 +184,25 @@ margin-left: 46%;
         }
         function nsePage(title)
         {
-          //handles all google finance type pages, having stats and numbers, just being clear of any wierd setting that I might see :)
+          //handles all google finance TYPE pages, having stats and numbers, just being clear of any wierd setting that I might see :)
           nsePageWindow = window.open("https://www.google.com/search?q="+title+" stock price nse");
           screenerInWindow = window.open("https://www.screener.in/company/"+title);
         }
         function closer()
         {
-          nsePageWindow.close();
-          moneyControlPageWindow.close();
-          screenerInWindow.close();
+          //safari gave error for variable not defined (window variable)
+          if(typeof nsePageWindow !== 'undefined')
+          {
+            nsePageWindow.close();
+          }
+          if(typeof moneyControlPageWindow !== 'undefined')
+          {
+            moneyControlPageWindow.close();
+          }
+          if(typeof screenerInWindow !== 'undefined')
+          {
+            screenerInWindow.close();
+          }
         }
     </script>
   <script language = "javascript" type = "text/javascript">
