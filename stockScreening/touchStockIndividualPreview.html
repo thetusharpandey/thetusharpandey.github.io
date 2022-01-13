@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script data-ad-client="ca-pub-2139663700971762" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>StockMarket Hover Screening</title>
+
+
+    <style>
+    /* BG */
+
+      #bg {
+        -moz-transform: scale(1.0);
+        -webkit-transform: scale(1.0);
+        -ms-transform: scale(1.0);
+        transform: scale(1.0);
+        -webkit-backface-visibility: hidden;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        z-index: -1;
+      }
+
+        #bg:before, #bg:after {
+          content: '';
+          display: block;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+        }
+
+        #bg:before {
+          -moz-transition: background-color 2.5s ease-in-out;
+          -webkit-transition: background-color 2.5s ease-in-out;
+          -ms-transition: background-color 2.5s ease-in-out;
+          transition: background-color 2.5s ease-in-out;
+          -moz-transition-delay: 0.75s;
+          -webkit-transition-delay: 0.75s;
+          -ms-transition-delay: 0.75s;
+          transition-delay: 0.75s;
+          background-image: linear-gradient(to top, rgba(19, 21, 25, 0.5), rgba(19, 21, 25, 0.5)), url("./overlay.png");
+          background-size: auto,
+     256px 256px;
+          background-position: center,
+     center;
+          background-repeat: no-repeat,
+     repeat;
+          z-index: -1;
+        }
+
+        #bg:after {
+          -moz-transform: scale(1.125);
+          -webkit-transform: scale(1.125);
+          -ms-transform: scale(1.125);
+          transform: scale(1.125);
+          -moz-transition: -moz-transform 0.325s ease-in-out, -moz-filter 0.325s ease-in-out;
+          -webkit-transition: -webkit-transform 0.325s ease-in-out, -webkit-filter 0.325s ease-in-out;
+          -ms-transition: -ms-transform 0.325s ease-in-out, -ms-filter 0.325s ease-in-out;
+          transition: transform 0.325s ease-in-out, filter 0.325s ease-in-out;
+          background-image: url("./bg.jpg");
+          background-position: center;
+
+          background-size: cover;
+          background-repeat: no-repeat;
+          z-index: -1;
+        }
+
+        body.is-article-visible #bg:after {
+          -moz-transform: scale(1.0825);
+          -webkit-transform: scale(1.0825);
+          -ms-transform: scale(1.0825);
+          transform: scale(1.0825);
+          -moz-filter: blur(0.2rem);
+          -webkit-filter: blur(0.2rem);
+          -ms-filter: blur(0.2rem);
+          filter: blur(0.2rem);
+        }
+
+        body.is-preload #bg:before {
+          background-color: #000000;
+        }
+
+        .content{
+            position: relative;
+            z-index: 1;
+        }
+       .content
+       {
+  font-family: Segoe UI;
+  border: 1px solid #ddd;
+  padding: 30px;
+  box-sizing: border-box;
+  line-height: 27px;
+}
+
+.v-content-modal {
+  z-index: 2;
+  position: absolute;
+  box-shadow: 0 0 50px 20px  #ff66b3;
+  width: auto;
+  border-top: 3px solid #ddd;
+  display: none;
+  box-sizing: border-box;
+}
+
+.v-content-modal .modal-title .modal-title2 {
+  padding-top: 0 1.25rem;
+  font-size: .95rem;
+  letter-spacing: .03rem;
+  line-height: 38px;
+  height: 35px;
+  border-bottom: 1px solid #ddd;
+
+
+}
+#info{
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 5px;
+  border-color:  #8000ff ;
+  margin: 12px;
+  padding: 15px;
+  width: 90px !important;
+  height: 40px !important;
+}
+
+
+
+#logo{
+ z-index: 1;
+ padding-bottom: : 20px;
+position: absolute;
+margin-left: 46%;
+}
+.price{
+  font-weight: bolder;
+  background-image: linear-gradient(to right, blue, purple, white);
+  font-family: cursive;
+}
+.name{
+  background-image: linear-gradient(to right, lightcoral, khaki);
+  font-family:monospace;
+}
+
+.circuit{
+  font-weight: bold;
+  background-image: linear-gradient(to left, blue, purple, lightseagreen);
+  font-family:monospace;
+}
+
+
+.priceArea{
+  mix-blend-mode: difference;
+}
+.v-content-modal .modal-content .modal-content2 {
+}
+
+.v-content-modal::before {
+  content: "";
+  position: absolute;
+  top: -23px;
+  left: 30px;
+  border: 10px solid transparent;
+  border-color: transparent transparent #ddd transparent;
+}
+ </style>
+</head>
+
+<body>
+
+  <script language="javascript" type="text/javascript">
+        function moneyControlPage(title)
+        {
+          //handles all the chart pages that I might find in the future, MoneyControl stands for Moneycontrol TYPE pages
+          //moneyControlPageWindow = window.open("https://www.moneycontrol.com/mc/stock/chart?exchangeId="+title);
+          //Deactivating this, coz trading view looks cool doe,
+          moneyControlPageWindow = window.open("https://www.tradingview.com/chart/?symbol="+title);
+        }
+        function nsePage(title)
+        {
+          //handles all google finance TYPE pages, having stats and numbers, just being clear of any wierd setting that I might see :)
+          nsePageWindow = window.open("https://www.google.com/search?q="+title+" stock price nse");
+          screenerInWindow = window.open("https://www.screener.in/company/"+title);
+        }
+        function closer()
+        {
+          //safari gave error for variable not defined (window variable)
+          if(typeof nsePageWindow !== 'undefined')
+          {
+            nsePageWindow.close();
+          }
+          if(typeof moneyControlPageWindow !== 'undefined')
+          {
+            moneyControlPageWindow.close();
+          }
+          if(typeof screenerInWindow !== 'undefined')
+          {
+            screenerInWindow.close();
+          }
+        }
+    </script>
+  <script language = "javascript" type = "text/javascript">
+      function linkMaker(alt)
+      {
+        return 'https://static.nseindia.com/sparklines/today/'+string(alt)+'.jpg';
+      }
+    </script>
+
+<div class="content">
+  <br><br><br>
+<br><br><br>
+  <br><br><br>
+  <img src='https://static.nseindia.com/sparklines/today/BLUECHIPEQN.jpg' price = 0.35 alt = 'BLUECHIP' title = 'BLUECHIP' onmouseover='closer()' onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/BLUECHIP-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/BLUECHIP-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/KGLEQN.jpg' price = 0.25 alt = 'KGL' title = 'KGL' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/KGL-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/KGL-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/RAJRAYONEQN.jpg' price = 0.25 alt = 'RAJRAYON' title = 'RAJRAYON' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/RAJRAYON-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/RAJRAYON-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/SPYLEQN.jpg' price = 0.35 alt = 'SPYL' title = 'SPYL' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/SPYL-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/SPYL-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/JIKINDEQN.jpg' price = 0.5 alt = 'JIKIND' title = 'JIKIND' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/JIKIND-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/JIKIND-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/GAYAHWSEQN.jpg' price = 0.6 alt = 'GAYAHWS' title = 'GAYAHWS' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/GAYAHWS-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/GAYAHWS-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/HPLEQN.jpg' price = 70 alt = 'HPL' title = 'HPL' onmouseover='closer()' onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/HPL-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/HPL-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/ENGINERSINEQN.jpg' price = 70 alt = 'ENGINERSIN' title = 'ENGINERSIN' onmouseover='closer()' onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/ENGINERSIN-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/ENGINERSIN-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/FSCEQN.jpg' price = 70 alt = 'FSC' title = 'FSC' onmouseover='closer()' onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/FSC-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/FSC-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/NCCEQN.jpg' price = 70.25 alt = 'NCC' title = 'NCC' onmouseover='closer()' onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/NCC-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/NCC-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/UMANGDAIRYEQN.jpg' price = 70.8 alt = 'UMANGDAIRY' title = 'UMANGDAIRY' onmouseover='closer()' onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/UMANGDAIRY-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/UMANGDAIRY-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/ASIANHOTNREQN.jpg' price = 70.8 alt = 'ASIANHOTNR' title = 'ASIANHOTNR' onmouseover='closer()' onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/ASIANHOTNR-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/ASIANHOTNR-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/SHREDIGCEMEQN.jpg' price = 71 alt = 'SHREDIGCEM' title = 'SHREDIGCEM' onmouseover='closer()' onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/SHREDIGCEM-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/SHREDIGCEM-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/VIJIFINEQN.jpg' price = 0.6 alt = 'VIJIFIN' title = 'VIJIFIN' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/VIJIFIN-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/VIJIFIN-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/CASTEXTECHEQN.jpg' price = 0.65 alt = 'CASTEXTECH' title = 'CASTEXTECH' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/CASTEXTECH-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/CASTEXTECH-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/FCSSOFTEQN.jpg' price = 0.65 alt = 'FCSSOFT' title = 'FCSSOFT' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/FCSSOFT-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/FCSSOFT-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/NITINFIREEQN.jpg' price = 0.65 alt = 'NITINFIRE' title = 'NITINFIRE' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/NITINFIRE-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/NITINFIRE-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/SANWARIAEQN.jpg' price = 0.65 alt = 'SANWARIA' title = 'SANWARIA' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/SANWARIA-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/SANWARIA-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/DNAMEDIAEQN.jpg' price = 0.7 alt = 'DNAMEDIA' title = 'DNAMEDIA' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/DNAMEDIA-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/DNAMEDIA-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/GAMMNINFRAEQN.jpg' price = 0.7 alt = 'GAMMNINFRA' title = 'GAMMNINFRA' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/GAMMNINFRA-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/GAMMNINFRA-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/GTLINFRAEQN.jpg' price = 0.7 alt = 'GTLINFRA' title = 'GTLINFRA' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/GTLINFRA-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/GTLINFRA-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/MICEQN.jpg' price = 0.7 alt = 'MIC' title = 'MIC' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/MIC-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/MIC-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/SETUINFRAEQN.jpg' price = 0.7 alt = 'SETUINFRA' title = 'SETUINFRA' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/SETUINFRA-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/SETUINFRA-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/VIVIDHAEQN.jpg' price = 0.7 alt = 'VIVIDHA' title = 'VIVIDHA' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/VIVIDHA-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/VIVIDHA-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/NTLEQN.jpg' price = 0.75 alt = 'NTL' title = 'NTL' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/NTL-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/NTL-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/PRAKASHSTLEQN.jpg' price = 0.75 alt = 'PRAKASHSTL' title = 'PRAKASHSTL' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/PRAKASHSTL-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/PRAKASHSTL-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/RADAANEQN.jpg' price = 0.75 alt = 'RADAAN' title = 'RADAAN' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/RADAAN-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/RADAAN-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/SPENTEXEQN.jpg' price = 0.75 alt = 'SPENTEX' title = 'SPENTEX' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/SPENTEX-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/SPENTEX-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/HAVISHAEQN.jpg' price = 0.8 alt = 'HAVISHA' title = 'HAVISHA' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/HAVISHA-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/HAVISHA-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/MERCATOREQN.jpg' price = 0.8 alt = 'MERCATOR' title = 'MERCATOR' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/MERCATOR-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/MERCATOR-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/SITINETEQN.jpg' price = 0.8 alt = 'SITINET' title = 'SITINET' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/SITINET-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/SITINET-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/ZENITHSTLEQN.jpg' price = 0.8 alt = 'ZENITHSTL' title = 'ZENITHSTL' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/ZENITHSTL-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/ZENITHSTL-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/BSELINFRAEQN.jpg' price = 0.85 alt = 'BSELINFRA' title = 'BSELINFRA' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/BSELINFRA-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/BSELINFRA-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/UNITYEQN.jpg' price = 0.85 alt = 'UNITY' title = 'UNITY' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/UNITY-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/UNITY-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/BKMINDSTEQN.jpg' price = 0.9 alt = 'BKMINDST' title = 'BKMINDST' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/BKMINDST-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/BKMINDST-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/DALALSTCOMEQN.jpg' price = 0.9 alt = 'DALALSTCOM' title = 'DALALSTCOM' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/DALALSTCOM-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/DALALSTCOM-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/IMPEXFERROEQN.jpg' price = 0.95 alt = 'IMPEXFERRO' title = 'IMPEXFERRO' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/IMPEXFERRO-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/IMPEXFERRO-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/ANKITMETALEQN.jpg' price = 1 alt = 'ANKITMETAL' title = 'ANKITMETAL' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/ANKITMETAL-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/ANKITMETAL-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/HOTELRUGBYEQN.jpg' price = 1 alt = 'HOTELRUGBY' title = 'HOTELRUGBY' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/HOTELRUGBY-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/HOTELRUGBY-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/ORTELEQN.jpg' price = 1.05 alt = 'ORTEL' title = 'ORTEL' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/ORTEL-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/ORTEL-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/BALLARPUREQN.jpg' price = 1.1 alt = 'BALLARPUR' title = 'BALLARPUR' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/BALLARPUR-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/BALLARPUR-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/COX&KINGSEQN.jpg' price = 1.1 alt = 'COX&KINGS' title = 'COX&KINGS' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/COX&KINGS-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/COX&KINGS-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/LSILEQN.jpg' price = 1.1 alt = 'LSIL' title = 'LSIL' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/LSIL-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/LSIL-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/SABEVENTSEQN.jpg' price = 1.1 alt = 'SABEVENTS' title = 'SABEVENTS' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/SABEVENTS-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/SABEVENTS-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/SUNDARAMEQN.jpg' price = 1.2 alt = 'SUNDARAM' title = 'SUNDARAM' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/SUNDARAM-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/SUNDARAM-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/ROHITFERROEQN.jpg' price = 1.3 alt = 'ROHITFERRO' title = 'ROHITFERRO' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/ROHITFERRO-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/ROHITFERRO-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/KAUSHALYAEQN.jpg' price = 1.35 alt = 'KAUSHALYA' title = 'KAUSHALYA' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/KAUSHALYA-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/KAUSHALYA-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/NILASPACESEQN.jpg' price = 1.35 alt = 'NILASPACES' title = 'NILASPACES' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/NILASPACES-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/NILASPACES-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/PUNJLLOYDEQN.jpg' price = 1.35 alt = 'PUNJLLOYD' title = 'PUNJLLOYD' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/PUNJLLOYD-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/PUNJLLOYD-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/EMCOEQN.jpg' price = 1.4 alt = 'EMCO' title = 'EMCO' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/EMCO-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/EMCO-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/UNITECHEQN.jpg' price = 1.4 alt = 'UNITECH' title = 'UNITECH' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/UNITECH-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/UNITECH-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/GOENKAEQN.jpg' price = 1.45 alt = 'GOENKA' title = 'GOENKA' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/GOENKA-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/GOENKA-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/ALPSINDUSEQN.jpg' price = 1.5 alt = 'ALPSINDUS' title = 'ALPSINDUS' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/ALPSINDUS-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/ALPSINDUS-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/JPINFRATECEQN.jpg' price = 1.5 alt = 'JPINFRATEC' title = 'JPINFRATEC' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/JPINFRATEC-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/JPINFRATEC-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/RCOMEQN.jpg' price = 1.6 alt = 'RCOM' title = 'RCOM' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/RCOM-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/RCOM-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/DCMFINSERVEQN.jpg' price = 1.65 alt = 'DCMFINSERV' title = 'DCMFINSERV' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/DCMFINSERV-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/DCMFINSERV-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/SHRENIKEQN.jpg' price = 1.7 alt = 'SHRENIK' title = 'SHRENIK' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/SHRENIK-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/SHRENIK-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/VIKASECOEQN.jpg' price = 1.7 alt = 'VIKASECO' title = 'VIKASECO' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/VIKASECO-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/VIKASECO-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/INDOSOLAREQN.jpg' price = 1.75 alt = 'INDOSOLAR' title = 'INDOSOLAR' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/INDOSOLAR-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/INDOSOLAR-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/JAINSTUDIOEQN.jpg' price = 1.75 alt = 'JAINSTUDIO' title = 'JAINSTUDIO' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/JAINSTUDIO-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/JAINSTUDIO-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/GFSTEELSEQN.jpg' price = 1.85 alt = 'GFSTEELS' title = 'GFSTEELS' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/GFSTEELS-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/GFSTEELS-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/GREENPOWEREQN.jpg' price = 1.85 alt = 'GREENPOWER' title = 'GREENPOWER' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/GREENPOWER-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/GREENPOWER-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/MELSTAREQN.jpg' price = 1.9 alt = 'MELSTAR' title = 'MELSTAR' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/MELSTAR-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/MELSTAR-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/LPDCEQN.jpg' price = 1.95 alt = 'LPDC' title = 'LPDC' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/LPDC-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/LPDC-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/GISOLUTIONEQN.jpg' price = 2 alt = 'GISOLUTION' title = 'GISOLUTION' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/GISOLUTION-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/GISOLUTION-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/RMCLEQN.jpg' price = 2 alt = 'RMCL' title = 'RMCL' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/RMCL-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/RMCL-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/VICEROYEQN.jpg' price = 2 alt = 'VICEROY' title = 'VICEROY' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/VICEROY-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/VICEROY-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/SAMBHAAVEQN.jpg' price = 2.05 alt = 'SAMBHAAV' title = 'SAMBHAAV' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/SAMBHAAV-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/SAMBHAAV-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/COUNCODOSEQN.jpg' price = 2.1 alt = 'COUNCODOS' title = 'COUNCODOS' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/COUNCODOS-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/COUNCODOS-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/TVVISIONEQN.jpg' price = 2.1 alt = 'TVVISION' title = 'TVVISION' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/TVVISION-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/TVVISION-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/BAGFILMSEQN.jpg' price = 2.15 alt = 'BAGFILMS' title = 'BAGFILMS' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/BAGFILMS-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/BAGFILMS-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/BHANDARIEQN.jpg' price = 2.15 alt = 'BHANDARI' title = 'BHANDARI' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/BHANDARI-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/BHANDARI-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/EASTSILKEQN.jpg' price = 2.2 alt = 'EASTSILK' title = 'EASTSILK' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/EASTSILK-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/EASTSILK-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/EASUNREYRLEQN.jpg' price = 2.2 alt = 'EASUNREYRL' title = 'EASUNREYRL' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/EASUNREYRL-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/EASUNREYRL-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/SCAPDVREQN.jpg' price = 2.2 alt = 'SCAPDVR' title = 'SCAPDVR' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/SCAPDVR-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/SCAPDVR-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/BARTRONICSEQN.jpg' price = 2.25 alt = 'BARTRONICS' title = 'BARTRONICS' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/BARTRONICS-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/BARTRONICS-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/BURNPUREQN.jpg' price = 2.25 alt = 'BURNPUR' title = 'BURNPUR' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/BURNPUR-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/BURNPUR-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/PREMIEREQN.jpg' price = 2.25 alt = 'PREMIER' title = 'PREMIER' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/PREMIER-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/PREMIER-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/EXCELEQN.jpg' price = 2.3 alt = 'EXCEL' title = 'EXCEL' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/EXCEL-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/EXCEL-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/JMTAUTOLTDEQN.jpg' price = 2.3 alt = 'JMTAUTOLTD' title = 'JMTAUTOLTD' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/JMTAUTOLTD-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/JMTAUTOLTD-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/TFLEQN.jpg' price = 2.3 alt = 'TFL' title = 'TFL' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/TFL-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/TFL-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/GALEQN.jpg' price = 2.4 alt = 'GAL' title = 'GAL' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/GAL-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/GAL-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/RHFLEQN.jpg' price = 2.4 alt = 'RHFL' title = 'RHFL' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/RHFL-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/RHFL-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/VIKASPROPEQN.jpg' price = 2.4 alt = 'VIKASPROP' title = 'VIKASPROP' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/VIKASPROP-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/VIKASPROP-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/EDUCOMPEQN.jpg' price = 2.45 alt = 'EDUCOMP' title = 'EDUCOMP' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/EDUCOMP-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/EDUCOMP-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/GLFLEQN.jpg' price = 2.45 alt = 'GLFL' title = 'GLFL' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/GLFL-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/GLFL-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/IL&FSTRANSEQN.jpg' price = 2.45 alt = 'IL&FSTRANS' title = 'IL&FSTRANS' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/IL&FSTRANS-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/IL&FSTRANS-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/SKILEQN.jpg' price = 2.45 alt = 'SKIL' title = 'SKIL' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/SKIL-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/SKIL-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/UJAASEQN.jpg' price = 2.45 alt = 'UJAAS' title = 'UJAAS' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/UJAAS-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/UJAAS-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/RTNPOWEREQN.jpg' price = 2.55 alt = 'RTNPOWER' title = 'RTNPOWER' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/RTNPOWER-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/RTNPOWER-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/SYNCOMEQN.jpg' price = 2.6 alt = 'SYNCOM' title = 'SYNCOM' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/SYNCOM-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/SYNCOM-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/TECHINEQN.jpg' price = 2.6 alt = 'TECHIN' title = 'TECHIN' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/TECHIN-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/TECHIN-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/LCCINFOTECEQN.jpg' price = 2.7 alt = 'LCCINFOTEC' title = 'LCCINFOTEC' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/LCCINFOTEC-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/LCCINFOTEC-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/CREATIVEYEEQN.jpg' price = 2.8 alt = 'CREATIVEYE' title = 'CREATIVEYE' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/CREATIVEYE-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/CREATIVEYE-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/RNAVALEQN.jpg' price = 2.85 alt = 'RNAVAL' title = 'RNAVAL' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/RNAVAL-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/RNAVAL-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/VIKASMCORPEQN.jpg' price = 2.85 alt = 'VIKASMCORP' title = 'VIKASMCORP' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/VIKASMCORP-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/VIKASMCORP-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/JPPOWEREQN.jpg' price = 2.95 alt = 'JPPOWER' title = 'JPPOWER' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/JPPOWER-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/JPPOWER-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/SPTLEQN.jpg' price = 3.15 alt = 'SPTL' title = 'SPTL' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/SPTL-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/SPTL-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/BCPEQN.jpg' price = 3.2 alt = 'BCP' title = 'BCP' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/BCP-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/BCP-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/ROLLTEQN.jpg' price = 3.2 alt = 'ROLLT' title = 'ROLLT' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/ROLLT-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/ROLLT-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/UMESLTDEQN.jpg' price = 3.3 alt = 'UMESLTD' title = 'UMESLTD' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/UMESLTD-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/UMESLTD-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/SINTEXEQN.jpg' price = 3.4 alt = 'SINTEX' title = 'SINTEX' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/SINTEX-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/SINTEX-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/SEPOWEREQN.jpg' price = 3.55 alt = 'SEPOWER' title = 'SEPOWER' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/SEPOWER-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/SEPOWER-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/KRIDHANINFEQN.jpg' price = 3.6 alt = 'KRIDHANINF' title = 'KRIDHANINF' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/KRIDHANINF-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/KRIDHANINF-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/IL&FSENGGEQN.jpg' price = 3.65 alt = 'IL&FSENGG' title = 'IL&FSENGG' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/IL&FSENGG-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/IL&FSENGG-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/INDOWINDEQN.jpg' price = 3.65 alt = 'INDOWIND' title = 'INDOWIND' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/INDOWIND-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/INDOWIND-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/LGBFORGEEQN.jpg' price = 3.65 alt = 'LGBFORGE' title = 'LGBFORGE' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/LGBFORGE-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/LGBFORGE-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/INFOMEDIAEQN.jpg' price = 3.75 alt = 'INFOMEDIA' title = 'INFOMEDIA' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/INFOMEDIA-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/INFOMEDIA-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/LAKPREEQN.jpg' price = 3.75 alt = 'LAKPRE' title = 'LAKPRE' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/LAKPRE-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/LAKPRE-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/CCHHLEQN.jpg' price = 3.8 alt = 'CCHHL' title = 'CCHHL' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/CCHHL-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/CCHHL-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/VIDEOINDEQN.jpg' price = 3.95 alt = 'VIDEOIND' title = 'VIDEOIND' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/VIDEOIND-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/VIDEOIND-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/A2ZINFRAEQN.jpg' price = 4 alt = 'A2ZINFRA' title = 'A2ZINFRA' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/A2ZINFRA-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/A2ZINFRA-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/SHRIRAMEPCEQN.jpg' price = 4 alt = 'SHRIRAMEPC' title = 'SHRIRAMEPC' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/SHRIRAMEPC-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/SHRIRAMEPC-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/KANANIINDEQN.jpg' price = 4.05 alt = 'KANANIIND' title = 'KANANIIND' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/KANANIIND-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/KANANIIND-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/ROLTAEQN.jpg' price = 4.1 alt = 'ROLTA' title = 'ROLTA' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/ROLTA-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/ROLTA-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/SURANAT&PEQN.jpg' price = 4.1 alt = 'SURANAT&P' title = 'SURANAT&P' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/SURANAT&P-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/SURANAT&P-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/NATNLSTEELEQN.jpg' price = 4.15 alt = 'NATNLSTEEL' title = 'NATNLSTEEL' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/NATNLSTEEL-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/NATNLSTEEL-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/OPTOCIRCUIEQN.jpg' price = 4.25 alt = 'OPTOCIRCUI' title = 'OPTOCIRCUI' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/OPTOCIRCUI-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/OPTOCIRCUI-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/TANTIACONSEQN.jpg' price = 4.25 alt = 'TANTIACONS' title = 'TANTIACONS' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/TANTIACONS-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/TANTIACONS-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/LYPSAGEMSEQN.jpg' price = 4.35 alt = 'LYPSAGEMS' title = 'LYPSAGEMS' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/LYPSAGEMS-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/LYPSAGEMS-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/MAGNUMEQN.jpg' price = 4.35 alt = 'MAGNUM' title = 'MAGNUM' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/MAGNUM-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/MAGNUM-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/NILAINFRAEQN.jpg' price = 4.35 alt = 'NILAINFRA' title = 'NILAINFRA' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/NILAINFRA-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/NILAINFRA-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/TGBHOTELSEQN.jpg' price = 4.35 alt = 'TGBHOTELS' title = 'TGBHOTELS' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/TGBHOTELS-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/TGBHOTELS-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/TNTELEEQN.jpg' price = 4.4 alt = 'TNTELE' title = 'TNTELE' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/TNTELE-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/TNTELE-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/PATSPINLTDEQN.jpg' price = 4.5 alt = 'PATSPINLTD' title = 'PATSPINLTD' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/PATSPINLTD-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/PATSPINLTD-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/CANDCEQN.jpg' price = 4.55 alt = 'CANDC' title = 'CANDC' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/CANDC-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/CANDC-EQ.jpg">'>
+  <img src='https://static.nseindia.com/sparklines/today/DCMNVLEQN.jpg' height="40px" width="90px" price = 86.6 alt = 'DCMNVL' title = 'DCMNVL' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/DCMNVL-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/DCMNVL-EQ.jpg">'>
+  <br><br><br>
+  <img src='https://static.nseindia.com/sparklines/today/ASIANPAINTEQN.jpg' price = 2423.2 alt = 'ASIANPAINT' title = 'ASIANPAINT' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/ASIANPAINT-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/ASIANPAINT-EQ.jpg">'>
+  <br><br><br>
+  <img src='https://static.nseindia.com/sparklines/today/GARFIBRESEQN.jpg' price = 2440 alt = 'GARFIBRES' title = 'GARFIBRES' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/GARFIBRES-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/GARFIBRES-EQ.jpg">'>
+  <br><br><br>
+  <img src='https://static.nseindia.com/sparklines/today/LALPATHLABEQN.jpg' price = 2447 alt = 'LALPATHLAB' title = 'LALPATHLAB' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/LALPATHLAB-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/LALPATHLAB-EQ.jpg">'>
+  <br><br><br>
+  <img src='https://static.nseindia.com/sparklines/today/JCHACEQN.jpg' price = 2465 alt = 'JCHAC' title = 'JCHAC' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/JCHAC-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/JCHAC-EQ.jpg">'>
+  <br><br><br>
+  <img src='https://static.nseindia.com/sparklines/today/NAVINFLUOREQN.jpg' price = 2489 alt = 'NAVINFLUOR' title = 'NAVINFLUOR' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/NAVINFLUOR-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/NAVINFLUOR-EQ.jpg">'>
+  <br><br><br>
+  <img src='https://static.nseindia.com/sparklines/today/TORNTPHARMEQN.jpg' price = 2494.95 alt = 'TORNTPHARM' title = 'TORNTPHARM' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/TORNTPHARM-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/TORNTPHARM-EQ.jpg">'>
+  <br><br><br>
+  <img src='https://static.nseindia.com/sparklines/today/COFORGEEQN.jpg' price = 2565 alt = 'COFORGE' title = 'COFORGE' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/COFORGE-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/COFORGE-EQ.jpg">'>
+  <br><br><br>
+  <img src='https://static.nseindia.com/sparklines/today/INDIGOPNTSEQN.jpg' price = 2575 alt = 'INDIGOPNTS' title = 'INDIGOPNTS' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/INDIGOPNTS-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/INDIGOPNTS-EQ.jpg">'>
+  <br><br><br>
+  <img src='https://static.nseindia.com/sparklines/today/EICHERMOTEQN.jpg' price = 2582 alt = 'EICHERMOT' title = 'EICHERMOT' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/EICHERMOT-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/EICHERMOT-EQ.jpg">'>
+  <br><br><br>
+  <img src='https://static.nseindia.com/sparklines/today/JKCEMENTEQN.jpg' price = 2626 alt = 'JKCEMENT' title = 'JKCEMENT' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/JKCEMENT-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/JKCEMENT-EQ.jpg">'>
+  <br><br><br>
+  <img src='https://static.nseindia.com/sparklines/today/LTTSEQN.jpg' price = 2670 alt = 'LTTS' title = 'LTTS' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/LTTS-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/LTTS-EQ.jpg">'>
+  <br><br><br>
+  <img src='https://static.nseindia.com/sparklines/today/HDFCEQN.jpg' price = 2740 alt = 'HDFC' title = 'HDFC' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/HDFC-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/HDFC-EQ.jpg">'>
+  <br><br><br>
+  <img src='https://static.nseindia.com/sparklines/today/TATAELXSIEQN.jpg' price = 2749 alt = 'TATAELXSI' title = 'TATAELXSI' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/TATAELXSI-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/TATAELXSI-EQ.jpg">'>
+  <br><br><br>
+  <img src='https://static.nseindia.com/sparklines/today/VMARTEQN.jpg' price = 2750.3 alt = 'VMART' title = 'VMART' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/VMART-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/VMART-EQ.jpg">'>
+  <br><br><br>
+  <img src='https://static.nseindia.com/sparklines/today/ICRAEQN.jpg' price = 2774.9 alt = 'ICRA' title = 'ICRA' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/ICRA-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/ICRA-EQ.jpg">'>
+  <br><br><br>
+  <img src='https://static.nseindia.com/sparklines/today/ALKEMEQN.jpg' price = 2879 alt = 'ALKEM' title = 'ALKEM' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/ALKEM-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/ALKEM-EQ.jpg">'>
+  <br><br><br>
+  <img src='https://static.nseindia.com/sparklines/today/APOLLOHOSPEQN.jpg' price = 2929.65 alt = 'APOLLOHOSP' title = 'APOLLOHOSP' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/APOLLOHOSP-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/APOLLOHOSP-EQ.jpg">'>
+  <br><br><br>
+  <img src='https://static.nseindia.com/sparklines/today/HDFCAMCEQN.jpg' price = 2930 alt = 'HDFCAMC' title = 'HDFCAMC' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/HDFCAMC-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/HDFCAMC-EQ.jpg">'>
+  <br><br><br>
+  <img src='https://static.nseindia.com/sparklines/today/JUBLFOODEQN.jpg' price = 2952.15 alt = 'JUBLFOOD' title = 'JUBLFOOD' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/JUBLFOOD-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/JUBLFOOD-EQ.jpg">'>
+  <br><br><br>
+  <img src='https://static.nseindia.com/sparklines/today/VAIBHAVGBLEQN.jpg' price = 2960.6 alt = 'VAIBHAVGBL' title = 'VAIBHAVGBL' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/VAIBHAVGBL-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/VAIBHAVGBL-EQ.jpg">'>
+  <br><br><br>
+  <img src='https://static.nseindia.com/sparklines/today/TEAMLEASEEQN.jpg' price = 3031 alt = 'TEAMLEASE' title = 'TEAMLEASE' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/TEAMLEASE-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/TEAMLEASE-EQ.jpg">'>
+  <br><br><br>
+<a href="./stockCheck.html"><img src = 'https://thetusharpandey.github.io/riquardi.png' title = 'RiquardiLogo, Copyright 2014-2021, All Rights Reserved, ClickForNextView' height = '50px' width = '50px' padding = '30px' id = 'logo'></a>
+    <div class="v-content-modal">
+        <div class="modal-title">
+            Title of the hover comes here
+        </div>
+        <div class="modal-content">
+            description of the hover comes here
+        </div>
+        <div class="modal-title2">
+            Title of the hover comes here
+        </div>
+        <div class="modal-content2">
+            description of the hover comes here
+        </div>
+
+        <div class="price">
+          ₹00.00<!--<p class="priceArea"><font color = "black">The two decimal price of the stock comes here</font></p>-->
+        </div>
+        <div class="name">
+          Name Not Available<!--<p class="priceArea"><font color = "black">The two decimal price of the stock comes here</font></p>-->
+        </div>
+        <div class="circuit">
+          Circuit Not Available<!--<p class="priceArea"><font color = "black">The two decimal price of the stock comes here</font></p>-->
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+$(function () {
+    let modal = $(".v-content-modal");
+    let title = $(".v-content-modal > .modal-title");
+    let content = $(".v-content-modal > .modal-content");
+    let title2 = $(".v-content-modal > .modal-title2");
+    let content2 = $(".v-content-modal > .modal-content2");
+    let priceTag = $(".v-content-modal > .price");
+    let nameTag = $(".v-content-modal > .name");
+    let circuitSize = $(".v-content-modal > .circuit");
+    let btns = document.querySelectorAll("#info");
+    var timer;
+    var urlBase = "http://thetusharpandey.github.io";
+    var urlName = prompt("Please enter your domain", "<domain goes here>");
+    if (urlName!= null) {
+      urlBase = urlName;
+    }
+    btns.forEach(btn => {
+        btn.addEventListener("mouseenter", (e) => {
+            const http = new XMLHttpRequest();
+            const scripName = e.target.getAttribute('title');
+            const url = urlBase+"/getPrice/"+scripName;
+            console.log(url);
+            http.open("GET", url, false);
+            title.html(e.target.getAttribute('data-title'));
+            content.html(e.target.getAttribute('data-content'));
+            title2.html(e.target.getAttribute('data-title2'));
+            content2.html(e.target.getAttribute('data-content2'));
+            nameTag.html("Name Not Available");
+            priceTag.html("~₹"+ e.target.getAttribute('price')+"~");
+            circuitSize.html("Circuit Not Available");
+            timer = setTimeout(() => {while(!http.send())
+            {
+              var obj1 = JSON.parse(http.responseText);
+              //<br> tag working in the text, since it is on HTML part, and ]n not working cuz not javascript, BUT {interestingly} "\n" was in there, but HTML did not render it even though it should've been taking it like text!!! STRANGE
+              //can combine everything in the price tag part to be containd in the gradient
+              priceTag.html("₹"+ obj1[0]);
+              nameTag.html("<marquee>" + obj1[1] + "</marquee>");
+              circuitSize.html("Circuit: " + obj1[2] + "%");
+            }}, 2000);
+          });
+
+        btn.addEventListener("mousemove", (e) => {
+            modal.css({
+                top: 'unset',
+                right: 'unset',
+                left: 'unset',
+                bottom: 'unset'
+            });
+
+
+            let pageX, pageY, winWidth, winHeight, elmWidth, elmHeight, width_limit, height_limit = '';
+            pageX = e.pageX;
+            pageY = e.pageY;
+            winWidth = $(window).width();
+            winHeight = $(window).height();
+            elmWidth = $(".v-content-modal").width();
+            elmHeight = $(".v-content-modal").height();
+            width_limit = winWidth - elmWidth;
+            height_limit = winHeight - elmHeight;
+
+            (pageX > width_limit) ? crossWidth(): normalWidth();
+            (pageY > height_limit) ? crossHeight(): normalHeight();
+
+            function crossWidth() {
+                modal.css({
+                    right: '5px'
+                });
+            }
+
+            function normalWidth() {
+                modal.css({
+                    left: pageX
+                });
+            }
+
+            function crossHeight() {
+                modal.css({
+                    top: e.pageY + 30 + 'px'
+                });
+            }
+
+            function normalHeight() {
+                modal.css({
+                    top: e.pageY + 30 + 'px'
+                });
+            }
+
+            // show when all customization is completed...
+            modal.show();
+        });
+
+        btn.addEventListener("mouseleave", () => {
+            clearTimeout(timer);
+            modal.hide();
+        });
+    });
+
+});
+   </script>
+
+
+
+   <!-- BG -->
+   <div id="bg"></div>
+
+
+
+<script>
+window.onbeforeunload = function() {
+  return "Data will be lost if you leave the page, are you sure?";
+};
+</script>
+</body>
+
+</html>
