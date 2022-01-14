@@ -89,7 +89,11 @@
 
         .content{
             position: relative;
+            display: flex;
             z-index: 1;
+        }
+        .column{
+          flex: 50%;
         }
        .content
        {
@@ -99,7 +103,10 @@
   box-sizing: border-box;
   line-height: 27px;
 }
-
+.upperLinkStuff{
+  height: 25px;
+  width: auto;
+}
 .v-content-modal {
   z-index: 2;
   position: absolute;
@@ -207,15 +214,20 @@ margin-left: 46%;
         }
     </script>
   <script language = "javascript" type = "text/javascript">
-      function linkMaker(alt)
-      {
-        return 'https://static.nseindia.com/sparklines/today/'+string(alt)+'.jpg';
+      function linkReset(){
+        var x = document.getElementById("linkField").value;
+        return x;
       }
     </script>
-
+    <!--That JQUERY thing from the bottom-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!--JQUERY ends-->
+<div>
+    <input class="upperLinkStuff" id="linkField" size="50" value="http://thetusharpandey.github.io">
+    <button class="upperLinkStuff" type="button" onClick = 'linkReset();'> Update Link </button>
+</div>
 <div class="content">
-  <br><br><br>
-<br><br><br>
+  <div class="column">
   <br><br><br>
   <img src='https://static.nseindia.com/sparklines/today/BLUECHIPEQN.jpg' price = 0.35 alt = 'BLUECHIP' title = 'BLUECHIP' onmouseover='closer()' onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/BLUECHIP-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/BLUECHIP-EQ.jpg">'>
   <img src='https://static.nseindia.com/sparklines/today/KGLEQN.jpg' price = 0.25 alt = 'KGL' title = 'KGL' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/KGL-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/KGL-EQ.jpg">'>
@@ -387,6 +399,44 @@ margin-left: 46%;
   <br><br><br>
   <img src='https://static.nseindia.com/sparklines/today/TEAMLEASEEQN.jpg' price = 3031 alt = 'TEAMLEASE' title = 'TEAMLEASE' onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img src ="https://static.nseindia.com/sparklines/30d/TEAMLEASE-EQ.jpg">' data-title2='1Year' data-content2='<img src ="https://static.nseindia.com/sparklines/365d/TEAMLEASE-EQ.jpg">'>
   <br><br><br>
+  </div>
+  <div class="column">
+    <iframe height="500" width="500" src='https://www.google.com/search?igu=1&q=ranasugar+stock+price+'><!--value for src is a custom search url like this, it will be supplie by NSETITLE() function modified to return string value of that search url--></iframe>
+    <div height="500" width="500"><!--tradingview gives customjavascript code, they dontuse an iframe, but provde you custom boxes for their stocks-->
+      <!-- https://in.tradingview.com/widget/advanced-chart/ -->
+      <!-- TradingView Widget BEGIN -->
+      <div class="tradingview-widget-container">
+        <div id="tradingview_9a6a8"></div>
+        <div class="tradingview-widget-copyright"><a href="https://in.tradingview.com/symbols/BSE-RANASUG/" rel="noopener" target="_blank"><span class="blue-text">RELIANCE Chart</span></a> by TradingView</div>
+        <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+        <script type="text/javascript">
+        new TradingView.widget(
+        {
+        "width": 500,
+        "height": 500,
+        "symbol": "BSE:RANASUG",
+        "interval": "D",
+        "timezone": "Etc/UTC",
+        "theme": "dark",
+        "style": "1",
+        "locale": "in",
+        "toolbar_bg": "#f1f3f6",
+        "enable_publishing": false,
+        "allow_symbol_change": true,
+        "studies": [
+    "BB@tv-basicstudies"
+  ],
+        "container_id": "tradingview_9a6a8"
+      }
+        );
+        </script>
+      </div>
+      <!-- TradingView Widget END -->
+    </div>
+    <iframe height="500" width="500" src='https://www.screener.in/company/yesbank/?igu=1'><!--value for src is a custom search url like this, it will be supplie by NSETITLE() function modified to return string value of that search url--></iframe>
+
+  </div>
+</div>
 <a href="./wideStockCheck.html"><img src = 'https://thetusharpandey.github.io/riquardi.png' title = 'RiquardiLogo, Copyright 2014-2021, All Rights Reserved, ClickForNextView' height = '50px' width = '50px' padding = '30px' id = 'logo'></a>
     <div class="v-content-modal">
         <div class="modal-title">
@@ -413,7 +463,7 @@ margin-left: 46%;
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!--jquery moved to the TOP to include the clas="upperLinkStuff" in the jquery scope, Was giving error since declared before jquery even referenced.-->
     <script>
 $(function () {
     let modal = $(".v-content-modal");
@@ -430,11 +480,13 @@ $(function () {
     var urlName = prompt("Please enter your domain", "<domain goes here>");
     if (urlName!= null) {
       urlBase = urlName;
+      document.getElementById("linkField").value = urlBase;
     }
     btns.forEach(btn => {
         btn.addEventListener("mouseenter", (e) => {
             const http = new XMLHttpRequest();
             const scripName = e.target.getAttribute('title');
+            urlBase = linkReset();
             const url = urlBase+"/getPrice/"+scripName;
             console.log(url);
             http.open("GET", url, false);
@@ -472,7 +524,7 @@ $(function () {
             winHeight = $(window).height();
             elmWidth = $(".v-content-modal").width();
             elmHeight = $(".v-content-modal").height();
-            width_limit = winWidth - elmWidth;
+            width_limit = (winWidth*0.47) - elmWidth;
             height_limit = winHeight - elmHeight;
 
             (pageX > width_limit) ? crossWidth(): normalWidth();
@@ -480,13 +532,13 @@ $(function () {
 
             function crossWidth() {
                 modal.css({
-                    right: '5px'
+                    right: width_limit+(elmWidth*1.75)+'px'
                 });
             }
 
             function normalWidth() {
                 modal.css({
-                    left: pageX
+                    left: (pageX - 40) + 'px'
                 });
             }
 
