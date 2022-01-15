@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<!--
+	Renitus equity by Tushar Pandey
+	Screen Page
+-->
+<html>
+	<head>
+		<title>Money | Life | Cars</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+		<div id="wrapper">
+			<div id="bg"></div>
+			<div id="overlay"></div>
+			<div id="main">
+
+				<!-- Header -->
+					<header id="header">
+						<h1>Riquardi Equity </h1>
+						<p>Back on square one &nbsp;&bull;&nbsp; There's no turning back!</p>
+						<nav>
+							<ul>
+								<li><a href="../durationPage/index.html?screen=Single" class="icon solid fa-tablet-alt"><span class="label">Single Screen</span></a></li>
+								<!-- a js file to recieve parameters as given nd divert to concerned page.-->
+								<li><a href="../durationPage/index.html?screen=WideOrDouble" class="icon regular fa-money-bill-alt"><span class="label">Wide Screen</span></a></li>
+								<li><a href="../durationPage/index.html?screen=Touch" class="icon regular fa-hand-point-up"><span class="label">Touch Screen</span></a></li>
+							</ul>
+						</nav>
+					</header>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<span class="copyright">&copy; Copyright 2021 &bull; Tushar Pandey | <a href="http://thetusharpandey.github.io">thetusharpandey</a>.</span>
+					</footer>
+
+			</div>
+		</div>
+		<script>
+			window.onload = function() { document.body.classList.remove('is-preload'); }
+			window.ontouchmove = function() { return false; }
+			window.onorientationchange = function() { document.body.scrollTop = 0; }
+		</script>
+	</body>
+</html>

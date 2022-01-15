@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<!--
+	Renitus equity by Tushar Pandey
+	DurationPage
+-->
+<html>
+	<head>
+		<title>Money | Life | Cars</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+		<div id="wrapper">
+			<div id="bg"></div>
+			<div id="overlay"></div>
+			<div id="main">
+				<script language = "javascript" type = "text/javascript">
+				var screenChoice = location.search.split("=");
+				function node1(duration) {
+					switch (duration) {
+						case 'daily': switch(screenChoice[1]){
+														case 'Single': window.open("../single/stockCheck.html", "_self"); break;
+														case 'WideOrDouble': window.open("../wideOrDouble/wideStockCheck.html", "_self"); break;
+														case 'Touch': window.open("../touch/touchStockCheck.html", "_self"); break;
+														default : window.open("../single/stockCheck.html", "_self"); break;
+													}
+													break;
+						case 'monthly': switch(screenChoice[1]){
+														case 'Single': window.open("../single/stockCheck30d.html", "_self"); break;
+														case 'WideOrDouble':window.open("../wideOrDouble/wideStockCheck30d.html", "_self"); break;
+														case 'Touch':window.open("../touch/touchStockCheck30d.html", "_self"); break;
+														default : window.open("../single/stockCheck30d.html", "_self"); break;
+													}
+													break;
+						case 'yearly': switch(screenChoice[1]){
+														case 'Single':window.open("../single/stockCheck365d.html", "_self"); break;
+														case 'WideOrDouble':window.open("../wideOrDouble/wideStockCheck365d.html", "_self"); break;
+														case 'Touch':window.open("../touch/touchStockCheck365d.html", "_self"); break;
+														default : window.open("../single/stockCheck365d.html", "_self"); break;
+													}
+													break;
+						default:
+
+					}
+				}
+				</script>
+				<!-- Header -->
+					<header id="header">
+						<h1>Riquardi Equity </h1>
+						<p>Back on square one &nbsp;&bull;&nbsp; There's no turning back!</p>
+						<nav>
+							<ul>
+								<!--fontawesome-all-min 1Day etc characters have been changed from bone , bong & some third char to this.-->
+								<li><a onclick="node1('daily')" class ="icon regular fa-1Day"><span class="label">Daily</span></a></li>
+								<li><a onclick="node1('monthly')" class="icon regular fa-1Month"><span class="label">Monthly</span></a></li>
+								<li><a onclick="node1('yearly')" class="icon regular fa-1Year"><span class="label">Yearly</span></a></li>
+								<!--href="../../wideStockIndividualPreview.html?="-->
+							</ul>
+						</nav>
+					</header>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<span class="copyright">&copy; Copyright 2021 &bull; Tushar Pandey | <a href="http://thetusharpandey.github.io">thetusharpandey</a>.</span>
+					</footer>
+
+			</div>
+		</div>
+		<script>
+			window.onload = function() { document.body.classList.remove('is-preload'); }
+			window.ontouchmove = function() { return false; }
+			window.onorientationchange = function() { document.body.scrollTop = 0; }
+		</script>
+	</body>
+</html>
