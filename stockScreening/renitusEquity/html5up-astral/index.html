@@ -18,7 +18,7 @@ No other alternative being found to get charts. Not going for Zerodha since they
 	<body class="is-preload">
 		<div id="pageContent">
 		<!-- Wrapper1-->
-			<div id="wrapper" style="max-height:740px; overflow:auto;" >
+			<div id="wrapper" style="max-width: 47.3% !important; max-height:740px; overflow:auto;" >
 				<style>
 
 		        .content{
@@ -33,7 +33,9 @@ No other alternative being found to get charts. Not going for Zerodha since they
 		       {
 		  font-family: Segoe UI;
 		  border: 1px solid #ddd;
-		  padding: 45px;
+		  padding-top: 45px;
+			padding-left: 5px;
+			padding-right: 5px;
 		  box-sizing: border-box;
 		}
 		.upperLinkStuff{
@@ -215,7 +217,7 @@ No other alternative being found to get charts. Not going for Zerodha since they
 		</div>
 		<div class="content">
 		  <div class="column">
-		  <img src='https://static.nseindia.com/sparklines/today/BLUECHIPEQN.jpg' height= '40px' width='90px' price = 0.35 alt = 'BLUECHIP' title = "BLUECHIP" onmouseover='closer()' onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img class="contentImage"   src ="https://static.nseindia.com/sparklines/30d/BLUECHIP-EQ.jpg">' data-title2='1Year' data-content2='<img class="contentImage"  src ="https://static.nseindia.com/sparklines/365d/BLUECHIP-EQ.jpg">'>
+		  <img src='https://static.nseindia.com/sparklines/today/BLUECHIPEQN.jpg' price = 0.35 alt = 'BLUECHIP' title = "BLUECHIP" onmouseover='closer()' onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img class="contentImage"   src ="https://static.nseindia.com/sparklines/30d/BLUECHIP-EQ.jpg">' data-title2='1Year' data-content2='<img class="contentImage"  src ="https://static.nseindia.com/sparklines/365d/BLUECHIP-EQ.jpg">'>
 		  <img src='https://static.nseindia.com/sparklines/today/KGLEQN.jpg' price = 0.25 alt = 'KGL' title = "KGL" onmouseover="closer()" onclick='nsePage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img class="contentImage"   src ="https://static.nseindia.com/sparklines/30d/KGL-EQ.jpg">' data-title2='1Year' data-content2='<img class="contentImage"   src ="https://static.nseindia.com/sparklines/365d/KGL-EQ.jpg">'>
 		  <img src='https://static.nseindia.com/sparklines/today/RAJRAYONEQN.jpg' price = 0.25 alt = 'RAJRAYON' title = "RAJRAYON" onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img class="contentImage"   src ="https://static.nseindia.com/sparklines/30d/RAJRAYON-EQ.jpg">' data-title2='1Year' data-content2='<img class="contentImage"   src ="https://static.nseindia.com/sparklines/365d/RAJRAYON-EQ.jpg">'>
 		  <img src='https://static.nseindia.com/sparklines/today/SPYLEQN.jpg' price = 0.35 alt = 'SPYL' title = "SPYL" onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img class="contentImage"   src ="https://static.nseindia.com/sparklines/30d/SPYL-EQ.jpg">' data-title2='1Year' data-content2='<img class="contentImage"   src ="https://static.nseindia.com/sparklines/365d/SPYL-EQ.jpg">'>
@@ -537,9 +539,9 @@ No other alternative being found to get charts. Not going for Zerodha since they
 
 				<!-- Nav -->
 					<nav id="nav">
-						<a href="#" class="icon brands fa-google"><span>GoogleFinance</span></a>
+						<a href="#home" class="icon brands fa-google"><span>GoogleFinance</span></a>
+						<a href="#work" class="icon solid fa-chart-area"><span>Graph</span></a>
 						<a ondblclick="arr.push(stockCurrent); printer();" href="#contact" class="icon solid fa-list-alt"><span>TradeList</span></a>
-						<a href="#work" class="icon solid fa-bug"><span>Buggy</span></a>
 					</nav>
 
 				<!-- Main -->
@@ -547,7 +549,7 @@ No other alternative being found to get charts. Not going for Zerodha since they
 
 						<!-- Me -->
 							<article id="home" class="panel intro">
-								<iframe id="googleFrame" height="670px" width=100% src="https://www.google.com/search?igu=1&q=tusharoxide"><!--value for src is a custom search url like this, it will be supplie by NSETITLE() function modified to return string value of that search url--></iframe>
+								<iframe id="googleFrame" height="700px" width=100% src="https://www.google.com/search?igu=1&q=tusharoxide"><!--value for src is a custom search url like this, it will be supplie by NSETITLE() function modified to return string value of that search url--></iframe>
 
 								<!--
 								<a href="#work" class="jumplink pic">
@@ -576,7 +578,7 @@ No other alternative being found to get charts. Not going for Zerodha since they
 										</div>
 										 TradingView Widget END -->
 										  <script type="module" src="https://unpkg.com/x-frame-bypass"></script>
-											<iframe is="x-frame-bypass" id="yahooFrame" height="670px" width=100% src="https://finance.yahoo.com/"></iframe>
+											<iframe is="x-frame-bypass" id="yahooFrame" height="690px" width=100% src="google.com"></iframe>
 								</section>
 
 							</article>
