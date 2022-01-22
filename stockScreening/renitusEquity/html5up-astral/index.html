@@ -21,96 +21,109 @@ No other alternative being found to get charts. Not going for Zerodha since they
 			<div id="wrapper" style="max-width: 47.3% !important; max-height:740px; overflow:auto;" >
 				<style>
 
-		        .content{
-		            position: relative;
-		            display: flex;
-		            z-index: 1;
-		        }
-		        .column{
-		          flex: 100%;
-		        }
-		       .content
-		       {
-		  font-family: Segoe UI;
-		  border: 1px solid #ddd;
-		  padding-top: 45px;
-			padding-left: 5px;
-			padding-right: 5px;
-		  box-sizing: border-box;
-		}
-		.upperLinkStuff{
-		  height: 25px;
-		  width: auto;
-		}
-		.divUpperLinkStuff{
-			margin-left: 0;
-			padding-left: 0;
-			align-items: flex-start;
-		}
-		.v-content-modal {
-		  z-index: 2;
-			font-size: 20px !important;
-		  position: absolute;
-		  box-shadow: 0 0 50px 20px  #ff66b3;
-		  width: auto;
-		  border-top: 3px solid #ddd;
-		  display: none;
-		  box-sizing: border-box;
-		}
+
+						        .content{
+						            position: relative;
+						            display: flex;
+						            z-index: 1;
+						        }
+						        .column{
+						          flex: 100%;
+						        }
+						       .content
+						       {
+						  font-family: Segoe UI;
+						  border: 1px solid #ddd;
+						  padding-top: 45px;
+							padding-left: 5px;
+							padding-right: 5px;
+						  box-sizing: border-box;
+						}
+						.upperLinkStuff{
+						  height: 25px;
+						  width: auto;
+							z-index: 3;
+						}
+						.divUpperLinkStuff{
+							margin-left: 0;
+							padding-left: 0;
+							align-items: flex-start;
+						}
+						.v-content-modal {
+						  z-index: 2;
+							padding: 4px;
+							font-size: 20px !important;
+							border-radius: 01.5rem;
+							-webkit-backdrop-filter: blur(6px);
+							backdrop-filter: blur(6px);
+						  position: absolute;
+						  box-shadow: 0 0 50px 20px  #ff66b3;
+						  width: auto;
+						  border:4px solid #ff66b3;
+						  display: none;
+						  box-sizing: border-box;
+						}
 
 
-		#info{
-		  border-style: solid;
-		  border-width: 2.3px;
-		  border-radius: 15px;
-		  border-color:  #8000ff ;
-		  margin: 1px;
-		  padding: 7px;
-		  width: 120px !important;
-		  height: 53.33px !important;
-		}
+						#info{
+						  border-style: solid;
+						  border-width: 2.3px;
+						  border-radius: 15px;
+						  border-color:  #8000ff ;
+						  margin: 1px;
+						  padding: 7px;
+						  width: 120px !important;
+						  height: 53.33px !important;
+						}
 
 
 
-		#logo{
-		 z-index: 1;
-		 padding-bottom: : 20px;
-		position: absolute;
-		margin-left: 46%;
-		}
-		.price{
-		  font-weight: bolder;
-		  background-image: linear-gradient(to right, blue, purple, white);
-		  font-family: cursive;
-		}
-		.name{
-		  background-image: linear-gradient(to right, lightcoral, khaki);
-		  font-family:monospace;
-		}
+						#logo{
+						 z-index: 1;
+						 padding-bottom: : 20px;
+						position: absolute;
+						margin-left: 46%;
+						}
+						.price{
+						  font-weight: bolder;
+						  background-image: linear-gradient(to left, transparent, purple, white);
+						  font-family: cursive;
+							border-radius: 1.5rem;
 
-		.circuit{
-		  font-weight: bold;
-		  background-image: linear-gradient(to left, blue, purple, lightseagreen);
-		  font-family:monospace;
-		}
+						}
+						.name{
+						  background-image: linear-gradient(to right, lightcoral, khaki);
+						  font-family:monospace;
+							border-radius: 1.5rem;
 
-		.priceArea{
-		  mix-blend-mode: difference;
-		}
+						}
 
-		.contentImage{
-			height: 60px;
-			width: 135px;
-		}
-		.v-content-modal::before {
-		  content: "";
-		  position: absolute;
-		  top: -23px;
-		  left: 30px;
-		  border: 10px solid transparent;
-		  border-color: transparent transparent #ddd transparent;
-		}
-		 </style>
+						.circuit{
+						  font-weight: bold;
+						  background-image: linear-gradient(to left, transparent, purple, lightseagreen);
+						  font-family:monospace;
+							z-index:0;
+							border-radius: 1.5rem;
+						}
+
+						.priceArea{
+						  mix-blend-mode: difference;
+						}
+
+						.contentImage{
+							height: 60px;
+							width: 135px;
+							border-radius: 0.5rem;
+						}
+						.v-content-modal::before {
+						  content: "";
+						  position: absolute;
+						  top: -23px;
+						  left: 30px;
+						  border: 10px solid transparent;
+						  border-color: transparent transparent #ddd transparent;
+						}
+						 </style>
 		  <script language="javascript" type="text/javascript">
 		        function moneyControlPage(title)
 		        {
@@ -541,11 +554,11 @@ No other alternative being found to get charts. Not going for Zerodha since they
 					<nav id="nav">
 						<a href="#home" class="icon brands fa-google"><span>GoogleFinance</span></a>
 						<a href="#work" class="icon solid fa-chart-area"><span>Graph</span></a>
-						<a ondblclick="arr.push(stockCurrent); printer();" href="#contact" class="icon solid fa-list-alt"><span>TradeList</span></a>
+						<a ondblclick="arr.push(stockCurrent); printer();" onclick="getElementById('main').style.max-width='1200';" href="#contact" class="icon solid fa-list-alt"><span>TradeList</span></a>
 					</nav>
 
 				<!-- Main -->
-					<div id="main">
+					<div id="main" style="background: transparent; backdrop-filter: blur(10px); border-radius: 15px; border: 3px;">
 
 						<!-- Me -->
 							<article id="home" class="panel intro">
@@ -598,10 +611,10 @@ No other alternative being found to get charts. Not going for Zerodha since they
 									</ul>
 								</div>
 								<!-- parserOfArray() has 3 arguments, 1, 2 & 3; 1 is for text file, 2 is for tweet, 3 is for email.-->
-								<nav id="nav" style="filter:invert(95%);">
-									<a onclick="parserOfArray(1)" class="icon regular fa-save"><span>Download</span></a>
-									<a onclick="parserOfArray(2)" class="icon brands fa-twitter"><span>Tweet</span></a>
-									<a onclick="parserOfArray(3)" class="icon regular fa-envelope"><span>Email</span></a>
+								<nav id="nav">
+									<a onclick="parserOfArray(1)" class="icon regular fa-save" onmouseout="style='filter: drop-shadow(18px 18px 18px white) blur(3px);'" onmouseover="style='filter: drop-shadow(0 0 0) blur(0);'"><span>Download</span></a>
+									<a onclick="parserOfArray(2)" class="icon brands fa-twitter" onmouseout="style='filter: drop-shadow(18px 18px 18px white) blur(3px);'" onmouseover="style='filter: drop-shadow(0 0 0) blur(0);'"><span>Tweet</span></a>
+									<a onclick="parserOfArray(3)" class="icon regular fa-envelope" onmouseout="style='filter: drop-shadow(18px 18px 18px white) blur(3px);'" onmouseover="style='filter: drop-shadow(0 0 0) blur(0);'"><span>Email</span></a>
 								</nav>
 
 								<script>

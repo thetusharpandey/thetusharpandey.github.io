@@ -1,3 +1,12 @@
+<!DOCTYPE HTML>
+<!--
+idk man, anything except for google isnt happening.
+screener isnt happening for CORS
+tradingview has the widgets but cannot edit that.
+moneycontrols makes CORS,
+Got a github XFrame bypass but just cant get it running.
+No other alternative being found to get charts. Not going for Zerodha since they'll also have CORS, and not fucking up with my money place;
+-->
 <html>
 	<head>
 		<title>Astral by HTML5 UP</title>
@@ -12,96 +21,109 @@
 			<div id="wrapper" style="max-width: 47.3% !important; max-height:740px; overflow:auto;" >
 				<style>
 
-		        .content{
-		            position: relative;
-		            display: flex;
-		            z-index: 1;
-		        }
-		        .column{
-		          flex: 100%;
-		        }
-		       .content
-		       {
-		  font-family: Segoe UI;
-		  border: 1px solid #ddd;
-		  padding-top: 45px;
-			padding-left: 5px;
-			padding-right: 5px;
-		  box-sizing: border-box;
-		}
-		.upperLinkStuff{
-		  height: 25px;
-		  width: auto;
-		}
-		.divUpperLinkStuff{
-			margin-left: 0;
-			padding-left: 0;
-			align-items: flex-start;
-		}
-		.v-content-modal {
-		  z-index: 2;
-			font-size: 20px !important;
-		  position: absolute;
-		  box-shadow: 0 0 50px 20px  #ff66b3;
-		  width: auto;
-		  border-top: 3px solid #ddd;
-		  display: none;
-		  box-sizing: border-box;
-		}
+
+						        .content{
+						            position: relative;
+						            display: flex;
+						            z-index: 1;
+						        }
+						        .column{
+						          flex: 100%;
+						        }
+						       .content
+						       {
+						  font-family: Segoe UI;
+						  border: 1px solid #ddd;
+						  padding-top: 45px;
+							padding-left: 5px;
+							padding-right: 5px;
+						  box-sizing: border-box;
+						}
+						.upperLinkStuff{
+						  height: 25px;
+						  width: auto;
+							z-index: 3;
+						}
+						.divUpperLinkStuff{
+							margin-left: 0;
+							padding-left: 0;
+							align-items: flex-start;
+						}
+						.v-content-modal {
+						  z-index: 2;
+							padding: 4px;
+							font-size: 20px !important;
+							border-radius: 01.5rem;
+							-webkit-backdrop-filter: blur(6px);
+							backdrop-filter: blur(6px);
+						  position: absolute;
+						  box-shadow: 0 0 50px 20px  #ff66b3;
+						  width: auto;
+						  border:4px solid #ff66b3;
+						  display: none;
+						  box-sizing: border-box;
+						}
 
 
-		#info{
-		  border-style: solid;
-		  border-width: 2.3px;
-		  border-radius: 15px;
-		  border-color:  #8000ff ;
-		  margin: 1px;
-		  padding: 7px;
-		  width: 120px !important;
-		  height: 53.33px !important;
-		}
+						#info{
+						  border-style: solid;
+						  border-width: 2.3px;
+						  border-radius: 15px;
+						  border-color:  #8000ff ;
+						  margin: 1px;
+						  padding: 7px;
+						  width: 120px !important;
+						  height: 53.33px !important;
+						}
 
 
 
-		#logo{
-		 z-index: 1;
-		 padding-bottom: : 20px;
-		position: absolute;
-		margin-left: 46%;
-		}
-		.price{
-		  font-weight: bolder;
-		  background-image: linear-gradient(to right, blue, purple, white);
-		  font-family: cursive;
-		}
-		.name{
-		  background-image: linear-gradient(to right, lightcoral, khaki);
-		  font-family:monospace;
-		}
+						#logo{
+						 z-index: 1;
+						 padding-bottom: : 20px;
+						position: absolute;
+						margin-left: 46%;
+						}
+						.price{
+						  font-weight: bolder;
+						  background-image: linear-gradient(to left, transparent, purple, white);
+						  font-family: cursive;
+							border-radius: 1.5rem;
 
-		.circuit{
-		  font-weight: bold;
-		  background-image: linear-gradient(to left, blue, purple, lightseagreen);
-		  font-family:monospace;
-		}
+						}
+						.name{
+						  background-image: linear-gradient(to right, lightcoral, khaki);
+						  font-family:monospace;
+							border-radius: 1.5rem;
 
-		.priceArea{
-		  mix-blend-mode: difference;
-		}
+						}
 
-		.contentImage{
-			height: 60px;
-			width: 135px;
-		}
-		.v-content-modal::before {
-		  content: "";
-		  position: absolute;
-		  top: -23px;
-		  left: 30px;
-		  border: 10px solid transparent;
-		  border-color: transparent transparent #ddd transparent;
-		}
-		 </style>
+						.circuit{
+						  font-weight: bold;
+						  background-image: linear-gradient(to left, transparent, purple, lightseagreen);
+						  font-family:monospace;
+							z-index:0;
+							border-radius: 1.5rem;
+						}
+
+						.priceArea{
+						  mix-blend-mode: difference;
+						}
+
+						.contentImage{
+							height: 60px;
+							width: 135px;
+							border-radius: 0.5rem;
+						}
+						.v-content-modal::before {
+						  content: "";
+						  position: absolute;
+						  top: -23px;
+						  left: 30px;
+						  border: 10px solid transparent;
+						  border-color: transparent transparent #ddd transparent;
+						}
+						 </style>
 		  <script language="javascript" type="text/javascript">
 		        function moneyControlPage(title)
 		        {
@@ -1990,141 +2012,141 @@
 </br>
 </div>
 </div>
-  <div class="v-content-modal" style="color:black !important; background: rgba(255, 0, 0, 0.4);">
-      <div class="modal-title">
-          Title of the hover comes here
-      </div>
-      <div class="modal-content" align="center">
-          description of the hover comes here
-      </div>
-      <div class="modal-title2">
-          Title of the hover comes here
-      </div>
-      <div class="modal-content2" align="center">
-          description of the hover comes here
-      </div>
+<div class="v-content-modal" style="color:black !important; background: rgba(255, 0, 0, 0.4);">
+		<div class="modal-title">
+				Title of the hover comes here
+		</div>
+		<div class="modal-content" align="center">
+				description of the hover comes here
+		</div>
+		<div class="modal-title2">
+				Title of the hover comes here
+		</div>
+		<div class="modal-content2" align="center">
+				description of the hover comes here
+		</div>
 
-      <div class="price" >
-        ₹00.00<!--<p class="priceArea"><font color = "black">The two decimal price of the stock comes here</font></p>-->
-      </div>
+		<div class="price" >
+			₹00.00<!--<p class="priceArea"><font color = "black">The two decimal price of the stock comes here</font></p>-->
+		</div>
 <!--
-      <div class="name">
-        Name Not Available<!_ _<p class="priceArea"><font color = "black">The two decimal price of the stock comes here</font></p>_ _>
-      </div>
+		<div class="name">
+			Name Not Available<!_ _<p class="priceArea"><font color = "black">The two decimal price of the stock comes here</font></p>_ _>
+		</div>
 -->
-      <div class="circuit">
-        Circuit Not Available<!--<p class="priceArea"><font color = "black">The two decimal price of the stock comes here</font></p>-->
-      </div>
-  </div>
+		<div class="circuit">
+			Circuit Not Available<!--<p class="priceArea"><font color = "black">The two decimal price of the stock comes here</font></p>-->
+		</div>
+</div>
 
-  <!--jquery moved to the TOP to include the clas="upperLinkStuff" in the jquery scope, Was giving error since declared before jquery even referenced.-->
-  <script>
+<!--jquery moved to the TOP to include the clas="upperLinkStuff" in the jquery scope, Was giving error since declared before jquery even referenced.-->
+<script>
 $(function () {
-  let modal = $(".v-content-modal");
-  let title = $(".v-content-modal > .modal-title");
-  let content = $(".v-content-modal > .modal-content");
-  let title2 = $(".v-content-modal > .modal-title2");
-  let content2 = $(".v-content-modal > .modal-content2");
-  let priceTag = $(".v-content-modal > .price");
+let modal = $(".v-content-modal");
+let title = $(".v-content-modal > .modal-title");
+let content = $(".v-content-modal > .modal-content");
+let title2 = $(".v-content-modal > .modal-title2");
+let content2 = $(".v-content-modal > .modal-content2");
+let priceTag = $(".v-content-modal > .price");
 //let nameTag = $(".v-content-modal > .name");
-  let circuitSize = $(".v-content-modal > .circuit");
-  let btns = document.querySelectorAll("#info");
-  var timer;
-  var urlBase = "http://thetusharpandey.github.io";
-  var urlName = prompt("Please enter your domain", "<domain goes here>");
-  if (urlName!= null) {
-    urlBase = urlName;
-    document.getElementById("linkField").value = urlBase;
-  }
-  btns.forEach(btn => {
-      btn.addEventListener("mouseenter", (e) => {
-          const http = new XMLHttpRequest();
-          const scripName = e.target.getAttribute('title');
-          urlBase = linkReset();
-          const url = urlBase+"/getPrice/"+scripName;
-          console.log(url);
-          http.open("GET", url, false);
-          title.html(e.target.getAttribute('data-title'));
-          content.html(e.target.getAttribute('data-content'));
-          title2.html(e.target.getAttribute('data-title2'));
-          content2.html(e.target.getAttribute('data-content2'));
-        //nameTag.html("Name Not Available");
-          priceTag.html("~₹"+ e.target.getAttribute('price')+"~");
-          circuitSize.html("Circuit Not Available");
-          timer = setTimeout(() => {while(!http.send())
-          {
-            var obj1 = JSON.parse(http.responseText);
-          //<br> tag working in the text, since it is on HTML part, and ]n not working cuz not javascript, BUT {interestingly} "\n" was in there, but HTML did not render it even though it should've been taking it like text!!! STRANGE
-          //can combine everything in the price tag part to be containd in the gradient
-            priceTag.html("₹"+ obj1[0]);
-          //nameTag.html("<marquee>" + obj1[1] + "</marquee>");
-            circuitSize.html("Circuit: " + obj1[2] + "%");
-          }}, 2000);
-        });
+let circuitSize = $(".v-content-modal > .circuit");
+let btns = document.querySelectorAll("#info");
+var timer;
+var urlBase = "http://thetusharpandey.github.io";
+var urlName = prompt("Please enter your domain", "<domain goes here>");
+if (urlName!= null) {
+	urlBase = urlName;
+	document.getElementById("linkField").value = urlBase;
+}
+btns.forEach(btn => {
+		btn.addEventListener("mouseenter", (e) => {
+				const http = new XMLHttpRequest();
+				const scripName = e.target.getAttribute('title');
+				urlBase = linkReset();
+				const url = urlBase+"/getPrice/"+scripName;
+				console.log(url);
+				http.open("GET", url, false);
+				title.html(e.target.getAttribute('data-title'));
+				content.html(e.target.getAttribute('data-content'));
+				title2.html(e.target.getAttribute('data-title2'));
+				content2.html(e.target.getAttribute('data-content2'));
+			//nameTag.html("Name Not Available");
+				priceTag.html("~₹"+ e.target.getAttribute('price')+"~");
+				circuitSize.html("Circuit Not Available");
+				timer = setTimeout(() => {while(!http.send())
+				{
+					var obj1 = JSON.parse(http.responseText);
+				//<br> tag working in the text, since it is on HTML part, and ]n not working cuz not javascript, BUT {interestingly} "\n" was in there, but HTML did not render it even though it should've been taking it like text!!! STRANGE
+				//can combine everything in the price tag part to be containd in the gradient
+					priceTag.html("₹"+ obj1[0]);
+				//nameTag.html("<marquee>" + obj1[1] + "</marquee>");
+					circuitSize.html("Circuit: " + obj1[2] + "%");
+				}}, 2000);
+			});
 
-      btn.addEventListener("mousemove", (e) => {
-          modal.css({
-              top: 'unset',
-              right: 'unset',
-              left: 'unset',
-              bottom: 'unset'
-          });
+		btn.addEventListener("mousemove", (e) => {
+				modal.css({
+						top: 'unset',
+						right: 'unset',
+						left: 'unset',
+						bottom: 'unset'
+				});
 
 
-          let pageX, pageY, winWidth, winHeight, elmWidth, elmHeight, width_limit, height_limit = '';
-          pageX = e.pageX;
-          pageY = e.pageY;
-          winWidth = $(window).width();
-          winHeight = $(window).height();
-          elmWidth = $(".v-content-modal").width();
-          elmHeight = $(".v-content-modal").height();
-          width_limit = (winWidth*0.47) - elmWidth;
-          height_limit = winHeight - elmHeight;
+				let pageX, pageY, winWidth, winHeight, elmWidth, elmHeight, width_limit, height_limit = '';
+				pageX = e.pageX;
+				pageY = e.pageY;
+				winWidth = $(window).width();
+				winHeight = $(window).height();
+				elmWidth = $(".v-content-modal").width();
+				elmHeight = $(".v-content-modal").height();
+				width_limit = (winWidth*0.47) - elmWidth;
+				height_limit = winHeight - elmHeight;
 
-          (pageX > width_limit) ? crossWidth(): normalWidth();
-          (pageY > height_limit) ? crossHeight(): normalHeight();
+				(pageX > width_limit) ? crossWidth(): normalWidth();
+				(pageY > height_limit) ? crossHeight(): normalHeight();
 
-          function crossWidth() {
-              modal.css({
-                  right: width_limit+(elmWidth*1.75)+'px'
-              });
-          }
+				function crossWidth() {
+						modal.css({
+								right: width_limit+(elmWidth*1.75)+'px'
+						});
+				}
 
-          function normalWidth() {
-              modal.css({
-                  left: (pageX - 40) + 'px'
-              });
-          }
+				function normalWidth() {
+						modal.css({
+								left: (pageX - 40) + 'px'
+						});
+				}
 
-          function crossHeight() {
-              modal.css({
-                  top: e.pageY + 30 + 'px'
-              });
-          }
+				function crossHeight() {
+						modal.css({
+								top: e.pageY + 30 + 'px'
+						});
+				}
 
-          function normalHeight() {
-              modal.css({
-                  top: e.pageY + 30 + 'px'
-              });
-          }
+				function normalHeight() {
+						modal.css({
+								top: e.pageY + 30 + 'px'
+						});
+				}
 
-          // show when all customization is completed...
-          modal.show();
-      });
+				// show when all customization is completed...
+				modal.show();
+		});
 
-      btn.addEventListener("mouseleave", () => {
-          clearTimeout(timer);
-          modal.hide();
-      });
-  });
+		btn.addEventListener("mouseleave", () => {
+				clearTimeout(timer);
+				modal.hide();
+		});
+});
 
 });
- </script>
+</script>
 
 
 
- <!-- BG -->
- <div id="bg"></div>
+<!-- BG -->
+<div id="bg"></div>
 
 
 
@@ -2138,92 +2160,92 @@ return "Data will be lost if you leave the page, are you sure?";
 <!-- Wrapper2-->
 <div id="wrapper" style="margin-right: 1.4% !important; margin-left: 1.4% !important; overflow: scroll !important;">
 
-  <!-- Nav -->
-    <nav id="nav">
-      <a href="#home" class="icon brands fa-google"><span>GoogleFinance</span></a>
-      <a href="#work" class="icon solid fa-chart-area"><span>Graph</span></a>
-      <a ondblclick="arr.push(stockCurrent); printer();" href="#contact" class="icon solid fa-list-alt"><span>TradeList</span></a>
-    </nav>
+<!-- Nav -->
+	<nav id="nav">
+		<a href="#home" class="icon brands fa-google"><span>GoogleFinance</span></a>
+		<a href="#work" class="icon solid fa-chart-area"><span>Graph</span></a>
+		<a ondblclick="arr.push(stockCurrent); printer();" onclick="getElementById('main').style.max-width='1200';" href="#contact" class="icon solid fa-list-alt"><span>TradeList</span></a>
+	</nav>
 
-  <!-- Main -->
-    <div id="main">
+<!-- Main -->
+	<div id="main" style="background: transparent; backdrop-filter: blur(10px); border-radius: 15px; border: 3px;">
 
-      <!-- Me -->
-        <article id="home" class="panel intro">
-          <iframe id="googleFrame" height="700px" width=100% src="https://www.google.com/search?igu=1&q=tusharoxide"><!--value for src is a custom search url like this, it will be supplie by NSETITLE() function modified to return string value of that search url--></iframe>
+		<!-- Me -->
+			<article id="home" class="panel intro">
+				<iframe id="googleFrame" height="700px" width=100% src="https://www.google.com/search?igu=1&q=tusharoxide"><!--value for src is a custom search url like this, it will be supplie by NSETITLE() function modified to return string value of that search url--></iframe>
 
-          <!--
-          <a href="#work" class="jumplink pic">
-            <span class="arrow icon solid fa-chevron-right"><span>See my work</span></span>
-          </a>
-          -->
-        </article>
+				<!--
+				<a href="#work" class="jumplink pic">
+					<span class="arrow icon solid fa-chevron-right"><span>See my work</span></span>
+				</a>
+				-->
+			</article>
 
-      <!-- Work -->
-        <article id="work" class="panel">
-          <section>
-            <div><!--tradingview gives customjavascript code, they dontuse an iframe, but provde you custom boxes for their stocks-->
-              <!-- https://in.tradingview.com/widget/advanced-chart/ -->
-              <!-- TradingView Widget BEGIN
-              <div class="tradingview-widget-container">
-                <div id="tradingview_9a6a8"></div>
-                <div class="tradingview-widget-copyright"><a id="tradingviewLink" href="https://in.tradingview.com" rel="noopener" target="_blank"><span class="blue-text">Chart</span></a> by TradingView</div>
-                <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-                <script id="sampleScript" type="text/javascript">
-                new TradingView.widget(
-                {
-                "width": "auto","height": 600,"symbol": returner(),
-                "interval": "D","timezone": "Etc/UTC","theme": "dark","style": "1","locale": "in","toolbar_bg": "#f1f3f6","enable_publishing": false,"allow_symbol_change": true,"studies": ["BB@tv-basicstudies"],"container_id": "tradingview_9a6a8"}
-                );
-                </script>
-              </div>
-               TradingView Widget END -->
-                <script type="module" src="https://unpkg.com/x-frame-bypass"></script>
-                <iframe is="x-frame-bypass" id="yahooFrame" height="690px" width=100% src="google.com"></iframe>
-          </section>
+		<!-- Work -->
+			<article id="work" class="panel">
+				<section>
+					<div><!--tradingview gives customjavascript code, they dontuse an iframe, but provde you custom boxes for their stocks-->
+						<!-- https://in.tradingview.com/widget/advanced-chart/ -->
+						<!-- TradingView Widget BEGIN
+						<div class="tradingview-widget-container">
+							<div id="tradingview_9a6a8"></div>
+							<div class="tradingview-widget-copyright"><a id="tradingviewLink" href="https://in.tradingview.com" rel="noopener" target="_blank"><span class="blue-text">Chart</span></a> by TradingView</div>
+							<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+							<script id="sampleScript" type="text/javascript">
+							new TradingView.widget(
+							{
+							"width": "auto","height": 600,"symbol": returner(),
+							"interval": "D","timezone": "Etc/UTC","theme": "dark","style": "1","locale": "in","toolbar_bg": "#f1f3f6","enable_publishing": false,"allow_symbol_change": true,"studies": ["BB@tv-basicstudies"],"container_id": "tradingview_9a6a8"}
+							);
+							</script>
+						</div>
+						 TradingView Widget END -->
+							<script type="module" src="https://unpkg.com/x-frame-bypass"></script>
+							<iframe is="x-frame-bypass" id="yahooFrame" height="690px" width=100% src="google.com"></iframe>
+				</section>
 
-        </article>
+			</article>
 
-      <!-- Contact -->
-        <article id="contact" class="panel">
-          <header>
-            <h2 align="center"><u>Prospective Scrip Shortlisting</u></h2>
-            <p> Double click the nav icon to add to current stock to list. Download from the icon when done.</p>
-          </header>
-          <h5 ondblclick="arr.push(stockCurrent); printer();" class="icon solid fa-cart-arrow-down"></h5>
-          <div id="currentName">--No stock--</div>
-          <br>
-          <div>
-            <ol id="stockList">
-              <!--Nothing in here initially-->
-            </ul>
-          </div>
-          <!-- parserOfArray() has 3 arguments, 1, 2 & 3; 1 is for text file, 2 is for tweet, 3 is for email.-->
-          <nav id="nav" style="filter:invert(95%);">
-            <a onclick="parserOfArray(1)" class="icon regular fa-save"><span>Download</span></a>
-            <a onclick="parserOfArray(2)" class="icon brands fa-twitter"><span>Tweet</span></a>
-            <a onclick="parserOfArray(3)" class="icon regular fa-envelope"><span>Email</span></a>
-          </nav>
+		<!-- Contact -->
+			<article id="contact" class="panel">
+				<header>
+					<h2 align="center"><u>Prospective Scrip Shortlisting</u></h2>
+					<p> Double click the nav icon to add to current stock to list. Download from the icon when done.</p>
+				</header>
+				<h5 ondblclick="arr.push(stockCurrent); printer();" class="icon solid fa-cart-arrow-down"></h5>
+				<div id="currentName">--No stock--</div>
+				<br>
+				<div>
+					<ol id="stockList">
+						<!--Nothing in here initially-->
+					</ul>
+				</div>
+				<!-- parserOfArray() has 3 arguments, 1, 2 & 3; 1 is for text file, 2 is for tweet, 3 is for email.-->
+				<nav id="nav">
+					<a onclick="parserOfArray(1)" class="icon regular fa-save" onmouseout="style='filter: drop-shadow(18px 18px 18px white) blur(3px);'" onmouseover="style='filter: drop-shadow(0 0 0) blur(0);'"><span>Download</span></a>
+					<a onclick="parserOfArray(2)" class="icon brands fa-twitter" onmouseout="style='filter: drop-shadow(18px 18px 18px white) blur(3px);'" onmouseover="style='filter: drop-shadow(0 0 0) blur(0);'"><span>Tweet</span></a>
+					<a onclick="parserOfArray(3)" class="icon regular fa-envelope" onmouseout="style='filter: drop-shadow(18px 18px 18px white) blur(3px);'" onmouseover="style='filter: drop-shadow(0 0 0) blur(0);'"><span>Email</span></a>
+				</nav>
 
-          <script>
-          function printer()
-          {
-            var node = document.createElement("LI");                 // Create a <li> node
-            var textnode = document.createTextNode(stockCurrent);    // Create a text node
-            node.appendChild(textnode);                              // Append the text to <li>
-            document.getElementById("stockList").appendChild(node);     // Append <li> to <ul> with id="myList"
-          }
-          </script>
-        </article>
+				<script>
+				function printer()
+				{
+					var node = document.createElement("LI");                 // Create a <li> node
+					var textnode = document.createTextNode(stockCurrent);    // Create a text node
+					node.appendChild(textnode);                              // Append the text to <li>
+					document.getElementById("stockList").appendChild(node);     // Append <li> to <ul> with id="myList"
+				}
+				</script>
+			</article>
 
-    </div>
+	</div>
 
-  <!-- Footer -->
-    <div id="footer">
-      <ul class="copyright">
-        <li>&copy; <u><a href="https://www.thetusharpandey.github.io">thetusharpandey</a></u></li><li><u><b><a href="../../coverPage/index.html">Riquardi Equity</a></b></u></li>
-      </ul>
-    </div>
+<!-- Footer -->
+	<div id="footer">
+		<ul class="copyright">
+			<li>&copy; <u><a href="https://www.thetusharpandey.github.io">thetusharpandey</a></u></li><li><u><b><a href="../../coverPage/index.html">Riquardi Equity</a></b></u></li>
+		</ul>
+	</div>
 
 </div>
 </div>
