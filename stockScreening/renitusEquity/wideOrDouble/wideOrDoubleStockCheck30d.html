@@ -18,7 +18,7 @@ No other alternative being found to get charts. Not going for Zerodha since they
 	<body class="is-preload">
 		<div id="pageContent">
 		<!-- Wrapper1-->
-			<div id="wrapper" style="max-width: 47.3% !important; max-height:740px; overflow:auto;" >
+			<div id="wrapper" style="max-width: 47.3% !important; max-height:803px; overflow:auto;" >
 				<style>
 
 
@@ -34,19 +34,19 @@ No other alternative being found to get charts. Not going for Zerodha since they
 						       {
 						  font-family: Segoe UI;
 						  border: 1px solid #ddd;
-						  padding-top: 45px;
-							padding-left: 5px;
+						  padding-top: 20px;
+							padding-left: 24px;
 							padding-right: 5px;
 						  box-sizing: border-box;
 						}
 						.upperLinkStuff{
-						  height: 25px;
+						  height: 35px;
 						  width: auto;
 							z-index: 3;
 						}
 						.divUpperLinkStuff{
 							margin-left: 0;
-							padding-left: 0;
+							padding-left: 23px;
 							align-items: flex-start;
 						}
 						.v-content-modal {
@@ -105,6 +105,7 @@ No other alternative being found to get charts. Not going for Zerodha since they
 							z-index:0;
 							border-radius: 1.5rem;
 						}
+
 
 						.priceArea{
 						  mix-blend-mode: difference;
@@ -226,7 +227,7 @@ No other alternative being found to get charts. Not going for Zerodha since they
 		    <!--JQUERY ends-->
 		<div class="divUpperLinkStuff">
 		    <input class="upperLinkStuff" id="linkField" size="50" value="http://thetusharpandey.github.io">
-		    <button class="upperLinkStuff" type="button" onClick = 'linkReset();'> Update Link </button>
+		    <button class="upperLinkStuff" style="padding-top:9px;" type="button" onClick = 'linkReset();'> Update Link </button>
 		</div>
 		<div class="content">
 		  <div class="column">
@@ -2164,7 +2165,7 @@ return "Data will be lost if you leave the page, are you sure?";
 	<nav id="nav">
 		<a href="#home" class="icon brands fa-google"><span>GoogleFinance</span></a>
 		<a href="#work" class="icon solid fa-chart-area"><span>Graph</span></a>
-		<a ondblclick="arr.push(stockCurrent); printer();" onclick="getElementById('main').style.max-width='1200';" href="#contact" class="icon solid fa-list-alt"><span>TradeList</span></a>
+		<a ondblclick="arr.push(stockCurrent); printer();"  href="#contact" class="icon solid fa-list-alt"><span>TradeList</span></a>
 	</nav>
 
 <!-- Main -->
@@ -2209,16 +2210,16 @@ return "Data will be lost if you leave the page, are you sure?";
 		<!-- Contact -->
 			<article id="contact" class="panel">
 				<header>
-					<h2 align="center"><u>Prospective Scrip Shortlisting</u></h2>
+					<h2 style="color:#ffffff !important;" align="center"><u>Prospective Scrip Shortlisting</u></h2>
 					<p> Double click the nav icon to add to current stock to list. Download from the icon when done.</p>
 				</header>
-				<h5 ondblclick="arr.push(stockCurrent); printer();" class="icon solid fa-cart-arrow-down"></h5>
+			  <h5 style="color:#ffffff !important;" ondblclick="arr.push(stockCurrent); printer();" class="icon solid fa-cart-arrow-down"></h5>
 				<div id="currentName">--No stock--</div>
 				<br>
 				<div>
-					<ol id="stockList">
+					<ol style="color:#ffffff !important;" id="stockList">
 						<!--Nothing in here initially-->
-					</ul>
+					</ol>
 				</div>
 				<!-- parserOfArray() has 3 arguments, 1, 2 & 3; 1 is for text file, 2 is for tweet, 3 is for email.-->
 				<nav id="nav">
