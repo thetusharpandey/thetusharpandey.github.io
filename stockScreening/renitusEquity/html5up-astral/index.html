@@ -137,7 +137,7 @@ No other alternative being found to get charts. Not going for Zerodha since they
 		        {
 		          //handles all google finance TYPE pages, having stats and numbers, just being clear of any wierd setting that I might see :)
 		         //-- nsePageWindow = window.open("https://www.google.com/search?q="+title+" stock price nse");
-		        //--  screenerInWindow = window.open("https://www.screener.in/company/"+title);
+		        screenerInWindow = window.open("https://www.screener.in/company/"+title);
 						nseFrameWindow="https://www.google.com/search?igu=1&q="+title+"+stock+price+nse";
 						document.getElementById("googleFrame").setAttribute('src', nseFrameWindow);
 						tradingViewFrameWindow = "https://in.tradingview.com/chart?symbols=BSE:"+title;
