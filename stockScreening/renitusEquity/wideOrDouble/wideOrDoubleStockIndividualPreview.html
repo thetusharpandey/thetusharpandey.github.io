@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
 <!--
+https://developer.mozilla.org/en-US/docs/Web/API/NodeList {version 2}
 idk man, anything except for google isnt happening.
 screener isnt happening for CORS
 tradingview has the widgets but cannot edit that.
@@ -8,230 +9,234 @@ Got a github XFrame bypass but just cant get it running.
 No other alternative being found to get charts. Not going for Zerodha since they'll also have CORS, and not fucking up with my money place;
 -->
 <html>
-	<head>
-		<title>NSE | Renitus</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="is-preload">
-		<div id="pageContent">
+
+<head>
+	<title>NSE | Renitus</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<noscript>
+		<link rel="stylesheet" href="assets/css/noscript.css" />
+	</noscript>
+</head>
+
+<body class="is-preload">
+	<div id="pageContent">
 		<!-- Wrapper1-->
-			<div id="wrapper" style="max-width: 47.3% !important; max-height:803px; overflow:auto;" >
-				<style>
+		<div id="wrapper" style="max-width: 47.3% !important; max-height:803px; overflow:auto;">
+			<style>
+				.content {
+					position: relative;
+					display: flex;
+					z-index: 1;
+				}
+
+				.column {
+					flex: 100%;
+				}
+
+				.content {
+					font-family: Segoe UI;
+					border: 1px solid #ddd;
+					padding-top: 45px;
+					padding-left: 5px;
+					padding-right: 5px;
+					box-sizing: border-box;
+				}
+
+				.upperLinkStuff {
+					height: 25px;
+					width: auto;
+					z-index: 3;
+				}
+
+				.divUpperLinkStuff {
+					margin-left: 0;
+					padding-left: 0;
+					align-items: flex-start;
+				}
+
+				.v-content-modal {
+					z-index: 2;
+					padding: 4px;
+					font-size: 20px !important;
+					border-radius: 01.5rem;
+					-webkit-backdrop-filter: blur(6px);
+					backdrop-filter: blur(6px);
+					position: absolute;
+					box-shadow: 0 0 50px 20px #ff66b3;
+					width: auto;
+					border: 4px solid #ff66b3;
+					display: none;
+					box-sizing: border-box;
+				}
 
 
-						        .content{
-						            position: relative;
-						            display: flex;
-						            z-index: 1;
-						        }
-						        .column{
-						          flex: 100%;
-						        }
-						       .content
-						       {
-						  font-family: Segoe UI;
-						  border: 1px solid #ddd;
-						  padding-top: 45px;
-							padding-left: 5px;
-							padding-right: 5px;
-						  box-sizing: border-box;
-						}
-						.upperLinkStuff{
-						  height: 25px;
-						  width: auto;
-							z-index: 3;
-						}
-						.divUpperLinkStuff{
-							margin-left: 0;
-							padding-left: 0;
-							align-items: flex-start;
-						}
-						.v-content-modal {
-						  z-index: 2;
-							padding: 4px;
-							font-size: 20px !important;
-							border-radius: 01.5rem;
-							-webkit-backdrop-filter: blur(6px);
-							backdrop-filter: blur(6px);
-						  position: absolute;
-						  box-shadow: 0 0 50px 20px  #ff66b3;
-						  width: auto;
-						  border:4px solid #ff66b3;
-						  display: none;
-						  box-sizing: border-box;
-						}
-
-
-						#info{
-						  border-style: solid;
-						  border-width: 2.3px;
-						  border-radius: 15px;
-						  border-color:  #8000ff ;
-						  margin: 1px;
-						  padding: 7px;
-						  width: 120px !important;
-						  height: 53.33px !important;
-						}
+				#info {
+					border-style: solid;
+					border-width: 2.3px;
+					border-radius: 15px;
+					border-color: #8000ff;
+					margin: 1px;
+					padding: 7px;
+					width: 120px !important;
+					height: 53.33px !important;
+				}
 
 
 
-						#logo{
-						 z-index: 1;
-						 padding-bottom: : 20px;
-						position: absolute;
-						margin-left: 46%;
-						}
-						.price{
-						  font-weight: bolder;
-						  background-image: linear-gradient(to left, transparent, purple, white);
-						  font-family: cursive;
-							border-radius: 1.5rem;
+				#logo {
+					z-index: 1;
+					padding-bottom: : 20px;
+					position: absolute;
+					margin-left: 46%;
+				}
 
-						}
-						.name{
-						  background-image: linear-gradient(to right, lightcoral, khaki);
-						  font-family:monospace;
-							border-radius: 1.5rem;
+				.price {
+					font-weight: bolder;
+					background-image: linear-gradient(to left, transparent, purple, white);
+					font-family: cursive;
+					border-radius: 1.5rem;
 
-						}
+				}
 
-						.circuit{
-						  font-weight: bold;
-						  background-image: linear-gradient(to left, transparent, purple, lightseagreen);
-						  font-family:monospace;
-							z-index:0;
-							border-radius: 1.5rem;
-						}
+				.name {
+					background-image: linear-gradient(to right, lightcoral, khaki);
+					font-family: monospace;
+					border-radius: 1.5rem;
 
-						.priceArea{
-						  mix-blend-mode: difference;
-						}
+				}
 
-						.contentImage{
-							height: 60px;
-							width: 135px;
-							border-radius: 0.5rem;
-						}
-						.v-content-modal::before {
-						  content: "";
-						  position: absolute;
-						  top: -23px;
-						  left: 30px;
-						  border: 10px solid transparent;
-						  border-color: transparent transparent #ddd transparent;
-						}
-						 </style>
-		  <script language="javascript" type="text/javascript">
-		        function moneyControlPage(title)
-		        {
-		          //handles all the chart pages that I might find in the future, MoneyControl stands for Moneycontrol TYPE pages
-		          //moneyControlPageWindow = window.open("https://www.moneycontrol.com/mc/stock/chart?exchangeId="+title);
-		          //Deactivating this, coz trading view looks cool doe,
-		          //--moneyControlPageWindow = window.open("https://www.tradingview.com/chart/?symbol="+title);
-		        }
-						var arr=["ScripNameToTrade:"];
-		        function nsePage(title)
-		        {
-		          //handles all google finance TYPE pages, having stats and numbers, just being clear of any wierd setting that I might see :)
-		         //-- nsePageWindow = window.open("https://www.google.com/search?q="+title+" stock price nse");
-		        //screenerInWindow = window.open("https://www.screener.in/company/"+title);
-						nseFrameWindow="https://www.google.com/search?igu=1&q="+title+"+stock+price+nse";
-						document.getElementById("googleFrame").setAttribute('src', nseFrameWindow);
-						tradingSpecial = "https://in.tradingview.com/chart?symbols=BSE:"+title;
-						screenerSpecial = "https://screener.in/company/"+title+"/consolidated#quarters";
-						//document.getElementById("tradingviewLink").setAttribute('href', tradingSpecial);
-						yahooSpecial="https://finance.yahoo.com/chart/"+title+".NS";
-						moneySpecial="https://www.moneycontrol.com/mc/stock/chart?exchangeId="+title;
-						document.getElementById("yahooFrame").setAttribute('src',moneySpecial);
-						document.getElementById("screenerLink").setAttribute('href',screenerSpecial); //open link from the icon itself
-						stockCurrent=title;
-						console.log(stockCurrent+" stockCurrent hai yeh");
-						document.getElementById("currentName").innerHTML=stockCurrent;
-						console.log(moneySpecial);
-		        }
-						function listDownloader(filename, dataHoldingStringVariable){
-							// A click on the button triggering this, starts the download of filename file (.txt by default or specify) that is containing data supplied in the dataHoldingStringVariable.
-							var element = document.createElement('a');
-						  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(dataHoldingStringVariable));
-						  element.setAttribute('download', filename);
+				.circuit {
+					font-weight: bold;
+					background-image: linear-gradient(to left, transparent, purple, lightseagreen);
+					font-family: monospace;
+					z-index: 0;
+					border-radius: 1.5rem;
+				}
 
-						  element.style.display = 'none';
-						  document.body.appendChild(element);
+				.priceArea {
+					mix-blend-mode: difference;
+				}
 
-						  element.click();
+				.contentImage {
+					height: 60px;
+					width: 135px;
+					border-radius: 0.5rem;
+				}
 
-						  document.body.removeChild(element);
-						}
-						function parserOfArray(choice)
-						{
-							switch (choice) {
-								case 1:{
-									returningStuff = "Stocks to consider:";
-									for (var i = 0; i < arr.length; i++) {
-										returningStuff+=arr[i]+",";
-									}
-									const d = new Date();
-									month = d.getMonth()+1;
-									listDownloader(d.getDate()+"-"+month+"-"+d.getFullYear(), returningStuff);
-								}
-									break;
-								case 2:{
-									returningStuff = "https://twitter.com/intent/tweet?text=";
-									for (var i = 0; i < arr.length; i++) {
-										returningStuff+="%0A"+arr[i];
-									}
-									window.open(returningStuff);
-								}
-									break;
-								case 3:{
-									const d = new Date();
-									month = d.getMonth()+1;
-									returningStuff = "mailto:thetusharpandey@icloud.com?body=";
-									for (var i = 0; i < arr.length; i++) {
-										returningStuff+="%0A"+arr[i];
-									}
-									window.open(returningStuff);
-								}
-									break;
-								default:Document.write("Ghor parsing anarth!");
+				.v-content-modal::before {
+					content: "";
+					position: absolute;
+					top: -23px;
+					left: 30px;
+					border: 10px solid transparent;
+					border-color: transparent transparent #ddd transparent;
+				}
+			</style>
+			<script language="javascript" type="text/javascript">
+				function moneyControlPage(title) {
+					//handles all the chart pages that I might find in the future, MoneyControl stands for Moneycontrol TYPE pages
+					//moneyControlPageWindow = window.open("https://www.moneycontrol.com/mc/stock/chart?exchangeId="+title);
+					//Deactivating this, coz trading view looks cool doe,
+					//--moneyControlPageWindow = window.open("https://www.tradingview.com/chart/?symbol="+title);
+				}
+				var arr = ["ScripNameToTrade:"];
 
+				function nsePage(title) {
+					//handles all google finance TYPE pages, having stats and numbers, just being clear of any wierd setting that I might see :)
+					//-- nsePageWindow = window.open("https://www.google.com/search?q="+title+" stock price nse");
+					//screenerInWindow = window.open("https://www.screener.in/company/"+title);
+					nseFrameWindow = "https://www.google.com/search?igu=1&q=" + title + "+stock+price+nse";
+					document.getElementById("googleFrame").setAttribute('src', nseFrameWindow);
+					tradingSpecial = "https://in.tradingview.com/chart?symbols=BSE:" + title;
+					screenerSpecial = "https://screener.in/company/" + title + "/consolidated#quarters";
+					//document.getElementById("tradingviewLink").setAttribute('href', tradingSpecial);
+					yahooSpecial = "https://finance.yahoo.com/chart/" + title + ".NS";
+					moneySpecial = "https://www.moneycontrol.com/mc/stock/chart?exchangeId=" + title;
+					document.getElementById("yahooFrame").setAttribute('src', moneySpecial);
+					document.getElementById("screenerLink").setAttribute('href', screenerSpecial); //open link from the icon itself
+					stockCurrent = title;
+					console.log(stockCurrent + " stockCurrent hai yeh");
+					document.getElementById("currentName").innerHTML = stockCurrent;
+					console.log(moneySpecial);
+				}
+
+				function listDownloader(filename, dataHoldingStringVariable) {
+					// A click on the button triggering this, starts the download of filename file (.txt by default or specify) that is containing data supplied in the dataHoldingStringVariable.
+					var element = document.createElement('a');
+					element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(dataHoldingStringVariable));
+					element.setAttribute('download', filename);
+					element.style.display = 'none';
+					document.body.appendChild(element);
+					element.click();
+					document.body.removeChild(element);
+				}
+
+				function parserOfArray(choice) {
+					switch (choice) {
+						case 1: {
+							returningStuff = "Stocks to consider:";
+							for (var i = 0; i < arr.length; i++) {
+								returningStuff += arr[i] + ",";
 							}
+							const d = new Date();
+							month = d.getMonth() + 1;
+							listDownloader(d.getDate() + "-" + month + "-" + d.getFullYear(), returningStuff);
 						}
-		        function closer()
-		        {
-		          //safari gave error for variable not defined (window variable)
-		          if(typeof nsePageWindow !== 'undefined')
-		          {
-		            nsePageWindow.close();
-		          }
-		          if(typeof moneyControlPageWindow !== 'undefined')
-		          {
-		            moneyControlPageWindow.close();
-		          }
-		          if(typeof screenerInWindow !== 'undefined')
-		          {
-		            screenerInWindow.close();
-		          }
-		        }
-		    </script>
-		  <script language = "javascript" type = "text/javascript">
-		      function linkReset(){
-		        var x = document.getElementById("linkField").value;
-		        return x;
-		      }
-		    </script>
-		    <!--That JQUERY thing from the bottom-->
-		    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-		    <!--JQUERY ends-->
-		<div class="divUpperLinkStuff">
-		    <input class="upperLinkStuff" id="linkField" size="50" style="font-size: 13pt;" value="http://thetusharpandey.github.io">
-		    <button class="upperLinkStuff" type="button" onClick = 'linkReset();'> Update Link </button>
-		</div>
-		<div class="content">
-		  <div class="column">
+						break;
+					case 2: {
+						returningStuff = "https://twitter.com/intent/tweet?text=";
+						for (var i = 0; i < arr.length; i++) {
+							returningStuff += "%0A" + arr[i];
+						}
+						window.open(returningStuff);
+					}
+					break;
+					case 3: {
+						const d = new Date();
+						month = d.getMonth() + 1;
+						returningStuff = "mailto:thetusharpandey@icloud.com?body=";
+						for (var i = 0; i < arr.length; i++) {
+							returningStuff += "%0A" + arr[i];
+						}
+						window.open(returningStuff);
+					}
+					break;
+					default:
+						Document.write("Ghor parsing anarth!");
+
+					}
+				}
+
+				function closer() {
+					//safari gave error for variable not defined (window variable)
+					if (typeof nsePageWindow !== 'undefined') {
+						nsePageWindow.close();
+					}
+					if (typeof moneyControlPageWindow !== 'undefined') {
+						moneyControlPageWindow.close();
+					}
+					if (typeof screenerInWindow !== 'undefined') {
+						screenerInWindow.close();
+					}
+				}
+			</script>
+			<script language="javascript" type="text/javascript">
+				function linkReset() {
+					var x = document.getElementById("linkField").value;
+					return x;
+				}
+			</script>
+			<!--That JQUERY thing from the bottom-->
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+			<!--JQUERY ends-->
+			<div class="divUpperLinkStuff">
+				<input class="upperLinkStuff" id="linkField" size="50" style="font-size: 13pt;" value="http://thetusharpandey.github.io">
+				<button class="upperLinkStuff" type="button" onClick='linkReset();'> Update Link </button>
+			</div>
+			<div class="content">
+				<div class="column">
 		  <img src='https://static.nseindia.com/sparklines/today/BLUECHIPEQN.jpg' price = 0.35 alt = 'BLUECHIP' title = "BLUECHIP" onmouseover='closer()' onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img class="contentImage"   src ="https://static.nseindia.com/sparklines/30d/BLUECHIP-EQ.jpg">' data-title2='1Year' data-content2='<img class="contentImage"  src ="https://static.nseindia.com/sparklines/365d/BLUECHIP-EQ.jpg">'>
 		  <img src='https://static.nseindia.com/sparklines/today/KGLEQN.jpg' price = 0.25 alt = 'KGL' title = "KGL" onmouseover="closer()" onclick='nsePage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img class="contentImage"   src ="https://static.nseindia.com/sparklines/30d/KGL-EQ.jpg">' data-title2='1Year' data-content2='<img class="contentImage"   src ="https://static.nseindia.com/sparklines/365d/KGL-EQ.jpg">'>
 		  <img src='https://static.nseindia.com/sparklines/today/RAJRAYONEQN.jpg' price = 0.25 alt = 'RAJRAYON' title = "RAJRAYON" onmouseover="closer()" onclick='nsePage(title); moneyControlPage(title); style.cssText = "box-shadow: 0 0 25px 30px  #e6e600;"' id='info' data-title='30Day' data-content='<img class="contentImage"   src ="https://static.nseindia.com/sparklines/30d/RAJRAYON-EQ.jpg">' data-title2='1Year' data-content2='<img class="contentImage"   src ="https://static.nseindia.com/sparklines/365d/RAJRAYON-EQ.jpg">'>
