@@ -1,0 +1,17 @@
+Make a page to read the stock list A-Z and open the screener.in page for that, Possible the quarterly section and screenshot it, save the file as the stock name and close the tab, once done, open the next stock and do the same thing. 
+
+Once all the pictures are taken, they are stored for ready to use whenever the picture is needed.
+
+When the stock is clicked in the web portal, the data is required for its quarter results, I currently have to go to the screener page to get the reading and come back from it, Or I do the Mac Preview shit, It's bad. If I cannot get the data from the portal I'll get it explicitly. 
+
+When the stock is clicked, get the image from storage and pass it to the client that is displayed to him in proper scroll or scale as and when necessary.
+
+
+code:
+
+Offline API and single page stock portal variant kept ready, double display mode (API left, portal Right).
+Python get stock list. Give stock name one by one to the portal.
+Portal gets a stock code, if its different from last...close the screener window if open already AND/OR open the new tab, set a hit&trial duration of waiting before you send a confirmation to the API for the screener webpage being ready.
+Python receives the confirmation of page open and clicked a screenshot of the second screen and saves it in proper name and date (Maybe?).
+Send the next stock name to the portal.
+Portal receives the next stock name and closes the first window if open, And then opens the next window and repeats the step.
