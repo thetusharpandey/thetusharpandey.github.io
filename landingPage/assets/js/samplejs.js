@@ -7,7 +7,7 @@ function dimmingPreloading(){
   });
 };
 function clickedWaiting() {
-  window.open("../secondPage/index2.html","_self");
+  window.open("../landingPage/index2/index.html","_self");
 };
 $('#linkIcon').click(function(){
   $('#riquardi').css({
