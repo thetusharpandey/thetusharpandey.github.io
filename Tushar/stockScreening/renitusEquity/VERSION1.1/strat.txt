@@ -1,0 +1,35 @@
+Use following code to fetch the html source. 
+
+fetch("https://www.screener.in/company/HDFCLIFE/", {
+  "headers": {
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+    "accept-language": "en-IN,en-GB;q=0.9,en-US;q=0.8,en;q=0.7,hi;q=0.6",
+    "cache-control": "no-cache",
+    "pragma": "no-cache",
+    "sec-ch-ua": "\"Not?A_Brand\";v=\"8\", \"Chromium\";v=\"108\", \"Google Chrome\";v=\"108\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"macOS\"",
+    "sec-fetch-dest": "document",
+    "sec-fetch-mode": "navigate",
+    "sec-fetch-site": "same-origin",
+    "sec-fetch-user": "?1",
+    "upgrade-insecure-requests": "1"
+  },
+  "referrer": "https://www.screener.in/company/DEEPAKNTR/consolidated/",
+  "referrerPolicy": "no-referrer-when-downgrade",
+  "body": null,
+  "method": "GET",
+  "mode": "cors",
+  "credentials": "include"
+});
+
+
+************************************************************************
+
+
+Once all the stocks are fetched, or the source code downloaded, use a program to fill all files in a program. And filter through to find the data elements, 
+Form tables to contain all the good data in 2d arrays or something. 
+This is kept into the personal database, and given out as need, or probably committed on every update, since being only text it will be small data
+
+Use this data to present data in screener tab of the dashboard, thereby enhancing the data presentation, and enabling powerful data consumption. 
+Use this data to do internal research as well, since powerful tool is EPS of a quarter, and mapping proper insight to it. Not many people would know about such companies. 
