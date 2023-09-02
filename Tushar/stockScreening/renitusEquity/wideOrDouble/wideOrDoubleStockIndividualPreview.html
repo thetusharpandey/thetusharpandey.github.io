@@ -12,6 +12,9 @@ google api:
 	account display name: scripRateApiAccount
 	account ID: scriprateapiaccount@scriprateapi.iam.gserviceaccount.com
 	console.cloud.google.com
+
+
+
 -->
 <html>
 	<head>
@@ -607,6 +610,18 @@ screener scan and data churning-> for each element, visit screener on auto and s
 
 
 
+bhavcopy gives all the stocks active-> get the csv from link https://archives.nseindia.com/products/content/sec_bhavdata_full_02052023.csv
+
+filter the EQ series
+
+ONCE: scan each stock for price from https://www.nseindia.com/api/quote-equity?symbol=TATAMOTORS
+
+save the same list with personal API with price.
+
+send this list to api, the api returns the stocks that are not in it and also adds these stocks then to the local list
+WE fetch the price of these stocks and send the prices back to the list which are appended again
+now the local list is sorted, fetch 30/50/80 stocks in a bunch and render to page with the fetched price. 
+we may fetch the price freshly from the nse api, and these fetched prices are sent to the local api as refresh patch
 
 
 
@@ -679,7 +694,7 @@ window.onbeforeunload = function() {
 
 				<!-- Me -->
 					<article id="home" class="panel intro">
-						<iframe id="googleFrame" height="700px" width=100% src="https://www.google.com/search?igu=1&q=tusharoxide"><!--value for src is a custom search url like this, it will be supplie by NSETITLE() function modified to return string value of that search url--></iframe>
+						<iframe id="googleFrame" height="700px" width=100% src="https://www.google.com/search?igu=1&q=tusharoxide"><!--value for src is a custom search url like this, it will be supplied by NSETITLE() function modified to return string value of that search url--></iframe>
 
 						<!--
 						<a href="#work" class="jumplink pic">
