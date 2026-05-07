@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Agent Global Map</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+  <style>
+    body, html { margin:0; height:100%; background:#0b0b0f; }
+    #map { height:100%; }
+
+    .agent-pin {
+      width:36px;height:48px;position:relative;
+    }
+    .agent-pin::before {
+      content:'';position:absolute;width:36px;height:36px;
+      background:var(--color);border-radius:50%;
+      box-shadow:0 0 12px var(--color);
+    }
+    .agent-pin::after {
+      /* content:'';position:absolute;bottom:0;left:50%; */
+      transform:translateX(-50%);
+      border-left:8px solid transparent;
+      border-right:8px solid transparent;
+      border-top:12px solid var(--color);
+    }
+    .agent-pin img {
+      position:absolute;top:4px;left:4px;
+      width:28px;height:28px;border-radius:50%;
+    }
+
+    .modal {
+      position:absolute;z-index:999;
+      background:#111;border:1px solid #00f0ff;
+      padding:10px;border-radius:10px;color:white;
+    }
+
+    button {
+      background:#111;color:#00f0ff;
+      border:1px solid #00f0ff;
+      padding:8px;border-radius:6px;
+      cursor:pointer;
+    }
+
+    #map.tilted {
+  transform: perspective(1000px) rotateX(40deg) scale(1.5);
+  transition: transform 1s ease;
+}
+
+#map {
+  transform-origin: center center;
+  transition: transform 1s ease;
+}
+  </style>
+</head>
+
+<body>
+
+<div id="map"></div>
+
+<!-- UI -->
+<div style="position:absolute;top:20px;right:20px;z-index:1000;display:flex;flex-direction:column;gap:10px;">
+  
+  <button id="addAgentBtn">+ Add Agent</button>
+  <div id="agentSelector" style="display:none;background:#111;padding:10px;border:1px solid #00f0ff;"></div>
+
+  <button id="globalToggle">Global View: OFF</button>
+
+  <button id="agentViewBtn">Agent View ⬇</button>
+  <div id="agentFilterBox" style="display:none;background:#111;padding:10px;border:1px solid #00f0ff;">
+    <div id="agentCheckboxes" style="color:white;"></div>
+  </div>
+
+  <button id="exportBtn">Export</button>
+
+</div>
+
+<div id="modal" class="modal" style="display:none;"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+const DATA_URL = "https://script.google.com/macros/s/AKfycbwldPKqgBN_22guGdsLLmt_b9xu4my00iy1gQRHJnm790M6Lsn4qAMRc8ZttZfVbEqo5A/exec";
+
+const DEFAULT_COLORS = [
+  "#ff4d4d",
+  "#4dff88",
+  "#4da6ff",
+  "#ffd24d",
+  "#cc66ff",
+  "#ff8a4d",
+  "#4dffd9",
+  "#ff4dd2"
+];
+
+// ================= STATE =================
+let selectedCountry = null;
+let pins = [];
+let activePin = null;
+
+let globalView = false;
+let selectedAgents = new Set();
+
+let allFeatures = [];
+let agents = [];
+let agentLookup = new Map();
+let countryAgents = {};
+let saveTimer = null;
+
+// ================= MAP =================
+const map = L.map('map').setView([20,0],2);
+
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  maxZoom: 6
+}).addTo(map);
+
+const countryLayers = {};
+
+// ================= HELPERS =================
+function normalizeRow(row) {
+  return {
+    country: row.country ?? row.Country ?? "",
+    agent: row.agent ?? row.Agent ?? "",
+    operator: row.operator ?? row.Operator ?? "",
+    pop: row.population ?? row.pop ?? row.Population ?? "",
+    stage: row.stage ?? row.Stage ?? ""
+  };
+}
+
+function buildAgentMeta(name, index) {
+  return {
+    name,
+    color: DEFAULT_COLORS[index % DEFAULT_COLORS.length],
+    img: `https://i.pravatar.cc/40?u=${encodeURIComponent(name)}`
+  };
+}
+
+function setAgents(list) {
+  agents = [];
+  agentLookup = new Map();
+
+  list.forEach((item, index) => {
+    const name = item.name ?? item.agent ?? String(item);
+    const a = {
+      name,
+      color: item.color ?? DEFAULT_COLORS[index % DEFAULT_COLORS.length],
+      img: item.img ?? `https://i.pravatar.cc/40?u=${encodeURIComponent(name)}`
+    };
+    agents.push(a);
+    agentLookup.set(a.name, a);
+  });
+}
+
+function ensureAgentExists(name) {
+  if (!name) return;
+  if (agentLookup.has(name)) return;
+
+  const a = buildAgentMeta(name, agents.length);
+  agents.push(a);
+  agentLookup.set(name, a);
+}
+
+function rebuildAgentsFromRows(rows) {
+  const uniqueNames = [...new Set(rows.map(r => r.agent).filter(Boolean))];
+  setAgents(uniqueNames.map((name, i) => buildAgentMeta(name, i)));
+}
+
+function buildCountryAgentsFromRows(rows) {
+  const result = {};
+
+  rows.forEach(r => {
+    if (!r.country) return;
+    if (!result[r.country]) result[r.country] = [];
+    result[r.country].push({
+      agent: r.agent,
+      operator: r.operator,
+      pop: r.pop,
+      stage: r.stage
+    });
+    ensureAgentExists(r.agent);
+  });
+
+  return result;
+}
+
+function extractRows(payload) {
+  if (Array.isArray(payload)) {
+    return payload.map(normalizeRow);
+  }
+
+  if (payload && Array.isArray(payload.data)) {
+    return payload.data.map(normalizeRow);
+  }
+
+  if (payload && Array.isArray(payload.rows)) {
+    return payload.rows.map(normalizeRow);
+  }
+
+  if (payload && payload.countryAgents && typeof payload.countryAgents === "object") {
+    const rows = [];
+    for (const [country, list] of Object.entries(payload.countryAgents)) {
+      if (!Array.isArray(list)) continue;
+      list.forEach(item => {
+        rows.push(normalizeRow({ country, ...item }));
+      });
+    }
+    return rows;
+  }
+
+  return [];
+}
+
+function buildPayload() {
+  const out = [];
+
+  for (const [country, list] of Object.entries(countryAgents)) {
+    list.forEach(d => {
+      out.push({
+        country,
+        agent: d.agent,
+        operator: d.operator,
+        population: d.pop,
+        stage: d.stage
+      });
+    });
+  }
+
+  return out;
+}
+
+function scheduleSave() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(sendDataToServer, 5000);
+}
+
+async function sendDataToServer() {
+  const payload = buildPayload();
+
+  try {
+    await fetch(DATA_URL, {
+      method: "POST",
+      // Using text/plain avoids some CORS preflight triggers in Apps Script
+      headers: { "Content-Type": "text/plain;charset=utf-8" }, 
+      body: JSON.stringify(payload)
+    });
+  } catch (err) {
+    console.error("Save failed:", err);
+  }
+}
+
+async function loadInitialData() {
+  try {
+    URLget = DATA_URL+"?call=recent";
+    const res = await fetch(URLget, { method: "GET" });
+    const payload = await res.json();
+
+    const rows = extractRows(payload);
+
+    if (Array.isArray(payload?.agents)) {
+      setAgents(payload.agents);
+    } else {
+      rebuildAgentsFromRows(rows);
+    }
+
+    countryAgents = buildCountryAgentsFromRows(rows);
+    renderAgentFilters();
+    rerender();
+  } catch (err) {
+    console.error("Failed to load initial data:", err);
+    countryAgents = {};
+    agents = [];
+    agentLookup = new Map();
+  }
+}
+
+// ================= GEOJSON =================
+fetch("https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json")
+.then(r => r.json())
+.then(data => {
+  allFeatures = data.features;
+
+  L.geoJSON(data, {
+    style: { color: "#555", weight: 1, fillOpacity: 0.1 },
+    onEachFeature: (feature, layer) => {
+      const name = feature.properties.name;
+      countryLayers[name] = layer;
+      layer.feature = feature;
+
+      layer.on('click', () => {
+        resetState();
+        selectedCountry = layer;
+        layer.setStyle({ color: "#00f0ff", fillOpacity: 0.3 });
+        map.fitBounds(layer.getBounds());
+        spawnPins(feature);
+      });
+    }
+  }).addTo(map);
+});
+
+// ================= AGENT UI =================
+const selector = document.getElementById("agentSelector");
+const agentBox = document.getElementById("agentCheckboxes");
+
+function renderAgentFilters() {
+  agentBox.innerHTML = "";
+
+  agents.forEach((a) => {
+    const row = document.createElement("div");
+    row.innerHTML = `<input type="checkbox" data-name="${a.name}"> ${a.name}`;
+    const cb = row.querySelector("input");
+
+    cb.onchange = (e) => {
+      const name = e.target.dataset.name;
+      if (e.target.checked) selectedAgents.add(name);
+      else selectedAgents.delete(name);
+      rerender();
+    };
+
+    agentBox.appendChild(row);
+  });
+}
+
+document.getElementById("addAgentBtn").onclick = () => {
+  if (!selectedCountry) {
+    alert("Select a country");
+    return;
+  }
+
+  selector.innerHTML = "";
+
+  agents.forEach((a, i) => {
+    const el = document.createElement("div");
+    el.innerText = a.name;
+    el.style.color = a.color;
+    el.style.cursor = "pointer";
+    el.onclick = () => addAgentToCountry(i);
+    selector.appendChild(el);
+  });
+
+  selector.style.display = "block";
+};
+
+function addAgentToCountry(i) {
+  const name = selectedCountry.feature.properties.name;
+
+  if (!countryAgents[name]) countryAgents[name] = [];
+
+  countryAgents[name].push({
+    agent: agents[i].name,
+    operator: "New",
+    pop: "Unknown",
+    stage: "New"
+  });
+
+  selector.style.display = "none";
+  rerender();
+  scheduleSave();
+}
+
+// dropdown
+const agentViewBtn = document.getElementById("agentViewBtn");
+const agentFilterBox = document.getElementById("agentFilterBox");
+
+agentViewBtn.onclick = () => {
+  agentFilterBox.style.display =
+    agentFilterBox.style.display === "none" ? "block" : "none";
+};
+
+// ================= GLOBAL TOGGLE =================
+document.getElementById("globalToggle").onclick = () => {
+  globalView = !globalView;
+
+  if (!globalView) {
+    selectedAgents.clear();
+    document.querySelectorAll("#agentCheckboxes input").forEach(cb => cb.checked = false);
+  }
+
+  document.getElementById("globalToggle").innerText =
+    "Global View: " + (globalView ? "ON" : "OFF");
+
+  rerender();
+};
+
+// ================= POINT IN POLYGON =================
+function isPointInPolygon(point, vs) {
+  const x = point[0], y = point[1];
+  let inside = false;
+
+  for (let i = 0, j = vs.length - 1; i < vs.length; j = i++) {
+    const xi = vs[i][0], yi = vs[i][1];
+    const xj = vs[j][0], yj = vs[j][1];
+
+    const intersect =
+      ((yi > y) !== (yj > y)) &&
+      (x < (xj - xi) * (y - yi) / (yj - yi + 0.0000001) + xi);
+
+    if (intersect) inside = !inside;
+  }
+
+  return inside;
+}
+
+function getCenter(f) {
+  let lat = 0, lng = 0, c = 0;
+
+  (function walk(coord) {
+    if (typeof coord[0] === "number") {
+      lng += coord[0];
+      lat += coord[1];
+      c++;
+    } else {
+      coord.forEach(walk);
+    }
+  })(f.geometry.coordinates);
+
+  return { lat: lat / c, lng: lng / c };
+}
+
+function getRandomPointInCountry(feature) {
+  const coords = feature.geometry.coordinates;
+
+  let polygon = coords[0];
+  if (feature.geometry.type === "MultiPolygon") {
+    polygon = coords[0][0];
+  }
+
+  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+
+  polygon.forEach(([x, y]) => {
+    if (x < minX) minX = x;
+    if (x > maxX) maxX = x;
+    if (y < minY) minY = y;
+    if (y > maxY) maxY = y;
+  });
+
+  for (let i = 0; i < 50; i++) {
+    const x = minX + Math.random() * (maxX - minX);
+    const y = minY + Math.random() * (maxY - minY);
+
+    if (isPointInPolygon([x, y], polygon)) {
+      return { lat: y, lng: x };
+    }
+  }
+
+  return getCenter(feature);
+}
+
+// ================= RENDER ENGINE =================
+function rerender() {
+  pins.forEach(p => map.removeLayer(p));
+  pins = [];
+
+  Object.values(countryLayers).forEach(l => {
+    l.setStyle({ color: "#555", weight: 1, fillOpacity: 0.1 });
+  });
+
+  if (globalView) {
+    Object.keys(countryAgents).forEach(c => {
+      renderCountry(c, null);
+
+      if (countryLayers[c]) {
+        countryLayers[c].setStyle({
+          color: "#00f0ff",
+          fillOpacity: 0.2
+        });
+      }
+    });
+    return;
+  }
+
+  if (selectedAgents.size > 0) {
+    Object.keys(countryAgents).forEach(c => renderCountry(c, selectedAgents));
+    return;
+  }
+
+  if (selectedCountry) {
+    spawnPins(selectedCountry.feature);
+  }
+}
+
+function renderCountry(name, filter) {
+  const feature = allFeatures.find(f => f.properties.name === name);
+  if (!feature) return;
+
+  const list = countryAgents[name];
+  if (!list) return;
+
+  const angleConst = 137.5 * Math.PI / 180;
+
+  list.forEach((d, i) => {
+    if (filter && !filter.has(d.agent)) return;
+
+    const angle = i * angleConst;
+    const jitter = 0.5 * Math.sqrt(i + 1);
+
+    let pos = getRandomPointInCountry(feature);
+    pos.lat += Math.cos(angle) * jitter;
+    pos.lng += Math.sin(angle) * jitter;
+
+    if (!isPointInPolygon([pos.lng, pos.lat], feature.geometry.coordinates[0])) {
+      pos = getRandomPointInCountry(feature);
+    }
+
+    const a = agentLookup.get(d.agent) || buildAgentMeta(d.agent || "Unknown", 0);
+
+    const icon = L.divIcon({
+      html: `<div class="agent-pin" style="--color:${a.color}">
+        <img src="${a.img}"/></div>`
+    });
+
+    const m = L.marker([pos.lat, pos.lng], { icon }).addTo(map);
+    m.data = d;
+    m.agentMeta = a;
+    m.on('click', (e) => toggleModal(m, e.originalEvent));
+
+    pins.push(m);
+  });
+}
+
+function spawnPins(feature) {
+  renderCountry(feature.properties.name, null);
+}
+
+// ================= MODAL =================
+const modal = document.getElementById("modal");
+
+function toggleModal(marker, e) {
+  if (activePin === marker) {
+    modal.style.display = "none";
+    activePin = null;
+    return;
+  }
+
+  activePin = marker;
+  const d = marker.data;
+  const a = marker.agentMeta;
+
+  modal.innerHTML = `
+    <b>${a.name}</b><br/>
+    Operator:<input id="op" value="${d.operator}"><br/>
+    Pop:<input id="pop" value="${d.pop}"><br/>
+    Stage:<input id="st" value="${d.stage}">
+  `;
+
+  modal.style.left = e.pageX + "px";
+  modal.style.top = e.pageY + "px";
+  modal.style.display = "block";
+
+  const op = modal.querySelector("#op");
+  const pop = modal.querySelector("#pop");
+  const st = modal.querySelector("#st");
+
+  op.oninput = e => { d.operator = e.target.value; scheduleSave(); };
+  pop.oninput = e => { d.pop = e.target.value; scheduleSave(); };
+  st.oninput = e => { d.stage = e.target.value; scheduleSave(); };
+}
+
+// ================= EXPORT =================
+document.getElementById("exportBtn").onclick = () => {
+  let txt = "";
+  Object.keys(countryAgents).forEach(c => {
+    txt += `\n=== ${c} ===\n`;
+    countryAgents[c].forEach(d => {
+      txt += `${d.agent} | ${d.operator} | ${d.pop} | ${d.stage}\n`;
+    });
+  });
+
+  const blob = new Blob([txt], { type: "text/plain" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "agents.txt";
+  a.click();
+};
+
+map.on("mousedown zoomstart", () => {
+  document.getElementById("map").classList.remove("tilted");
+});
+
+// ================= RESET =================
+function resetState() {
+  pins.forEach(p => map.removeLayer(p));
+  pins = [];
+
+  if (selectedCountry) {
+    selectedCountry.setStyle({
+      color: "#555",
+      weight: 1,
+      fillOpacity: 0.1
+    });
+  }
+
+  selectedCountry = null;
+  modal.style.display = "none";
+  activePin = null;
+}
+
+// ================= OUTSIDE CLICK =================
+document.addEventListener("click", (e) => {
+  if (!selector.contains(e.target) && e.target.id !== "addAgentBtn") {
+    selector.style.display = "none";
+  }
+
+  if (!agentFilterBox.contains(e.target) && e.target.id !== "agentViewBtn") {
+    agentFilterBox.style.display = "none";
+  }
+});
+
+// ================= AUTO SAVE TRIGGER =================
+document.addEventListener("input", (e) => {
+  if (e.target.matches("input, textarea")) scheduleSave();
+});
+
+document.addEventListener("keyup", (e) => {
+  if (e.target.matches("input, textarea")) scheduleSave();
+});
+
+// ================= ESC =================
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    resetState();
+
+    map.flyTo([20, 0], 2, {
+      duration: 1.2
+    });
+
+    document.getElementById("map").classList.add("tilted");
+  }
+});
+
+// ================= INIT =================
+(async function init() {
+  await loadInitialData();
+})();
+</script>
+</body>
+</html>
